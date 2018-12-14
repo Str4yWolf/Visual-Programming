@@ -19,6 +19,7 @@
   margin-right: 444px;
   border-style: solid;
   border-radius: 10px;
+  border-width: 8px;
   border-color: blue;
 }
 
