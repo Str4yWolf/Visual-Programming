@@ -51,33 +51,19 @@
         <q-item @click.native="openURL('https://twitter.com/quasarframework')">
           <q-item-side icon="rss feed" />
           <q-item-main label="Twitter" sublabel="@quasarframework" />
-        </q-item>
-          <q-collapsible group="somegroup" icon="explore" label="First">
-    <div>
-      Content
-    </div>
-  </q-collapsible>
-  <q-collapsible group="somegroup" icon="perm_identity" label="Second">
-    <div>
-      Content
-    </div>
-  </q-collapsible>
-  <q-collapsible group="somegroup" icon="shopping_cart" label="Third">
-    <div>
-      Content
-    </div>
-  </q-collapsible> -->
+        </q-item> -->
+
   <q-btn-dropdown
         split
         color="blue"
         glossy
         size="30px"
         label="Image Processing"
-        icon="folder"
+        icon="sentiment_satisfied_alt"
       >
         <q-list link>
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="blue" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
             <q-item-main>
               <q-item-tile label>Binarization</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -93,7 +79,7 @@
           </q-item>
           <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="blue" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
             <q-item-main>
               <q-item-tile label>Rotation</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -109,7 +95,7 @@
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="blue" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
             <q-item-main>
               <q-item-tile label>Greyscaling</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -125,7 +111,7 @@
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="blue" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
             <q-item-main>
               <q-item-tile label>Noise Removal</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -147,40 +133,40 @@
         glossy
         size="30px"
         label="Page Layout Analysis / Image Segmentation"
-        icon="folder"
+        icon="sentiment_satisfied_alt"
       >
         <q-list link>
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="red" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
             <q-item-main>
-              <q-item-tile label>tensei</q-item-tile>
+              <q-item-tile label>placeholder 1</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-item-side right icon="info" color="amber" />
           </q-item>
           <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="red" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
             <q-item-main>
-              <q-item-tile label>shitara</q-item-tile>
+              <q-item-tile label>placeholder 2</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-item-side right icon="info" color="amber" />
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="red" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
             <q-item-main>
-              <q-item-tile label>slime</q-item-tile>
+              <q-item-tile label>placeholder 3</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-item-side right icon="info" color="amber" />
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="red" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
             <q-item-main>
-              <q-item-tile label>datta ken</q-item-tile>
+              <q-item-tile label>placeholder 4</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-item-side right icon="info" color="amber" />
@@ -193,11 +179,11 @@
         glossy
         size="30px"
         label="Optical Character Recognition"
-        icon="folder"
+        icon="sentiment_satisfied_alt"
       >
         <q-list link>
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="orange" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
             <q-item-main>
               <q-item-tile label>placeholder 1</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -206,7 +192,7 @@
           </q-item>
           <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="orange" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
             <q-item-main>
               <q-item-tile label>placeholder 2</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -215,7 +201,7 @@
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="orange" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
             <q-item-main>
               <q-item-tile label>placeholder 3</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -224,7 +210,7 @@
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="orange" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
             <q-item-main>
               <q-item-tile label>placeholder 4</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -239,11 +225,11 @@
         glossy
         size="30px"
         label="feature extraction / comparison"
-        icon="folder"
+        icon="sentiment_satisfied_alt"
       >
         <q-list link>
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="green" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
             <q-item-main>
               <q-item-tile label>placeholder 1</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -252,7 +238,7 @@
           </q-item>
           <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="green" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
             <q-item-main>
               <q-item-tile label>placeholder 2</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -261,7 +247,7 @@
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="green" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
             <q-item-main>
               <q-item-tile label>placeholder 3</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
@@ -270,7 +256,7 @@
           </q-item>
                     <q-item-separator inset />
           <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="folder" inverted color="green" />
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
             <q-item-main>
               <q-item-tile label>placeholder 4</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
