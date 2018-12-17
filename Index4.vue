@@ -16,7 +16,7 @@
 .blocks_editor {
   height: 800px;
   width: 50%;
-  margin-right: 444px;
+  margin-right: 44%;
   border-style: solid;
   border-radius: 10px;
   border-width: 8px;
