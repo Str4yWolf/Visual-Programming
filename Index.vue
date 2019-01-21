@@ -3,7 +3,7 @@
     <!-- function adapted from Vinodh's reference on Stine -->
     <button @click="addBlock('binarization')">add binarization</button>
     <binarization
-      v-touch-pan="moveBlock" class="q-ma-md movable" :id="'binarizationBlock-'+(i-1)"
+      v-touch-pan="moveBlock" class="q-ma-md movable" :id="'binarizationBlocks-'+(i-1)"
       :ref="'BinarizationBlock'+(i-1)"
       :style="{'left': binarizationBlocks[i-1][0] + 'px', 'top': binarizationBlocks[i-1][0] + 'px'}"
       v-for="i in binarizationBlocks.length" :key="'binarization'+i"></binarization>
@@ -49,15 +49,20 @@ export default {
     return {
       initialPos: [100, 100], // this is the initial positions of a newly generated blocks [x, y]
       binarizationCounter: 0,
-      binarizationBlocks: []
+      binarizationBlocks: [],
+      blocks: [binarizationBlocks]
     }
   },
   methods: {
     // adds a block of the name given in the parameter
+    // each block has its own intype and outtype,
+    // specifying what data can be input
+    // and what can be output
     addBlock: function (blockName) {
       if (blockName === 'binarization') {
         this.binarizationCounter += 1
-        this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
+        this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
+          'image', 'image'])
         alert('Binarization component #' + this.binarizationCounter + ' added')
         console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
@@ -67,7 +72,6 @@ export default {
       if (blockName === 'binarization') {
         this.binarizationCounter += 1
         this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
-
         console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
     },
@@ -76,29 +80,61 @@ export default {
       if (event.evt.target.className.includes('movable')) {
         return event.evt.target.id.split('-')
       } else {
-        event.evt.path.forEach(function (element) {
+        // path doesn't work with every browser
+        var path = event.evt.path || (event.evt.composedPath && event.evt.composedPath())
+        path.forEach(function (element) {
           if (element.className.includes('movable')) {
             return element.id.split('-')
           }
         })
       }
     },
-    // moves the block which triggered the event
+    // moves the block which triggered by the event
     moveBlock: function (event) {
-      // block who triggered event
+      // block which triggered event
       var element = this.getActiveElement(event)
       // its name
       var name = element[0]
       // its number
-      var index = element[1]
-
+      var index = parseInt(element[1])
       console.log(name + '#?' + ' with index ' + index + ' is moving')
-      // position reference
-      var posVar = name + 's'
-
       // update positions
-      this.$set(this[posVar][index], 0, this[posVar][index][0] + event.delta.x)
-      this.$set(this[posVar][index], 1, this[posVar][index][1] + event.delta.y)
+      var newX = this[name][index][0] + event.delta.x
+      var newY = this[name][index][1] + event.delta.y
+      // console.log(newX, newY)
+      this.$set(this[name], index, [newX, newY])
+
+      var bB1
+      if (typeof this.$refs[name + index].$el === 'undefined') {
+        bB1 = this.$refs[name + index][0].$el.getBoundingClientRect()
+      } else {
+        bB1 = this.$refs[name + index].$el.getBoundingClientRect()
+      }
+
+      for (b in this.blocks) {
+        for (sb in b) {
+          if (sb !== this[name][index]) {
+            var bB2
+            
+            if (typeof sb === 'undefined') {
+              bB2 = sb.getBoundingClientRect()
+            } else {
+              bB2 = sb.getBoundingClientRect()
+            }
+
+            // dock
+            var overlap = !(bB1.right < bB2.left ||
+                            bB1.left > bB2.right ||
+                            bB1.bottom < bB2.top ||
+                            bB1.top < bB2.bottom)
+            
+            if (!false) {
+              console.log(name + index + 'collided with ' + sb)
+              // if(element[2] == sb[3])
+            }
+          }
+        }
+      }
     }
   }
 }
