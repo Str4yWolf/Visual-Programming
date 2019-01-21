@@ -55,10 +55,14 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
-        'QBtnDropdown'
+        'QItemTile',
+        'QItemSeparator',
+        'QBtnDropdown',
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'TouchPan',
+        'CloseOverlay'
       ],
       // Quasar plugins
       plugins: [
