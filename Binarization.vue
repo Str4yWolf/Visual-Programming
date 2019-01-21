@@ -3,7 +3,7 @@
     <span style="text-align: center; font-weight: bold;">Binarization</span>
     <br/><br/>
     <em>Enter Threshold &nbsp; &nbsp;</em>
-    <input v-model="number" id="input">
+    <input id="input">
     <button @click="binarize">Binarize</button>
    </div>
 </template>
