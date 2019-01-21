@@ -1,12 +1,12 @@
 <template>
   <q-page class="flex flex-center">
     <!-- function adapted from Vinodh's reference on Stine -->
+    <button @click="addBlock('binarization')">add binarization</button>
     <binarization
-      :style="{'left': x1 + 'px', 'top': y1 + 'px'}"
-      class="q-ma-md movable"
-      @mousedown.native="moveStart($event,1)"
-      @mouseup.native="moveEnd($event,1)"
-      @mousemove.native="moveActive($event,1)"></binarization>
+      v-touch-pan="moveBlock" class="q-ma-md movable" :id="'binarizationBlock-'+(i-1)"
+      :ref="'BinarizationBlock'+(i-1)"
+      :style="{'left': binarizationBlocks[i-1][0] + 'px', 'top': binarizationBlocks[i-1][0] + 'px'}"
+      v-for="i in binarizationBlocks.length" :key="'binarization'+i"></binarization>
     <rectangle-select class="select-comp"></rectangle-select>
     <edit-frame class="blocks_editor"></edit-frame>
   </q-page>
@@ -16,7 +16,7 @@
 .blocks_editor {
   height: 800px;
   width: 50%;
-  margin-right: 44%;
+  margin-right: 444px;
   border-style: solid;
   border-radius: 10px;
   border-width: 8px;
@@ -47,39 +47,59 @@ export default {
   },
   data () {
     return {
-      x1: 100,
-      y1: 100,
+      initialPos: [100, 100], // this is the initial positions of a newly generated blocks [x, y]
       binarizationCounter: 0,
       binarizationBlocks: []
     }
   },
   methods: {
-    moveStart: function (event, index) {
-      console.log('index moveStart')
-      this.moving = true
-      this['offsetInitX' + index] = event.offsetX
-      this['offsetInitY' + index] = event.offsetY
-    },
-    moveActive: function (event, index) {
-      if (this.moving) {
-        console.log('index moveActive')
-        this['x' + index] += event.offsetX - this['offsetInitX' + index]
-        this['y' + index] += event.offsetY - this['offsetInitY' + index]
-      }
-    },
-    moveEnd: function (event, index) {
-      console.log('index moveEnd')
-      this.moving = false
-    }
-    /* addBlock: function (blocktype, index) {
-      if (blocktype === 'binarization') {
+    // adds a block of the name given in the parameter
+    addBlock: function (blockName) {
+      if (blockName === 'binarization') {
         this.binarizationCounter += 1
-        this.binarizationBlocks.push((
-              'id': index,
-              'x': 100,
-              'y': 100))
+        this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
+        alert('Binarization component #' + this.binarizationCounter + ' added')
+        console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
-    } */
+    },
+    // deletes a block which called this function
+    deleteBlock: function (blockName) {
+      if (blockName === 'binarization') {
+        this.binarizationCounter += 1
+        this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
+
+        console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
+      }
+    },
+    // find out which element is moving (adapted from Vinodh's reference on Stine)
+    getActiveElement: function (event) {
+      if (event.evt.target.className.includes('movable')) {
+        return event.evt.target.id.split('-')
+      } else {
+        event.evt.path.forEach(function (element) {
+          if (element.className.includes('movable')) {
+            return element.id.split('-')
+          }
+        })
+      }
+    },
+    // moves the block which triggered the event
+    moveBlock: function (event) {
+      // block who triggered event
+      var element = this.getActiveElement(event)
+      // its name
+      var name = element[0]
+      // its number
+      var index = element[1]
+
+      console.log(name + '#?' + ' with index ' + index + ' is moving')
+      // position reference
+      var posVar = name + 's'
+
+      // update positions
+      this.$set(this[posVar][index], 0, this[posVar][index][0] + event.delta.x)
+      this.$set(this[posVar][index], 1, this[posVar][index][1] + event.delta.y)
+    }
   }
 }
 </script>
