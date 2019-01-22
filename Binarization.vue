@@ -1,3 +1,6 @@
+<!-- TODO:
+  make delete button completely red and more beautiful
+-->
 <template>
   <div class="binarization">
     <span style="text-align: center; font-weight: bold;">Binarization</span>
@@ -5,7 +8,10 @@
     <em>Enter Threshold &nbsp; &nbsp;</em>
     <input id="input">
     <button @click="binarize">Binarize</button>
-   </div>
+    <div class="deletion">
+    <button class="del-btn" @click="deleteBlock">x</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -13,14 +19,13 @@ export default {
   // name: 'Binarization',
   data () {
     return {
-      blocktype: 'image',
-      // What blocktypes can be input
-      intype: 'image',
-      // What blocktypes can be output
-      outtype: 'image'
     }
   },
   methods: {
+    /*
+            binarizes the image with a threshold
+            and filters some inappropriate user inpus
+    */
     binarize: function () {
       var threshold = document.getElementById('input').value
       if (isNaN(threshold)) {
@@ -30,6 +35,13 @@ export default {
       } else {
         alert('Image binarized.')
       }
+    },
+    /*
+            calls the parent to delete this component
+    */
+    deleteBlock: function () {
+      console.log('called deleteBlock from binarization')
+      this.$emit('emitted', ['deleteBlock', this])
     }
   }
 }
@@ -42,5 +54,17 @@ div .binarization {
   padding: 20px;
   border: 2px solid black;
   background-color: powderblue;
+}
+div .deletion {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: black;
+  background: red;
+  font-weight: bold;
+  padding: 2px;
+}
+button .del-btn {
+  background: red;
 }
 </style>
