@@ -1,6 +1,5 @@
 <!-- TODO:
   clickButton from layout   90%: misses the final bus
-  delete block              80%: misses the final deletion
   docking
   undocking
   selection frame
@@ -16,9 +15,9 @@
       v-touch-pan="moveBlock" class="movable q-py-xl"
       :id="'binarizationBlock-'+(i-1)"
       :ref="'binarizationBlock-'+(i-1)"
-      :style="{'left': binarizationBlocks[i-1][0] + 'px',
-               'top': binarizationBlocks[i-1][1] + 'px'}"
-      v-for="i in binarizationBlocks.length"
+      :style="{'left': blocks.binarizationBlocks[i-1][0] + 'px',
+               'top': blocks.binarizationBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.binarizationBlocks.length"
       :key="'binarizationBlock'+i">
     </binarization>
     <rectangle-select class="select-comp"></rectangle-select>
@@ -67,11 +66,11 @@ export default {
       // a newly generated blocks [x, y]
       initialPos: [100, 100],
       binarizationCounter: 0,
-      binarizationBlocks: [],
-      blocks: [this.binarizationBlocks]
+      // binarizationBlocks: [],
+      blocks: {binarizationBlocks: []}
     }
   },
-  updated () {
+  creation () {
     this.$root.$on('addBlock', this.addBlock)
   },
   methods: {
@@ -95,8 +94,10 @@ export default {
       console.log('called addBlock with argument ' + blockName)
       if (blockName === 'binarization') {
         this.binarizationCounter += 1
-        this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
+        this.blocks.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
           'image', 'image'])
+        // this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
+        // 'image', 'image'])
         alert('Binarization component #' + this.binarizationCounter + ' added')
         console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
@@ -106,7 +107,9 @@ export default {
     */
     deleteBlock: function (data) {
       console.log('called deleteBlock from Index')
-      data = null
+      var parentArray = data.$el.id.split('-')[0] + 's'
+      var index = parseInt(data.$el.id.split('-')[1])
+      this.$delete(this.blocks[parentArray], index)
     },
     /*
             find out which element is moving
@@ -136,12 +139,14 @@ export default {
       var blockArray = element[0] + 's'
       // its number
       var index = parseInt(element[1])
-      console.log(name + '#?' + ' with index ' + index + ' is moving')
+      // var blockNumber = index + 1
+      // console.log(element[0] + ' #' + blockNumber +
+      //            ' with index ' + index + ' is moving')
       // update positions
-      var newX = this[blockArray][index][0] + event.delta.x
-      var newY = this[blockArray][index][1] + event.delta.y
-      console.log(newX, newY)
-      this.$set(this[blockArray], index, [newX, newY])
+      var newX = this.blocks[blockArray][index][0] + event.delta.x
+      var newY = this.blocks[blockArray][index][1] + event.delta.y
+      // console.log(newX, newY)
+      this.$set(this.blocks[blockArray], index, [newX, newY])
       /* var bB1
       var ref = element[0] + '-' + index
       if (typeof this.$refs[ref].$el === 'undefined') {
@@ -149,14 +154,20 @@ export default {
       } else {
         bB1 = this.$refs[ref].$el.getBoundingClientRect()
       }
-      for (var b in this.blocks) {
-        for (var sb in b) {
-          if (sb !== this[blockArray][index]) {
+      // console.log(this.blocks)
+      // console.log(typeof this.blocks)
+      Object.values(this.blocks).forEach(blockType => {
+        // console.log(blockType)
+        // console.log(typeof blockType)
+        Object.values(blockType).forEach(block => {
+          // console.log(block)
+          // console.log(typeof block)
+          if (block !== this.blocks[blockArray][index]) {
             var bB2
-            if (typeof sb === 'undefined') {
-              bB2 = sb.getBoundingClientRect()
+            if (typeof block === 'undefined') {
+              bB2 = block.$el.getBoundingClientRect()
             } else {
-              bB2 = sb.getBoundingClientRect()
+              bB2 = block.$el.getBoundingClientRect()
             }
             // dock
             var overlap = !(bB1.right < bB2.left ||
@@ -164,12 +175,12 @@ export default {
                             bB1.bottom < bB2.top ||
                             bB1.top < bB2.bottom)
             if (overlap) {
-              console.log(name + index + 'collided with ' + sb)
+              console.log(name + index + 'collided with ' + block)
               // if(element[2] == sb[3])
             }
           }
-        }
-      } */
+        })
+      }) */
     }
   }
 }
