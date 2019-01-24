@@ -28,9 +28,17 @@
       <q-list
         no-border
         link
-        inset-delimiter
+        inset-delimit
       >
-        <q-list-header>Main Menu
+        <q-list-header>Main Menu &nbsp; &nbsp; &nbsp;
+        <!-- Lets the user toggle notifications on several actions -->
+        <q-btn
+                color="primary"
+                size="sm"
+                label="Toggle Notifications"
+                align="right"
+                @click.native="emit('toggleNotifications')"
+              />
         </q-list-header>
      <!--   <q-item @click.native="openURL('http://quasar-framework.org')">
           <q-item-side icon="school" />
@@ -76,7 +84,7 @@
         icon="folder"
       >
         <q-list link>
-          <q-item v-close-overlay @click.native="addBinarization">
+          <q-item v-close-overlay>
             <q-item-side icon="folder" inverted color="blue" />
             <q-item-main>
               <q-item-tile label>Binarization</q-item-tile>
@@ -87,7 +95,7 @@
                 size="sm"
                 label="add"
                 align="right"
-                @click="addBinarization"
+                @click.native="addBinarization"
               />
             <q-item-side right icon="info" color="amber" />
           </q-item>
@@ -156,6 +164,13 @@
               <q-item-tile label>tensei</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
+            <q-btn
+                color="primary"
+                size="sm"
+                label="add"
+                align="right"
+                @click="notImplemented"
+              />
             <q-item-side right icon="info" color="amber" />
           </q-item>
           <q-item-separator inset />
@@ -298,11 +313,14 @@ export default {
   methods: {
     openURL,
     addBinarization: function () {
-      this.$root.$emit('addblock', 'binarization')
+      this.$root.$emit('addBlock', 'binarization')
       console.log('addBinarization called from layout')
     },
     notImplemented: function () {
       alert('Not implemented yet (...) We\'ll work on that')
+    },
+    emit: function (msg) {
+      this.$root.$emit(msg)
     }
   }
 }
