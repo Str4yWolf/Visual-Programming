@@ -1,15 +1,10 @@
 <!-- TODO:
-  clickButton from layout   90%: misses the final bus
-  docking
-  undocking
+  docking/undocking and how it works together with delete
   selection frame
   emulate results
   -->
 <template>
   <q-page class="flex flex-center">
-    <!-- add a binarization block -->
-    <button @click="addBlock('binarization')">add binarization
-    </button>
     <binarization
       @emitted="receiveData"
       v-touch-pan="moveBlock" class="movable q-py-xl"
@@ -22,10 +17,16 @@
     </binarization>
     <rectangle-select class="select-comp"></rectangle-select>
     <edit-frame class="blocks_editor"></edit-frame>
-  </q-page>
+    </q-page>
 </template>
 
 <style>
+#notifications {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+}
 .blocks_editor {
   height: 800px;
   width: 50%;
@@ -67,11 +68,18 @@ export default {
       initialPos: [100, 100],
       binarizationCounter: 0,
       // binarizationBlocks: [],
-      blocks: {binarizationBlocks: []}
+      blocks: {binarizationBlocks: []},
+      // these are the links or docks between blocks
+      links: [],
+      // show notifications to user
+      showNotifications: true
     }
   },
-  creation () {
+  created () {
     this.$root.$on('addBlock', this.addBlock)
+    this.$root.$on('toggleNotifications', () => {
+      this.showNotifications = !this.showNotifications
+    })
   },
   methods: {
     /*
@@ -98,7 +106,9 @@ export default {
           'image', 'image'])
         // this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
         // 'image', 'image'])
-        alert('Binarization component #' + this.binarizationCounter + ' added')
+        if (this.showNotifications) {
+          alert('Binarization component #' + this.binarizationCounter + ' added')
+        }
         console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
     },
@@ -107,6 +117,13 @@ export default {
     */
     deleteBlock: function (data) {
       console.log('called deleteBlock from Index')
+      if (this.showNotifications) {
+        var proceed = confirm('Are you sure you would like to delete this component? ' +
+                              'This action cannot be undone.')
+        if (!proceed) {
+          return
+        }
+      }
       var parentArray = data.$el.id.split('-')[0] + 's'
       var index = parseInt(data.$el.id.split('-')[1])
       this.$delete(this.blocks[parentArray], index)
@@ -147,40 +164,77 @@ export default {
       var newY = this.blocks[blockArray][index][1] + event.delta.y
       // console.log(newX, newY)
       this.$set(this.blocks[blockArray], index, [newX, newY])
-      /* var bB1
-      var ref = element[0] + '-' + index
-      if (typeof this.$refs[ref].$el === 'undefined') {
-        bB1 = this.$refs[ref][0].$el.getBoundingClientRect()
+      var bB1
+      var ref1 = element[0] + '-' + index
+      if (typeof this.$refs[ref1].$el === 'undefined') {
+        bB1 = this.$refs[ref1][0].$el.getBoundingClientRect()
       } else {
-        bB1 = this.$refs[ref].$el.getBoundingClientRect()
+        bB1 = this.$refs[ref1].$el.getBoundingClientRect()
       }
+      // console.log('ref1: ' + ref1)
+      // console.log(typeof ref1)
+      // console.log('bB1: ' + bB1)
+      // console.log(typeof bB1)
       // console.log(this.blocks)
       // console.log(typeof this.blocks)
-      Object.values(this.blocks).forEach(blockType => {
-        // console.log(blockType)
-        // console.log(typeof blockType)
-        Object.values(blockType).forEach(block => {
-          // console.log(block)
-          // console.log(typeof block)
-          if (block !== this.blocks[blockArray][index]) {
+      // console.log('Coordinates of ' + ref1 + '\n' +
+      //              '      top-left corner: (' + bB1.left + ', ' + bB1.top + ')\n' +
+      //              '  bottom-right corner: (' + bB1.right + ', ' + bB1.bottom + ')')
+      Object.entries(this.blocks).forEach(blockType => {
+        // console.log(blockType[0])
+        // console.log(typeof blockType[0])
+        Object.entries(blockType[1]).forEach(block => {
+          // console.log(block[1])
+          // console.log(typeof block[1])
+          if (block[1] !== this.blocks[blockArray][index]) {
             var bB2
-            if (typeof block === 'undefined') {
-              bB2 = block.$el.getBoundingClientRect()
+            // the name (key) and index (array key) of a block
+            var ref2 = blockType[0].substring(0, blockType[0].length - 1) +
+                       '-' + block[0]
+            if (typeof this.$refs[ref2].$el === 'undefined') {
+              // bB2 = this.blocks[blockType][block][1].$refs[ref2].$el.getBoundingClientRect()
+              bB2 = this.$refs[ref2][0].$el.getBoundingClientRect()
             } else {
-              bB2 = block.$el.getBoundingClientRect()
+              bB2 = this.$refs[ref2].$el.getBoundingClientRect()
             }
-            // dock
+            // console.log('ref2: ' + ref2)
+            // console.log(typeof ref2)
+            // console.log('bB2: ' + bB2)
+            // console.log(typeof bB2)
+            //
             var overlap = !(bB1.right < bB2.left ||
                             bB1.left > bB2.right ||
                             bB1.bottom < bB2.top ||
-                            bB1.top < bB2.bottom)
-            if (overlap) {
-              console.log(name + index + 'collided with ' + block)
-              // if(element[2] == sb[3])
+                            bB1.top > bB2.bottom)
+            // if (overlap) {
+            //   console.log(ref1 + ' collided with ' + ref2)
+            // }
+            // dockable bB1 that you're moving to the bottom of bB2
+            var dockable = overlap && (bB1.top === bB2.bottom)
+            if (dockable &&
+                !Object.values(this.links).includes(ref1) &&
+                !Object.keys(this.links).includes(ref2)) {
+              var dock = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
+              if (dock) {
+                this.dock(ref2, ref1)
+              }
             }
           }
         })
-      }) */
+      })
+    },
+    /*
+            docks the block
+    */
+    dock: function (b1, b2) {
+      this.links[b1] = b2
+      if (this.showNotifications) {
+        alert('Docked.')
+      }
+      console.log(this.links)
+      console.log(typeof this.links)
+      console.log(Object.keys(this.links))
+      console.log(Object.values(this.links))
     }
   }
 }
