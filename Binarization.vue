@@ -1,5 +1,6 @@
 <!-- TODO:
-  make delete button completely red and more beautiful
+  fix interblock reference error: every block reads from
+  one single input field only (wrong get element by Id)
 -->
 <template>
   <div class="binarization">
