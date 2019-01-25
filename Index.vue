@@ -1,5 +1,6 @@
 <!-- TODO:
   docking/undocking and how it works together with delete
+  update of links and connected blocks also upon delete
   selection frame
   emulate results
   -->
@@ -21,12 +22,6 @@
 </template>
 
 <style>
-#notifications {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 10;
-}
 .blocks_editor {
   height: 800px;
   width: 50%;
@@ -68,9 +63,12 @@ export default {
       initialPos: [100, 100],
       binarizationCounter: 0,
       // binarizationBlocks: [],
-      blocks: {binarizationBlocks: []},
+      blocks: {binarizationBlocks: [[100, 100], [100, 200]]},
       // these are the links or docks between blocks
-      links: [],
+      linksTop: [],
+      linksBottom: [],
+      // connected blocks (value) of a block (key)
+      connectedBlocks: [],
       // show notifications to user
       showNotifications: true
     }
@@ -166,6 +164,8 @@ export default {
       this.$set(this.blocks[blockArray], index, [newX, newY])
       var bB1
       var ref1 = element[0] + '-' + index
+      // move all blocks connected to the current block too
+      this.moveConnectedBlocks(ref1, event.delta.x, event.delta.y)
       if (typeof this.$refs[ref1].$el === 'undefined') {
         bB1 = this.$refs[ref1][0].$el.getBoundingClientRect()
       } else {
@@ -212,8 +212,8 @@ export default {
             // dockable bB1 that you're moving to the bottom of bB2
             var dockable = overlap && (bB1.top === bB2.bottom)
             if (dockable &&
-                !Object.values(this.links).includes(ref1) &&
-                !Object.keys(this.links).includes(ref2)) {
+                !this.linksBottom.includes(ref1) &&
+                !this.linksTop.includes(ref2)) {
               var dock = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
               if (dock) {
                 this.dock(ref2, ref1)
@@ -224,17 +224,114 @@ export default {
       })
     },
     /*
+            move all blocks connected to b in response to a change in position
+    */
+    moveConnectedBlocks: function (b, x, y) {
+      console.log('Called moveConnectedBlocks')
+      /*
+      // connected blocks
+      // console.log(b)
+      if (!Object.values[b]) {
+        console.log('cbs undefined')
+        return
+      }
+      var cbs = Object.values(this.connectedBlocks[b])
+      console.log(cbs)
+      for (var i = 0; i < cbs.length; i++) {
+        var arr = cbs[i].split('-')
+        var blockType = arr[0].substring(0, arr[0].length) + 's'
+        var index = arr[1]
+        // console.log(blockType)
+        // console.log(index)
+        this.$set(this.blocks[blockType][index], 0, this.blocks[blockType][index] + x)
+        this.$set(this.blocks[blockType][index], 1, this.blocks[blockType][index] + y)
+      }
+      */
+      for (var i = 0; i < this.connectedBlocks.length; i++) {
+        // first element is block itself, other elements connected ones
+        var keyVals = this.connectedBlocks[i].split(' ')
+        // console.log('keyVals: ' + keyVals)
+        // console.log('typeof keyVals: ' + typeof keyVals)
+        // console.log('length of keyVals: ' + keyVals.length)
+        if (keyVals[0] === b) {
+          for (var j = 1; j < keyVals.length; j++) {
+            // connected block
+            var cb
+            if (typeof this.$refs[keyVals[j]].$el === 'undefined') {
+              cb = this.$refs[keyVals[j]][0].$el
+            } else {
+              cb = this.$refs[keyVals[j]].$el
+            }
+            cb.style.left = (parseInt(cb.style.left) + x) + 'px'
+            cb.style.top = (parseInt(cb.style.top) + y) + 'px'
+            // console.log('cb: ' + cb)
+            // console.log('Connected block ' + keyVals[j])
+            // console.log(keyVals[j] + 'x: ' + cb[0])
+            // console.log(keyVals[j] + 'y: ' + cb[1])
+            // this.$set(cb, 0, cb[0] + x)
+            // this.$set(cb, 1, cb[1] + y)
+            // var arr = cb.id.split('-')
+            // var blockType = arr[0].substring(0, arr[0].length) + 's'
+            // var index = arr[1]
+            // console.log(b)
+            // console.log(cb)
+            // console.log(blockType)
+            // console.log(index)
+            // this.$set(this.blocks[blockType][index], 0, this.blocks[blockType][index] + x)
+            // this.$set(this.blocks[blockType][index], 1, this.blocks[blockType][index] + y)
+            // cb.style.left = this.blocks[blockType][index][0] + x + 'px'
+            // cb.style.top = this.blocks[blockType][index][1] + y + 'px'
+          }
+        }
+      }
+    },
+    /*
             docks the block
     */
     dock: function (b1, b2) {
-      this.links[b1] = b2
+      this.linksTop.push(b1)
+      this.linksBottom.push(b2)
       if (this.showNotifications) {
         alert('Docked.')
       }
-      console.log(this.links)
-      console.log(typeof this.links)
-      console.log(Object.keys(this.links))
-      console.log(Object.values(this.links))
+      this.updateConnected(b1)
+      this.updateConnected(b2)
+      // console.log(this.links)
+      // console.log(typeof this.links)
+      // console.log(Object.keys(this.links))
+      // console.log(Object.values(this.links))
+    },
+    /*
+            updates which blocks are connected to b
+    */
+    updateConnected: function (b) {
+      // console.log('called updateConnected')
+      // blocks connected to b besides itself
+      var connected = b
+      for (var i = 0; i < this.linksTop.length; i++) {
+        if (this.linksTop[i] === b) {
+          // console.log('pushed updateConnected')
+          connected = connected.concat(' ' + this.linksBottom[i])
+        }
+        if (this.linksBottom[i] === b) {
+          // console.log('pushed updateConnected')
+          connected = connected.concat(' ' + this.linksTop[i])
+        }
+      }
+      // console.log('updatedConnected connected: ' + connected)
+      console.log('updatedConnected this.connectedBlocks before: ' + this.connectedBlocks)
+      // overwrite old entry if there exists one
+      // for (var j = 0; j < this.connectedBlocks.length; j++) {
+      //   if (this.connectedBlocks[j][0] === b) {
+      //     this.connectedBlocks[j] = connected
+      //     console.log('updatedConnected this.connectedBlocks after: ' + this.connectedBlocks)
+      //   return
+      //   }
+      // }
+      this.connectedBlocks.push(connected)
+      // create new entry if necessary
+      // this.connectedBlocks.push({key: b, value: connected})
+      console.log('updatedConnected this.connectedBlocks after: ' + this.connectedBlocks)
     }
   }
 }
