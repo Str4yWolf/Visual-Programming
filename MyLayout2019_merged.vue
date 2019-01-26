@@ -273,7 +273,7 @@
                 size="sm"
                 label="add"
                 align="right"
-                @click="addBinarization"
+                @click="emit('addBlock', 'binarization')"
               />
             <q-item-side right icon="info" color="amber" />
           </q-item>
@@ -487,9 +487,13 @@ export default {
     addBinarization: function () {
       this.binarizationCounter += 1
       alert('Binarization component #' + this.binarizationCounter + ' added')
+      this.$root.$emit('addBlock', 'binarization')
     },
     notImplemented: function () {
       alert('Not implemented yet (...) We\'ll work on that')
+    },
+    emit: function (msg, ...args) {
+      this.$root.$emit(msg, ...args)
     }
   }
 }
