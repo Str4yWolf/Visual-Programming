@@ -7,7 +7,7 @@
         @mousemove.native="selectActive($event,1)" hidden>
       </div>
     <div class="preview-image">
-      <img src="../statics/image.jpg" v-bind:class="{ active: isActive }">
+      <img src="../statics/dummy.jpg" v-bind:class="{ active: isActive }">
     </div>
     </div>
     <button id="btn1" @click="select()">Select</button>
@@ -109,3 +109,4 @@ div #image-frame {
   margin: 10px;
 }
 </style>
+
