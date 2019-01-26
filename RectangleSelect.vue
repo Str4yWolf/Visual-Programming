@@ -7,7 +7,7 @@
         @mousemove.native="selectActive($event,1)" hidden>
       </div>
     <div class="preview-image">
-      <img src="../assets/tensei-logo.png" v-bind:class="{ active: isActive }">
+      <img src="../assets/image.jpg" v-bind:class="{ active: isActive }">
     </div>
     </div>
     <button id="btn1" @click="select()">Select</button>
