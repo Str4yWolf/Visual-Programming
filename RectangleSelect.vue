@@ -1,31 +1,24 @@
 <template>
   <div id="outer-frame">
-    <div id="image-frame">
-      <div id="rectangle-select"
-        @mousedown.native="selectStart($event,1)"
-        @mouseup.native="selectEnd($event,1)"
-        @mousemove.native="selectActive($event,1)" hidden>
+    <div id="image-frame" @mousedown.native="selectStart($event)"
+        @mouseup.native="selectEnd($event)"
+        @mousemove.native="selectActive($event)">
+      <div id="rectangle-select" hidden>
       </div>
-    <div class="preview">
+      <div class="preview">
       <img src="../statics/dummy.jpg" v-bind:class="{ active: isActive }">
-    </div>
+      </div>
     </div>
     <button id="btn1" @click="select()">Select</button>
     <button id="btn2" @click="cancel()">Cancel</button>
   </div>
 </template>
 
-
 <script>
 export default {
   // name: '',
   data () {
     return {
-      blocktype: 'RectangleSelect',
-      // What data can be input
-      intype: 'image',
-      // What data can be output
-      outtype: 'image',
       x1: 0,
       y1: 0,
       x2: 0,
@@ -78,9 +71,14 @@ export default {
 </script>
 
 <style>
+.preview {
+  z-index: 4;
+}
 div #rectangle-select {
   border: 2px dotted black;
   position: absolute;
+  z-index: 5;
+
 }
 div #outer-frame {
   border: 2px solid black;
@@ -88,6 +86,7 @@ div #outer-frame {
   height: 500px;
   width: 400px;
   background: #eeeeee;
+  z-index: 2;
 }
 div #image-frame {
   border: none;
@@ -97,6 +96,7 @@ div #image-frame {
   top: 25px;
   left: 25px;
   background: white;
+  z-index: 3;
 }
 #btn1, #btn2 {
   position: relative;
@@ -107,6 +107,6 @@ div #image-frame {
   right: 25px;
   left: 25px;
   margin: 10px;
+  z-index: 3;
 }
 </style>
-
