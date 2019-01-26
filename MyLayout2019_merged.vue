@@ -385,9 +385,16 @@
           <q-item v-close-overlay @click.native="showNotification">
             <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
             <q-item-main>
-              <q-item-tile label>placeholder 1</q-item-tile>
+              <q-item-tile label>Letters Classification</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
+            <q-btn
+                color="orange"
+                size="sm"
+                label="add"
+                align="right"
+                @click="emit('addBlock', 'lettersClassification')"
+              />
             <q-item-side right icon="info" color="amber" />
           </q-item>
           <q-item-separator inset />
@@ -478,22 +485,19 @@ export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-      binarizationCounter: 0
+      leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
   methods: {
     openURL,
-    addBinarization: function () {
-      this.binarizationCounter += 1
-      alert('Binarization component #' + this.binarizationCounter + ' added')
-      this.$root.$emit('addBlock', 'binarization')
-    },
     notImplemented: function () {
       alert('Not implemented yet (...) We\'ll work on that')
     },
     emit: function (msg, ...args) {
       this.$root.$emit(msg, ...args)
+    },
+    showNotification: function () {
+      console.log('called showNotification in Layout')
     }
   }
 }
