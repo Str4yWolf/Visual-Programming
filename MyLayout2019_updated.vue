@@ -222,7 +222,7 @@
         link
         inset-delimiter
       >
-        <q-list-header>Main Menu &nbsp; &nbsp; &nbsp;
+        <q-list-header>MAIN MENU &nbsp; &nbsp; &nbsp;
         <!-- Lets the user toggle notifications on several actions -->
         <q-btn
                 color="primary"
