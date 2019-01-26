@@ -15,7 +15,7 @@
         >
           <q-icon name="menu" />
         </q-btn>
-  <q-btn-group push>
+  <q-btn-group>
   <q-btn-dropdown
         color="primary"
         rounded glossy label="tensei"
