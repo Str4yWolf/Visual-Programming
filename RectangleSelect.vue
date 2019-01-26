@@ -6,7 +6,7 @@
         @mouseup.native="selectEnd($event,1)"
         @mousemove.native="selectActive($event,1)" hidden>
       </div>
-    <div class="preview-image">
+    <div class="preview">
       <img src="../statics/dummy.jpg" v-bind:class="{ active: isActive }">
     </div>
     </div>
