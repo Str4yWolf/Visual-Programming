@@ -58,6 +58,7 @@ module.exports = function (ctx) {
         'QItemTile',
         'QItemSeparator',
         'QBtnDropdown',
+        'QBtnGroup'
       ],
       directives: [
         'Ripple',
