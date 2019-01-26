@@ -16,6 +16,16 @@
       v-for="i in blocks.binarizationBlocks.length"
       :key="'binarizationBlock'+i">
     </binarization>
+    <letters-classification
+      @emitted="receiveData"
+      v-touch-pan="moveBlock" class="movable q-py-xl"
+      :id="'lettersClassificationBlock-'+(i-1)"
+      :ref="'lettersClassificationBlock-'+(i-1)"
+      :style="{'left': blocks.lettersClassificationBlocks[i-1][0] + 'px',
+               'top': blocks.lettersClassificationBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.lettersClassificationBlocks.length"
+      :key="'lettersClassificationBlock'+i">
+    </letters-classification>
     <rectangle-select class="select-comp"></rectangle-select>
     <edit-frame class="blocks_editor"></edit-frame>
     </q-page>
@@ -47,12 +57,14 @@
 
 <script>
 import Binarization from '../components/Binarization.vue'
+import LettersClassification from '../components/LettersClassification.vue'
 import RectangleSelect from '../components/RectangleSelect.vue'
 import EditFrame from '../components/editFrame.vue'
 export default {
   name: 'PageIndex',
   components: {
     Binarization,
+    LettersClassification,
     RectangleSelect,
     EditFrame
   },
@@ -61,8 +73,8 @@ export default {
       // this is the initial positions of
       // a newly generated blocks [x, y]
       initialPos: [100, 100],
-      // binarizationBlocks: [],
-      blocks: {binarizationBlocks: [[100, 100], [100, 200]]},
+      // all blocks,
+      blocks: {binarizationBlocks: [[100, 100]], lettersClassificationBlocks: [[100, 240]]},
       // these are the links or docks between blocks
       linksTop: [],
       linksBottom: [],
@@ -73,9 +85,9 @@ export default {
       // whether you can dock again
       redockable: true,
       // what data can be input to each block
-      intype: {binarizationBlock: 'image'},
+      intype: {binarization: 'image', lettersClassification: 'image', rectangleSelect: 'image'},
       // what data will be the output of each block
-      outtype: {binarizationBlock: 'image'},
+      outtype: {binarization: 'image', lettersClassification: 'text', rectangleSelect: 'image'},
       // whether a block is incompatible
       incompatible: false
     }
@@ -107,12 +119,17 @@ export default {
       console.log('called addBlock with argument ' + blockName)
       if (blockName === 'binarization') {
         this.blocks.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
-        // this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
         if (this.showNotifications) {
           alert('Binarization component #' + (this.blocks.binarizationBlocks.length) + ' added')
         }
-        console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
+      if (blockName === 'lettersClassification') {
+        this.blocks.lettersClassificationBlocks.push([this.initialPos[0], this.initialPos[1]])
+        if (this.showNotifications) {
+          alert('letters classification component #' + (this.blocks.lettersClassificationBlocks.length) + ' added')
+        }
+      }
+      console.log('created ' + blockName + 'Block #' + this.blocks[blockName + 'Blocks'].length + ' at coordinates ' + this.initialPos)
     },
     /*
             deletes a block which called this function
