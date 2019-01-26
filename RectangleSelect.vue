@@ -6,11 +6,15 @@
         @mouseup.native="selectEnd($event,1)"
         @mousemove.native="selectActive($event,1)" hidden>
       </div>
+    <div class="preview-image">
+      <img src="../assets/tensei-logo.png" v-bind:class="{ active: isActive }">
+    </div>
     </div>
     <button id="btn1" @click="select()">Select</button>
     <button id="btn2" @click="cancel()">Cancel</button>
   </div>
 </template>
+
 
 <script>
 export default {
