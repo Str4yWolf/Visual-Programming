@@ -109,4 +109,3 @@ div #image-frame {
   margin: 10px;
 }
 </style>
-
