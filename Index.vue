@@ -61,7 +61,6 @@ export default {
       // this is the initial positions of
       // a newly generated blocks [x, y]
       initialPos: [100, 100],
-      binarizationCounter: 0,
       // binarizationBlocks: [],
       blocks: {binarizationBlocks: [[100, 100], [100, 200]]},
       // these are the links or docks between blocks
@@ -70,7 +69,15 @@ export default {
       // connected blocks (value) of a block (key)
       connectedBlocks: [],
       // show notifications to user
-      showNotifications: true
+      showNotifications: true,
+      // whether you can dock again
+      redockable: true,
+      // what data can be input to each block
+      intype: {binarizationBlock: 'image'},
+      // what data will be the output of each block
+      outtype: {binarizationBlock: 'image'},
+      // whether a block is incompatible
+      incompatible: false
     }
   },
   created () {
@@ -99,13 +106,10 @@ export default {
     addBlock: function (blockName) {
       console.log('called addBlock with argument ' + blockName)
       if (blockName === 'binarization') {
-        this.binarizationCounter += 1
-        this.blocks.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
-          'image', 'image'])
-        // this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1],
-        // 'image', 'image'])
+        this.blocks.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
+        // this.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
         if (this.showNotifications) {
-          alert('Binarization component #' + this.binarizationCounter + ' added')
+          alert('Binarization component #' + (this.blocks.binarizationBlocks.length) + ' added')
         }
         console.log('created ' + blockName + 'Block #' + this.binarizationCounter + ' at coordinates ' + this.initialPos)
       }
@@ -164,28 +168,15 @@ export default {
       this.$set(this.blocks[blockArray], index, [newX, newY])
       var bB1
       var ref1 = element[0] + '-' + index
-      // move all blocks connected to the current block too
+      // move all blocks connected to the current block
       this.moveConnectedBlocks(ref1, event.delta.x, event.delta.y)
       if (typeof this.$refs[ref1].$el === 'undefined') {
         bB1 = this.$refs[ref1][0].$el.getBoundingClientRect()
       } else {
         bB1 = this.$refs[ref1].$el.getBoundingClientRect()
       }
-      // console.log('ref1: ' + ref1)
-      // console.log(typeof ref1)
-      // console.log('bB1: ' + bB1)
-      // console.log(typeof bB1)
-      // console.log(this.blocks)
-      // console.log(typeof this.blocks)
-      // console.log('Coordinates of ' + ref1 + '\n' +
-      //              '      top-left corner: (' + bB1.left + ', ' + bB1.top + ')\n' +
-      //              '  bottom-right corner: (' + bB1.right + ', ' + bB1.bottom + ')')
       Object.entries(this.blocks).forEach(blockType => {
-        // console.log(blockType[0])
-        // console.log(typeof blockType[0])
         Object.entries(blockType[1]).forEach(block => {
-          // console.log(block[1])
-          // console.log(typeof block[1])
           if (block[1] !== this.blocks[blockArray][index]) {
             var bB2
             // the name (key) and index (array key) of a block
@@ -197,27 +188,34 @@ export default {
             } else {
               bB2 = this.$refs[ref2].$el.getBoundingClientRect()
             }
-            // console.log('ref2: ' + ref2)
-            // console.log(typeof ref2)
-            // console.log('bB2: ' + bB2)
-            // console.log(typeof bB2)
-            //
             var overlap = !(bB1.right < bB2.left ||
                             bB1.left > bB2.right ||
                             bB1.bottom < bB2.top ||
                             bB1.top > bB2.bottom)
-            // if (overlap) {
-            //   console.log(ref1 + ' collided with ' + ref2)
-            // }
             // dockable bB1 that you're moving to the bottom of bB2
-            var dockable = overlap && (bB1.top === bB2.bottom)
-            if (dockable &&
+            var dockable1 = overlap && ((bB2.bottom - 10) < bB1.top)
+            if (this.redockable && dockable1 &&
                 !this.linksBottom.includes(ref1) &&
                 !this.linksTop.includes(ref2)) {
-              var dock = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
-              if (dock) {
+              var dock1 = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
+              if (dock1) {
                 this.dock(ref2, ref1)
               }
+            }
+            // reverse case
+            var dockable2 = overlap && ((bB1.bottom - 10) < bB2.top)
+            if (this.redockable && dockable2 &&
+                !this.linksBottom.includes(ref2) &&
+                !this.linksTop.includes(ref1)) {
+              var dock2 = confirm('Do you want to dock ' + ref2 + ' to ' + ref1 + '?')
+              if (dock2) {
+                this.dock(ref1, ref2)
+              }
+            }
+            // avoid asking the user again if still overlapping
+            this.redockable = false
+            if (!overlap) {
+              this.redockable = true
             }
           }
         })
