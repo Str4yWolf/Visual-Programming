@@ -468,7 +468,8 @@
         </q-list>
         <q-btn
                 color="secondary"
-                size="xl"
+                glossy
+                size="xl"                
                 rounded
                 label="Run Program"
                 align="center"
