@@ -1,6 +1,5 @@
 <!-- TODO:
-  docking/undocking and how it works together with delete
-  update of links and connected blocks also upon delete
+  fix update of links and connected blocks
   selection frame
   emulate results
   -->
@@ -27,12 +26,12 @@
       :key="'lettersClassificationBlock'+i">
     </letters-classification>
     <rectangle-select class="select-comp"></rectangle-select>
-    <edit-frame class="blocks_editor"></edit-frame>
+    <!-- <edit-frame class="blocks_editor"></edit-frame> -->
     </q-page>
 </template>
 
 <style>
-.blocks_editor {
+/* .blocks_editor {
   height: 800px;
   width: 50%;
   margin-right: 444px;
@@ -41,7 +40,7 @@
   border-width: 8px;
   border-color: blue;
   z-index: -1;
-}
+} */
 .movable {
   display: inline-block;
   padding: 0px;
@@ -59,14 +58,14 @@
 import Binarization from '../components/Binarization.vue'
 import LettersClassification from '../components/LettersClassification.vue'
 import RectangleSelect from '../components/RectangleSelect.vue'
-import EditFrame from '../components/editFrame.vue'
+// import EditFrame from '../components/editFrame.vue'
 export default {
   name: 'PageIndex',
   components: {
     Binarization,
     LettersClassification,
-    RectangleSelect,
-    EditFrame
+    RectangleSelect
+    // EditFrame
   },
   data () {
     return {
@@ -94,6 +93,7 @@ export default {
   },
   created () {
     this.$root.$on('addBlock', this.addBlock)
+    this.$root.$on('resetAll', this.resetAll)
     this.$root.$on('toggleNotifications', () => {
       this.showNotifications = !this.showNotifications
     })
@@ -143,8 +143,29 @@ export default {
           return
         }
       }
-      var parentArray = data.$el.id.split('-')[0] + 's'
-      var index = parseInt(data.$el.id.split('-')[1])
+      var ref = data.$el.id
+      var parentArray = ref.split('-')[0] + 's'
+      var index = parseInt(ref.split('-')[1])
+      // delete all links
+      for (var i = this.linksTop.length - 1; i >= 0; i--) {
+        if (this.linksTop === ref) {
+          // update the connected block at bottom
+          var linkBottom = this.linksBottom[i]
+          this.updateConnected(linkBottom)
+          // delete entries
+          this.linksTop.splice(i, 1)
+          this.linksBottom.splice(i, 1)
+        }
+        if (this.linksBottom === ref) {
+          // update the connected block at top
+          var linkTop = this.linksTop[i]
+          this.updateConnected(linkTop)
+          // delete entries
+          this.linksTop.splice(i, 1)
+          this.linksBottom.splice(i, 1)
+        }
+      }
+      // finally, delete this block itself
       this.$delete(this.blocks[parentArray], index)
     },
     /*
@@ -347,6 +368,29 @@ export default {
       // create new entry if necessary
       // this.connectedBlocks.push({key: b, value: connected})
       console.log('updatedConnected this.connectedBlocks after: ' + this.connectedBlocks)
+    },
+    /*
+            resets everything
+    */
+    resetAll: function () {
+      console.log('called resetAll in Index')
+      var reset = confirm('Are you sure you want to reset everything? This action cannot be undone.')
+      if (reset) {
+        this.initialPos = [100, 100]
+        this.blocks = {binarizationBlocks: [], lettersClassificationBlocks: []}
+        this.linksTop = []
+        this.linksBottom = []
+        this.connectedBlocks = []
+        this.showNotifications = true
+        this.redockable = true
+        this.incompatible = false
+      }
+    },
+    /*
+            sets the initial positions of blocks the parameters
+    */
+    setInitialPos: function (x, y) {
+      this.initialPos = [x, y]
     }
   }
 }
