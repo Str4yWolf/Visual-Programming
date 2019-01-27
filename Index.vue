@@ -190,12 +190,12 @@ export default {
     */
     moveBlock: function (event) {
       // block which triggered event
-      var element = this.getActiveElement(event)
+      var sRef1 = this.getActiveElement(event)
       // console.log(event, element)
       // its name
-      var blockArray = element[0] + 's'
+      var blockArray = sRef1[0] + 's'
       // its number
-      var index = parseInt(element[1])
+      var index = parseInt(sRef1[1])
       // var blockNumber = index + 1
       // console.log(element[0] + ' #' + blockNumber +
       //            ' with index ' + index + ' is moving')
@@ -205,55 +205,107 @@ export default {
       // console.log(newX, newY)
       this.$set(this.blocks[blockArray], index, [newX, newY])
       var bB1
-      var ref1 = element[0] + '-' + index
+      var el1
+      var ref1 = sRef1[0] + '-' + index
       // move all blocks connected to the current block
       this.moveConnectedBlocks(ref1, event.delta.x, event.delta.y)
       if (typeof this.$refs[ref1].$el === 'undefined') {
-        bB1 = this.$refs[ref1][0].$el.getBoundingClientRect()
+        el1 = this.$refs[ref1][0].$el
       } else {
-        bB1 = this.$refs[ref1].$el.getBoundingClientRect()
+        el1 = this.$refs[ref1].$el
       }
+      bB1 = el1.getBoundingClientRect()
       Object.entries(this.blocks).forEach(blockType => {
         Object.entries(blockType[1]).forEach(block => {
           if (block[1] !== this.blocks[blockArray][index]) {
             var bB2
+            var el2
             // the name (key) and index (array key) of a block
             var ref2 = blockType[0].substring(0, blockType[0].length - 1) +
                        '-' + block[0]
             if (typeof this.$refs[ref2].$el === 'undefined') {
-              // bB2 = this.blocks[blockType][block][1].$refs[ref2].$el.getBoundingClientRect()
-              bB2 = this.$refs[ref2][0].$el.getBoundingClientRect()
+              el2 = this.$refs[ref2][0].$el
             } else {
-              bB2 = this.$refs[ref2].$el.getBoundingClientRect()
+              el2 = this.$refs[ref2].$el
             }
+            bB2 = el2.getBoundingClientRect()
             var overlap = !(bB1.right < bB2.left ||
                             bB1.left > bB2.right ||
                             bB1.bottom < bB2.top ||
                             bB1.top > bB2.bottom)
+            // get the types of each block by name
+            var type1 = sRef1[0].substring(0, sRef1[0].length - 5)
+            var sRef2 = ref2.split('-')
+            var type2 = sRef2[0].substring(0, sRef2[0].length - 5)
+            // if output of ref2 is compatible with input of ref1
+            var compatible1 = this.outtype[type2] === this.intype[type1]
+            // reverse case
+            var compatible2 = this.outtype[type1] === this.intype[type2]
             // dockable bB1 that you're moving to the bottom of bB2
             var dockable1 = overlap && ((bB2.bottom - 10) < bB1.top)
-            if (this.redockable && dockable1 &&
+            if (this.redockable && compatible1 && dockable1 &&
                 !this.linksBottom.includes(ref1) &&
                 !this.linksTop.includes(ref2)) {
               var dock1 = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
               if (dock1) {
                 this.dock(ref2, ref1)
+                compatible1 = true
+                compatible2 = true
               }
             }
             // reverse case
             var dockable2 = overlap && ((bB1.bottom - 10) < bB2.top)
-            if (this.redockable && dockable2 &&
+            if (this.redockable && compatible2 && dockable2 &&
                 !this.linksBottom.includes(ref2) &&
                 !this.linksTop.includes(ref1)) {
               var dock2 = confirm('Do you want to dock ' + ref2 + ' to ' + ref1 + '?')
               if (dock2) {
                 this.dock(ref1, ref2)
+                compatible1 = true
+                compatible2 = true
               }
             }
             // avoid asking the user again if still overlapping
             this.redockable = false
+            //
+            // style 1 (inset red border)
+            //
+            /*
+            // display incompatibility of blocks
+            if (overlap && !compatible1) {
+              el1.style.border = '10px solid red'
+            }
+            if (overlap && !compatible2) {
+              el2.style.border = '10px solid red'
+            }
             if (!overlap) {
               this.redockable = true
+              el1.style.border = '2px solid black'
+              el2.style.border = '2px solid black'
+            }
+            */
+            //
+            // style 2 (outset red border)
+            //
+            // display incompatibility of blocks
+            if (overlap && !compatible1) {
+              el1.style.height = '120px'
+              el1.style.width = '520px'
+              el1.style.border = '12px solid red'
+            }
+            if (overlap && !compatible2) {
+              el2.style.height = '120px'
+              el2.style.width = '520px'
+              el2.style.border = '12px solid red'
+            }
+            if (!overlap) {
+              this.redockable = true
+              el2.style.height = '100px'
+              el2.style.width = '500px'
+              el2.style.height = '100px'
+              el2.style.width = '500px'
+              el1.style.border = '2px solid black'
+              el2.style.border = '2px solid black'
             }
           }
         })
