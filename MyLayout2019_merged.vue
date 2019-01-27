@@ -36,6 +36,7 @@
               </q-item-main>
             <q-item-side right icon="info" color="amber" />
             </q-item>
+            <q-item-separator inset />
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
@@ -74,6 +75,7 @@
               </q-item-main>
             <q-item-side right icon="info" color="amber" />
             </q-item>
+            <q-item-separator inset />
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
@@ -112,6 +114,7 @@
               </q-item-main>
             <q-item-side right icon="info" color="amber" />
             </q-item>
+            <q-item-separator inset />
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
@@ -150,6 +153,7 @@
               </q-item-main>
             <q-item-side right icon="info" color="amber" />
             </q-item>
+            <q-item-separator inset />
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
@@ -188,6 +192,7 @@
               </q-item-main>
             <q-item-side right icon="info" color="amber" />
             </q-item>
+            <q-item-separator inset />
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
