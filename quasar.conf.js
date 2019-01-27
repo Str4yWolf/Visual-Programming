@@ -47,6 +47,7 @@ module.exports = function (ctx) {
         'QPageContainer',
         'QPage',
         'QToolbar',
+        'QTooltip',
         'QToolbarTitle',
         'QBtn',
         'QIcon',
@@ -58,7 +59,8 @@ module.exports = function (ctx) {
         'QItemTile',
         'QItemSeparator',
         'QBtnDropdown',
-        'QBtnGroup'
+        'QBtnGroup',
+        'QPopover',
       ],
       directives: [
         'Ripple',
