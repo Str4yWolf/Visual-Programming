@@ -1,5 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf"
+  :content-class="$q.theme === 'mat' ? 'bg-grey-9' : null"
+  >
     <q-layout-header>
       <q-toolbar
         color="primary"
@@ -238,7 +240,7 @@
               />
               <!-- reset to initial state -->
         <q-btn
-                color="primary"
+                color="grey"
                 size="sm"
                 label="Reset All"
                 align="center"
@@ -469,7 +471,7 @@
         <q-btn
                 color="secondary"
                 glossy
-                size="xl"                
+                size="xl"
                 rounded
                 label="Run Program"
                 align="center"
