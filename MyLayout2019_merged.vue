@@ -228,7 +228,7 @@
                 color="primary"
                 size="sm"
                 label="Toggle Notifications"
-                align="right"
+                align="center"
                 @click.native="emit('toggleNotifications')"
               />
               <!-- reset to initial state -->
@@ -236,11 +236,10 @@
                 color="primary"
                 size="sm"
                 label="Reset All"
-                align="right"
+                align="center"
                 @click.native="emit('resetAll')"
               />
         </q-list-header>
-
   <q-btn-dropdown
         split
         color="blue"
@@ -461,7 +460,17 @@
           </q-item>
         </q-list>
 </q-btn-dropdown>
-      </q-list>
+        </q-list>
+        <q-btn
+                color="secondary"
+                size="xl"
+                rounded
+                label="Run Program"
+                align="center"
+                class="full-width"
+                icon="sentiment_satisfied_alt"
+                @click.native="emit('')"
+              />
     </q-layout-drawer>
      <q-page-container>
       <router-view />
