@@ -52,8 +52,9 @@ div .lettersClassification {
   height: 100px;
   width: 500px;
   padding: 20px;
-  border: 2px solid orange;
+  border: 4px solid orange;
   background-color:  #f7dc6f ;
+  border-radius: 8px;
 }
 div .deletion {
   position: absolute;
