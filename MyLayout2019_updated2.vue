@@ -760,6 +760,28 @@
           </q-item>
         </q-list>
 </q-btn-dropdown>
+              <q-btn
+                color="indigo"
+                glossy
+                class="full-width"
+                size="xl"
+                rounded
+                label="Customize block"
+                align="center"
+                icon="sentiment_satisfied_alt"
+                @click.native="emit('')"
+              />
+              <q-btn
+                color="blue-grey"
+                glossy
+                class="full-width"
+                size="xl"
+                rounded
+                label="Customize routine"
+                align="center"
+                icon="sentiment_satisfied_alt"
+                @click.native="emit('')"
+              />
         </q-list>
     </q-layout-drawer>
      <q-page-container>
