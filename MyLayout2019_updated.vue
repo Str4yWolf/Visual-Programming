@@ -381,6 +381,7 @@
             </q-item-main>
             <q-btn
                 color="blue"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -401,6 +402,7 @@
             </q-item-main>
             <q-btn
                 color="blue"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -421,6 +423,7 @@
             </q-item-main>
             <q-btn
                 color="blue"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -451,6 +454,7 @@
             </q-item-main>
             <q-btn
                 color="red"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -471,6 +475,7 @@
             </q-item-main>
             <q-btn
                 color="red"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -491,6 +496,7 @@
             </q-item-main>
             <q-btn
                 color="red"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -511,6 +517,7 @@
             </q-item-main>
             <q-btn
                 color="red"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -561,6 +568,7 @@
             </q-item-main>
             <q-btn
                 color="orange"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -581,6 +589,7 @@
             </q-item-main>
             <q-btn
                 color="orange"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -601,6 +610,7 @@
             </q-item-main>
             <q-btn
                 color="orange"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -631,6 +641,7 @@
             </q-item-main>
             <q-btn
                 color="green"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -651,6 +662,7 @@
             </q-item-main>
             <q-btn
                 color="green"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -671,6 +683,7 @@
             </q-item-main>
             <q-btn
                 color="green"
+                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -691,6 +704,7 @@
             </q-item-main>
             <q-btn
                 color="green"
+                outline
                 size="sm"
                 label="add"
                 align="center"
