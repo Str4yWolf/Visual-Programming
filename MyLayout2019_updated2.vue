@@ -769,7 +769,7 @@
                 label="Customize block"
                 align="center"
                 icon="sentiment_satisfied_alt"
-                @click.native="emit('')"
+                @click="notImplemented"
               />
               <q-btn
                 color="blue-grey"
@@ -780,7 +780,7 @@
                 label="Customize routine"
                 align="center"
                 icon="sentiment_satisfied_alt"
-                @click.native="emit('')"
+                @click="notImplemented"
               />
         </q-list>
     </q-layout-drawer>
