@@ -764,7 +764,7 @@
                 color="indigo"
                 glossy
                 class="full-width"
-                size="xl"
+                size="lg"
                 rounded
                 label="Customize block"
                 align="center"
@@ -775,7 +775,7 @@
                 color="blue-grey"
                 glossy
                 class="full-width"
-                size="xl"
+                size="lg"
                 rounded
                 label="Customize routine"
                 align="center"
