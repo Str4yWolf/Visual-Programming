@@ -31,16 +31,6 @@
 </template>
 
 <style>
-/* .blocks_editor {
-  height: 800px;
-  width: 50%;
-  margin-right: 444px;
-  border-style: solid;
-  border-radius: 10px;
-  border-width: 8px;
-  border-color: blue;
-  z-index: -1;
-} */
 .movable {
   display: inline-block;
   padding: 0px;
