@@ -1,7 +1,10 @@
 <!-- TODO:
-  fix update of links and connected blocks
   selection frame
   emulate results
+  fix red border after elements are docked and overlapping
+  (addBlock: replace id with $ref) - failed attempt
+  (moveConnected: try $set instead of $el.style) - failed attempt
+  (make blocks move smoothly together - tried out everything in my might)
   -->
 <template>
   <q-page class="flex flex-center">
@@ -59,29 +62,28 @@ export default {
   },
   data () {
     return {
-      // this is the initial positions of
-      // a newly generated blocks [x, y]
+      // initial position of new blocks
       initialPos: [100, 100],
-      // all blocks,
-      blocks: {binarizationBlocks: [[100, 100]], lettersClassificationBlocks: [[100, 240]]},
-      // these are the links or docks between blocks
+      // all blocks
+      blocks: {binarizationBlocks: [[100, 100]],
+        lettersClassificationBlocks: [[100, 240]]},
+      // linksTop[i] and linksBottom[i] are connected blocks
       linksTop: [],
       linksBottom: [],
       // connected blocks (value) of a block (key)
-      connectedBlocks: [],
+      connectedBlocks: {},
       // show notifications to user
-      showNotifications: true,
-      // whether you can dock again
+      showNotifications: false,
+      // whether a block is redockable after docking attempt
       redockable: true,
-      // what data can be input to each block
+      // input data type for each block type
       intype: {binarization: 'image', lettersClassification: 'image', rectangleSelect: 'image'},
-      // what data will be the output of each block
-      outtype: {binarization: 'image', lettersClassification: 'text', rectangleSelect: 'image'},
-      // whether a block is incompatible
-      incompatible: false
+      // output data type for each block type
+      outtype: {binarization: 'image', lettersClassification: 'text', rectangleSelect: 'image'}
     }
   },
   created () {
+    // listen to event calls from elsewhere
     this.$root.$on('addBlock', this.addBlock)
     this.$root.$on('resetAll', this.resetAll)
     this.$root.$on('toggleNotifications', () => {
@@ -90,42 +92,46 @@ export default {
   },
   methods: {
     /*
-            receives the data and passes it on
-            to the action specified in the message
+            Receives data[message, object] from child components and passes on data according to message
+            @params: Array data[String message, Object object]
     */
     receiveData: function (data) {
-      console.log('received data')
+      // console.log('received data')
       if (data[0] === 'deleteBlock') {
         this.deleteBlock(data[1])
       }
     },
     /*
-            adds a block of the name given in the parameter
-            each block has its own intype and outtype,
-            specifying what data can be input
-            and what can be output
+            Adds a block of the type specified. Initial positions given in data field.
+            @params: String blockName
     */
     addBlock: function (blockName) {
-      console.log('called addBlock with argument ' + blockName)
-      if (blockName === 'binarization') {
-        this.blocks.binarizationBlocks.push([this.initialPos[0], this.initialPos[1]])
-        if (this.showNotifications) {
-          alert('Binarization component #' + (this.blocks.binarizationBlocks.length) + ' added')
-        }
+      var blockArray = blockName + 'Blocks'
+      var blockIndex = this.blocks[blockArray].length
+      var ref = blockName + 'Block-' + blockIndex
+      this.blocks[blockArray].push([this.initialPos[0], this.initialPos[1]])
+      console.log(ref)
+      /*
+      var blockId
+      if (typeof this.$refs[ref].$el === 'undefined') {
+        blockId = this.$refs[ref][0].$el
+      } else {
+        blockId = this.$refs[ref].$el
       }
-      if (blockName === 'lettersClassification') {
-        this.blocks.lettersClassificationBlocks.push([this.initialPos[0], this.initialPos[1]])
-        if (this.showNotifications) {
-          alert('letters classification component #' + (this.blocks.lettersClassificationBlocks.length) + ' added')
-        }
+      console.log(blockId)
+      */
+      var blockId = ref
+      this.connectedBlocks[blockId] = [] // entry for connected blocks
+      if (this.showNotifications) {
+        alert('created ' + blockName + 'block #' + (blockIndex + 1) + ' at coordinates ' + this.initialPos)
       }
-      console.log('created ' + blockName + 'Block #' + this.blocks[blockName + 'Blocks'].length + ' at coordinates ' + this.initialPos)
     },
     /*
-            deletes a block which called this function
+            Deletes a block specified in data.
+            @params: Object data
     */
     deleteBlock: function (data) {
-      console.log('called deleteBlock from Index')
+      // console.log('called deleteBlock from Index')
       if (this.showNotifications) {
         var proceed = confirm('Are you sure you would like to delete this component? ' +
                               'This action cannot be undone.')
@@ -138,29 +144,34 @@ export default {
       var index = parseInt(ref.split('-')[1])
       // delete all links
       for (var i = this.linksTop.length - 1; i >= 0; i--) {
-        if (this.linksTop === ref) {
+        if (this.linksTop[i] === ref) {
           // update the connected block at bottom
           var linkBottom = this.linksBottom[i]
           this.updateConnected(linkBottom)
           // delete entries
+          console.log('delete top===ref this.linksTop before: ' + this.linksTop)
           this.linksTop.splice(i, 1)
           this.linksBottom.splice(i, 1)
+          console.log('delete top===ref this.linksTop after: ' + this.linksTop)
         }
-        if (this.linksBottom === ref) {
+        if (this.linksBottom[i] === ref) {
           // update the connected block at top
           var linkTop = this.linksTop[i]
           this.updateConnected(linkTop)
           // delete entries
+          console.log('delete bottom===ref this.linksTop before: ' + this.linksTop)
           this.linksTop.splice(i, 1)
           this.linksBottom.splice(i, 1)
+          console.log('delete bottom===ref this.linksTop after: ' + this.linksTop)
         }
       }
-      // finally, delete this block itself
+      // delete block itself and its dictionary entry
       this.$delete(this.blocks[parentArray], index)
+      delete this.connectedBlocks[ref]
     },
     /*
-            find out which element is moving
-            (adapted from Vinodh's reference on Stine)
+            Find out which element is moving (adapted from Vinodh's reference on Stine).
+            @params: Event event
     */
     getActiveElement: function (event) {
       if (event.evt.target.className.includes('movable')) {
@@ -176,66 +187,64 @@ export default {
       }
     },
     /*
-            moves the block which triggered by the event
+            Move the block which has triggered the event.
+            @params: Event event
     */
     moveBlock: function (event) {
-      // block which triggered event
+      // [blockTypeName, index] of block which triggered event
       var sRef1 = this.getActiveElement(event)
-      // console.log(event, element)
-      // its name
+      // name of parent array and index
       var blockArray = sRef1[0] + 's'
-      // its number
       var index = parseInt(sRef1[1])
-      // var blockNumber = index + 1
-      // console.log(element[0] + ' #' + blockNumber +
-      //            ' with index ' + index + ' is moving')
-      // update positions
+      // console.log(element[0] + ' #' + blockNumber + ' with index ' + index + ' is moving')
+      // get new positions and update
       var newX = this.blocks[blockArray][index][0] + event.delta.x
       var newY = this.blocks[blockArray][index][1] + event.delta.y
-      // console.log(newX, newY)
       this.$set(this.blocks[blockArray], index, [newX, newY])
+      // bounding box, element, and reference
       var bB1
       var el1
       var ref1 = sRef1[0] + '-' + index
       // move all blocks connected to the current block
-      this.moveConnectedBlocks(ref1, event.delta.x, event.delta.y)
+      this.moveConnectedBlocks(ref1, [event.delta.x, event.delta.y])
+      // either one should work
       if (typeof this.$refs[ref1].$el === 'undefined') {
         el1 = this.$refs[ref1][0].$el
       } else {
         el1 = this.$refs[ref1].$el
       }
       bB1 = el1.getBoundingClientRect()
-      Object.entries(this.blocks).forEach(blockType => {
-        Object.entries(blockType[1]).forEach(block => {
-          if (block[1] !== this.blocks[blockArray][index]) {
+      // search for other blocks iteratively
+      Object.entries(this.blocks).forEach(blockType => { // block types
+        Object.entries(blockType[1]).forEach(block => { // instances of each type
+          if (block[1] !== this.blocks[blockArray][index]) { // excluding block which is moving
             var bB2
             var el2
-            // the name (key) and index (array key) of a block
-            var ref2 = blockType[0].substring(0, blockType[0].length - 1) +
-                       '-' + block[0]
+            // reconstruct 'blockTypeName-index', and its split array version
+            var ref2 = blockType[0].substring(0, blockType[0].length - 1) + '-' + block[0]
+            var sRef2 = ref2.split('-')
+            // either one should work
             if (typeof this.$refs[ref2].$el === 'undefined') {
               el2 = this.$refs[ref2][0].$el
             } else {
               el2 = this.$refs[ref2].$el
             }
             bB2 = el2.getBoundingClientRect()
+            // get overlapping areas
             var overlap = !(bB1.right < bB2.left ||
                             bB1.left > bB2.right ||
                             bB1.bottom < bB2.top ||
                             bB1.top > bB2.bottom)
             // get the types of each block by name
             var type1 = sRef1[0].substring(0, sRef1[0].length - 5)
-            var sRef2 = ref2.split('-')
             var type2 = sRef2[0].substring(0, sRef2[0].length - 5)
-            // if output of ref2 is compatible with input of ref1
+            // output(ref2) compatible with input(ref1), and vice versa
             var compatible1 = this.outtype[type2] === this.intype[type1]
-            // reverse case
             var compatible2 = this.outtype[type1] === this.intype[type2]
-            // dockable bB1 that you're moving to the bottom of bB2
+            // checking for dockability of block (ref1) moving to the bottom of ref2
             var dockable1 = overlap && ((bB2.bottom - 10) < bB1.top)
             if (this.redockable && compatible1 && dockable1 &&
-                !this.linksBottom.includes(ref1) &&
-                !this.linksTop.includes(ref2)) {
+                !this.linksBottom.includes(ref1) && !this.linksTop.includes(ref2)) {
               var dock1 = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
               if (dock1) {
                 this.dock(ref2, ref1)
@@ -246,8 +255,7 @@ export default {
             // reverse case
             var dockable2 = overlap && ((bB1.bottom - 10) < bB2.top)
             if (this.redockable && compatible2 && dockable2 &&
-                !this.linksBottom.includes(ref2) &&
-                !this.linksTop.includes(ref1)) {
+                !this.linksBottom.includes(ref2) && !this.linksTop.includes(ref1)) {
               var dock2 = confirm('Do you want to dock ' + ref2 + ' to ' + ref1 + '?')
               if (dock2) {
                 this.dock(ref1, ref2)
@@ -255,112 +263,72 @@ export default {
                 compatible2 = true
               }
             }
-            // avoid asking the user again if still overlapping
+            // avoid asking user to dock again if still overlapping
             this.redockable = false
-            //
-            // style 1 (inset red border)
-            //
-            /*
-            // display incompatibility of blocks
-            if (overlap && !compatible1) {
-              el1.style.border = '10px solid red'
-            }
-            if (overlap && !compatible2) {
-              el2.style.border = '10px solid red'
-            }
-            if (!overlap) {
-              this.redockable = true
-              el1.style.border = '2px solid black'
-              el2.style.border = '2px solid black'
-            }
-            */
-            //
-            // style 2 (outset red border)
-            //
-            // display incompatibility of blocks
-            if (overlap && !compatible1) {
+            // display incompatibility of blocks - style 1 (outset red border)
+            if (overlap && (!compatible1 || !compatible2)) {
               el1.style.height = '120px'
               el1.style.width = '520px'
               el1.style.border = '12px solid red'
             }
-            if (overlap && !compatible2) {
-              el2.style.height = '120px'
-              el2.style.width = '520px'
-              el2.style.border = '12px solid red'
+            if (!overlap) {
+              this.redockable = true
+              el1.style.height = '100px'
+              el1.style.width = '500px'
+              el1.style.border = '2px solid black'
+            }
+            /*
+            // display incompatibility of blocks - style 2 (inset red border)
+            if (overlap && (!compatible1 || !compatible2)) {
+              el1.style.border = '10px solid red'
             }
             if (!overlap) {
               this.redockable = true
-              el2.style.height = '100px'
-              el2.style.width = '500px'
-              el2.style.height = '100px'
-              el2.style.width = '500px'
               el1.style.border = '2px solid black'
-              el2.style.border = '2px solid black'
             }
+            */
           }
         })
       })
     },
     /*
-            move all blocks connected to b in response to a change in position
+            Move all blocks connected to block b in response to a change in position delta
+            @params: String b (block), Array delta[int x, int y]
     */
-    moveConnectedBlocks: function (b, x, y) {
-      console.log('Called moveConnectedBlocks')
-      /*
-      // connected blocks
-      // console.log(b)
-      if (!Object.values[b]) {
-        console.log('cbs undefined')
+    moveConnectedBlocks: function (b, delta) {
+    // b not connected to any other blocks
+      if (!this.connectedBlocks[b]) {
         return
       }
-      var cbs = Object.values(this.connectedBlocks[b])
-      console.log(cbs)
+      var cbs = this.connectedBlocks[b]
+      // console.log('connected to ' + b + ': ' + cbs)
       for (var i = 0; i < cbs.length; i++) {
-        var arr = cbs[i].split('-')
-        var blockType = arr[0].substring(0, arr[0].length) + 's'
-        var index = arr[1]
-        // console.log(blockType)
-        // console.log(index)
-        this.$set(this.blocks[blockType][index], 0, this.blocks[blockType][index] + x)
-        this.$set(this.blocks[blockType][index], 1, this.blocks[blockType][index] + y)
-      }
-      */
-      for (var i = 0; i < this.connectedBlocks.length; i++) {
-        // first element is block itself, other elements connected ones
-        var keyVals = this.connectedBlocks[i].split(' ')
-        // console.log('keyVals: ' + keyVals)
-        // console.log('typeof keyVals: ' + typeof keyVals)
-        // console.log('length of keyVals: ' + keyVals.length)
-        if (keyVals[0] === b) {
-          for (var j = 1; j < keyVals.length; j++) {
-            // connected block
-            var cb
-            if (typeof this.$refs[keyVals[j]].$el === 'undefined') {
-              cb = this.$refs[keyVals[j]][0].$el
-            } else {
-              cb = this.$refs[keyVals[j]].$el
-            }
-            cb.style.left = (parseInt(cb.style.left) + x) + 'px'
-            cb.style.top = (parseInt(cb.style.top) + y) + 'px'
-            // console.log('cb: ' + cb)
-            // console.log('Connected block ' + keyVals[j])
-            // console.log(keyVals[j] + 'x: ' + cb[0])
-            // console.log(keyVals[j] + 'y: ' + cb[1])
-            // this.$set(cb, 0, cb[0] + x)
-            // this.$set(cb, 1, cb[1] + y)
-            // var arr = cb.id.split('-')
-            // var blockType = arr[0].substring(0, arr[0].length) + 's'
-            // var index = arr[1]
-            // console.log(b)
-            // console.log(cb)
-            // console.log(blockType)
-            // console.log(index)
-            // this.$set(this.blocks[blockType][index], 0, this.blocks[blockType][index] + x)
-            // this.$set(this.blocks[blockType][index], 1, this.blocks[blockType][index] + y)
-            // cb.style.left = this.blocks[blockType][index][0] + x + 'px'
-            // cb.style.top = this.blocks[blockType][index][1] + y + 'px'
-          }
+        // set by attribute - properly called but inexplicably bad
+        var ref
+        if (cbs[i].charAt(0) === ' ') {
+          ref = cbs[i].substring(1, cbs[i].length)
+        } else {
+          ref = cbs[i]
         }
+        var cb
+        console.log('moveConnected with ' + b + ' and current connected block ' + ref)
+        if (typeof this.$refs[ref].$el === 'undefined') {
+          cb = this.$refs[ref][0].$el
+        } else {
+          cb = this.$refs[ref].$el
+        }
+        cb.style.left = (parseInt(cb.style.left) + delta[0]) + 'px'
+        cb.style.top = (parseInt(cb.style.top) + delta[1]) + 'px'
+        /*
+        // set by array - $set doesn't work at all for some reason
+        var arr = cbs[i].split('-')
+        var blockType = arr[0].substring(1, arr[0].length) + 's'
+        var index = arr[1]
+        console.log(blockType)
+        console.log(index)
+        this.$set(this.blocks[blockType][index], 0, this.blocks[blockType][index] + delta[0])
+        this.$set(this.blocks[blockType][index], 1, this.blocks[blockType][index] + delta[1])
+        */
       }
     },
     /*
@@ -374,15 +342,12 @@ export default {
       }
       this.updateConnected(b1)
       this.updateConnected(b2)
-      // console.log(this.links)
-      // console.log(typeof this.links)
-      // console.log(Object.keys(this.links))
-      // console.log(Object.values(this.links))
     },
     /*
             updates which blocks are connected to b
     */
     updateConnected: function (b) {
+      /*
       // console.log('called updateConnected')
       // blocks connected to b besides itself
       var connected = b
@@ -410,6 +375,25 @@ export default {
       // create new entry if necessary
       // this.connectedBlocks.push({key: b, value: connected})
       console.log('updatedConnected this.connectedBlocks after: ' + this.connectedBlocks)
+      */
+      var connected = []
+      for (var i = 0; i < this.linksTop.length; i++) {
+        if (this.linksTop[i] === b) {
+          console.log('pushed updateConnected')
+          connected.push(this.linksBottom[i])
+        }
+        if (this.linksBottom[i] === b) {
+          console.log('pushed updateConnected')
+          connected.push(' ' + this.linksTop[i])
+        }
+      }
+      // console.log('caller: ' + b)
+      // console.log('connected: ' + connected)
+      // console.log('connectedBlocks before: ' + this.connectedBlocks)
+      // console.log('connectedBlocks before val[b]: ' + this.connectedBlocks[b])
+      this.connectedBlocks[b] = connected
+      // console.log('connectedBlocks after: ' + this.connectedBlocks)
+      // console.log('connectedBlocks before after[b]: ' + this.connectedBlocks[b])
     },
     /*
             resets everything
