@@ -40,7 +40,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -52,7 +52,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -64,7 +64,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -83,7 +83,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -95,7 +95,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -107,7 +107,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -119,7 +119,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -138,7 +138,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -150,7 +150,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -162,7 +162,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -174,7 +174,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -193,7 +193,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -205,7 +205,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -217,7 +217,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -229,7 +229,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -248,7 +248,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -260,7 +260,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -272,7 +272,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -284,7 +284,7 @@
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
               </q-item-main> &nbsp;
-<q-icon name="info" color="amber">
+              <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
             some tooltip
             </q-tooltip>
@@ -293,9 +293,10 @@
             <q-item-separator inset />
           </q-list>
         </q-btn-dropdown>
-      </q-btn-group> &nbsp; &nbsp;
+      </q-btn-group> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
              <!-- reset to initial state -->
               <q-btn
+                class="on-right"
                 color="white"
                 text-color="blue"
                 size="md"
@@ -305,6 +306,7 @@
               /> &nbsp;
               <!-- Lets the user toggle notifications on several actions -->
               <q-btn
+                class="on-right"
                 color="primary"
                 glossy
                 size="md"
@@ -314,6 +316,7 @@
               /> &nbsp;
               <!-- runs the generated process chain -->
               <q-btn
+                class="on-right"
                 color="secondary"
                 glossy
                 size="md"
@@ -360,7 +363,7 @@
                 color="blue"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="emit('addBlock', 'binarization')"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -380,7 +383,7 @@
                 color="blue"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -400,7 +403,7 @@
                 color="blue"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -420,7 +423,7 @@
                 color="blue"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -450,7 +453,7 @@
                 color="red"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -470,7 +473,7 @@
                 color="red"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -490,7 +493,7 @@
                 color="red"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -510,7 +513,7 @@
                 color="red"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -540,7 +543,7 @@
                 color="orange"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="emit('addBlock', 'lettersClassification')"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -560,7 +563,7 @@
                 color="orange"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -580,7 +583,7 @@
                 color="orange"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -600,7 +603,7 @@
                 color="orange"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -630,7 +633,7 @@
                 color="green"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -650,7 +653,7 @@
                 color="green"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -670,7 +673,7 @@
                 color="green"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
@@ -690,7 +693,7 @@
                 color="green"
                 size="sm"
                 label="add"
-                align="right"
+                align="center"
                 @click="notImplemented"
               /> &nbsp;
             <q-icon name="info" color="amber">
