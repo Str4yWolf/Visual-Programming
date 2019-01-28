@@ -96,6 +96,7 @@ div #image-frame {
   top: 25px;
   left: 25px;
   background: white;
+  overflow: hidden;
 }
 #btn1, #btn2 {
   position: relative;
