@@ -52,7 +52,7 @@ div .lettersClassification {
   height: 100px;
   width: 500px;
   padding: 20px;
-  border: 2px solid black;
+  border: 2px solid orange;
   background-color:  #f7dc6f ;
 }
 div .deletion {
