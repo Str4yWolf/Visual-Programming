@@ -435,6 +435,48 @@
             </q-tooltip>
             </q-icon>
           </q-item>
+          <q-item-separator inset />
+          <q-item v-close-overlay @click.native="showNotification">
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+            <q-item-main>
+              <q-item-tile label>Sharpening</q-item-tile>
+              <q-item-tile sublabel></q-item-tile>
+            </q-item-main>
+            <q-btn
+                color="blue"
+                outline
+                size="sm"
+                label="add"
+                align="center"
+                @click="notImplemented"
+              /> &nbsp;
+            <q-icon name="info" color="amber">
+            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+            some tooltip
+            </q-tooltip>
+            </q-icon>
+          </q-item>
+          <q-item-separator inset />
+          <q-item v-close-overlay @click.native="showNotification">
+            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+            <q-item-main>
+              <q-item-tile label>Gaussian Filters</q-item-tile>
+              <q-item-tile sublabel></q-item-tile>
+            </q-item-main>
+            <q-btn
+                color="blue"
+                outline
+                size="sm"
+                label="add"
+                align="center"
+                @click="notImplemented"
+              /> &nbsp;
+            <q-icon name="info" color="amber">
+            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+            some tooltip
+            </q-tooltip>
+            </q-icon>
+          </q-item>
         </q-list>
 </q-btn-dropdown>
 <q-btn-dropdown
