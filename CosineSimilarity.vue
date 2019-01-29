@@ -53,6 +53,7 @@ div .cosine-similarity {
   border-radius: 8px;
 }
 button .del-btn {
-  background: red;
+/*  background: red;*/
 }
 </style>
+
