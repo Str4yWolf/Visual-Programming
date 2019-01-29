@@ -66,6 +66,6 @@ div .deletion {
   padding: 2px;
 }
 button .del-btn {
-  background: red;
+/*  background: red;*/
 }
 </style>
