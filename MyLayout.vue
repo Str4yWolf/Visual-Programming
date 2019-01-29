@@ -794,6 +794,7 @@
               <q-btn
                 color="indigo"
                 glossy
+                disable
                 class="full-width"
                 size="lg"
                 rounded
@@ -804,6 +805,7 @@
               <q-btn
                 color="blue-grey"
                 glossy
+                disable
                 class="full-width"
                 size="lg"
                 rounded
