@@ -56,15 +56,16 @@ div .binarization {
   border: 2px solid blue;
   background-color: powderblue;
 }
-div .binarization {
-  height: 100px;
-  width: 500px;
-  padding: 20px;
-  border: 4px solid blue;
-  background-color: powderblue;
-  border-radius: 8px;
+div .deletion {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: black;
+/*  background: red;*/
+  font-weight: bold;
+  padding: 2px;
 }
 button .del-btn {
-  background: red;
+/*  background: red;*/
 }
 </style>
