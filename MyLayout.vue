@@ -399,7 +399,7 @@
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Make an image black and white only, according to some threshold
+            Make an image black and white only,<br>according to some threshold
             </q-tooltip>
             </q-icon>
           </q-item>
@@ -534,7 +534,7 @@
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Cluster an image into an image with clusters.
+            Cluster an image<br>into an image with clusters.
             </q-tooltip>
             </q-icon>
           </q-item>
@@ -627,7 +627,7 @@
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Output a classified text given an image and an alphabet.
+            Output a classified text<br>given an image and an alphabet.
             </q-tooltip>
             </q-icon>
           </q-item>
@@ -720,7 +720,7 @@
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Determine the cosine similarity of a given image (1 means very similar, 0 means not at all).
+            Determine the cosine similarity of a given image<br>(1 means very similar, 0 means not at all).
             </q-tooltip>
             </q-icon>
           </q-item>
