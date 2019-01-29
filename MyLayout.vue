@@ -48,7 +48,7 @@
             </q-item>
             <q-item-separator inset />
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-side icon="save" inverted color="primary" />
               <q-item-main>
                 <q-item-tile label >Save project</q-item-tile>
               </q-item-main> &nbsp;
@@ -296,10 +296,10 @@
         <q-btn-dropdown
         color="primary"
         rounded glossy label="Help"
-        icon="sentiment_satisfied_alt">
+        icon="help">
           <q-list link>
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-side icon="help" inverted color="primary" />
               <q-item-main>
                 <q-item-tile label >Help</q-item-tile>
               </q-item-main> &nbsp;
@@ -338,7 +338,7 @@
               <!-- Lets the user toggle notifications on several actions -->
               <q-btn
                 class="on-right"
-                color="primary"
+                color="positive"
                 glossy
                 size="md"
                 label="Toggle Notifications"
@@ -354,7 +354,7 @@
                 rounded
                 label="Run Program"
                 align="center"
-                icon="sentiment_satisfied_alt"
+                icon="play_arrow"
                 @click.native="emit('')"
               />&nbsp;
          <!-- <q-toolbar-title> -->
@@ -382,7 +382,7 @@
         label="Image Processing"
         icon="sentiment_satisfied_alt"
       >
-        <q-list link>
+<q-list link>
           <!-- <q-item v-close-overlay @click.native="showNotification"> -->
           <q-item v-close-overlay>
             <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
@@ -527,7 +527,6 @@
             </q-item-main>
             <q-btn
                 color="red"
-                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -714,7 +713,6 @@
             </q-item-main>
             <q-btn
                 color="green"
-                outline
                 size="sm"
                 label="add"
                 align="center"
@@ -813,7 +811,7 @@
                 align="center"
                 icon="sentiment_satisfied_alt"
               />
-        </q-list>
+</q-list>
     </q-layout-drawer>
      <q-page-container>
       <router-view />
