@@ -428,3 +428,10 @@ export default {
   }
 }
 </script>
+<style>
+.flex {
+  background: #d3d3d3;
+  z-index: 0;
+}
+</style>
+
