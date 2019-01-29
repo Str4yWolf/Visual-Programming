@@ -1,6 +1,7 @@
 <!-- TODO:
   selection frame
   emulate results
+  fix red border after elements are docked and overlapping
   (addBlock: replace id with $ref) - failed attempt
   (moveConnected: try $set instead of $el.style) - failed attempt
   (make blocks move smoothly together - tried out everything in my might)
@@ -27,6 +28,26 @@
       v-for="i in blocks.lettersClassificationBlocks.length"
       :key="'lettersClassificationBlock'+i">
     </letters-classification>
+    <cosine-similarity
+      @emitted="receiveData"
+      v-touch-pan="moveBlock" class="movable q-py-xl"
+      :id="'cosineSimilarityBlock-'+(i-1)"
+      :ref="'cosineSimilarityBlock-'+(i-1)"
+      :style="{'left': blocks.cosineSimilarityBlocks[i-1][0] + 'px',
+               'top': blocks.cosineSimilarityBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.cosineSimilarityBlocks.length"
+      :key="'cosineSimilarityBlock'+i">
+    </cosine-similarity>
+    <clustering
+      @emitted="receiveData"
+      v-touch-pan="moveBlock" class="movable q-py-xl"
+      :id="'clusteringBlock-'+(i-1)"
+      :ref="'clusteringBlock-'+(i-1)"
+      :style="{'left': blocks.clusteringBlocks[i-1][0] + 'px',
+               'top': blocks.clusteringBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.clusteringBlocks.length"
+      :key="'clusteringBlock'+i">
+    </clustering>
     <rectangle-select class="select-comp"></rectangle-select>
     <!-- <edit-frame class="blocks_editor"></edit-frame> -->
     </q-page>
@@ -37,12 +58,13 @@
   display: inline-block;
   padding: 0px;
   position: absolute;
+  z-index: 1;
 }
 .select-comp {
   position: fixed;
   top: 0px;
   right: 0px;
-  z-index: -1;
+  z-index: 0;
 }
 </style>
 
@@ -50,12 +72,16 @@
 import Binarization from '../components/Binarization.vue'
 import LettersClassification from '../components/LettersClassification.vue'
 import RectangleSelect from '../components/RectangleSelect.vue'
+import CosineSimilarity from '../components/CosineSimilarity.vue'
+import Clustering from '../components/Clustering.vue'
 // import EditFrame from '../components/editFrame.vue'
 export default {
   name: 'PageIndex',
   components: {
     Binarization,
     LettersClassification,
+    CosineSimilarity,
+    Clustering,
     RectangleSelect
     // EditFrame
   },
@@ -64,8 +90,10 @@ export default {
       // initial position of new blocks
       initialPos: [100, 100],
       // all blocks
-      blocks: {binarizationBlocks: [[100, 100]],
-        lettersClassificationBlocks: [[100, 240]]},
+      blocks: {binarizationBlocks: [],
+        lettersClassificationBlocks: [],
+        cosineSimilarityBlocks: [],
+        clusteringBlocks: []},
       // linksTop[i] and linksBottom[i] are connected blocks
       linksTop: [],
       linksBottom: [],
@@ -76,9 +104,17 @@ export default {
       // whether a block is redockable after docking attempt
       redockable: true,
       // input data type for each block type
-      intype: {binarization: 'image', lettersClassification: 'image', rectangleSelect: 'image'},
+      intype: {binarization: 'image',
+        lettersClassification: 'image',
+        cosineSimilarity: 'image',
+        clustering: 'image',
+        rectangleSelect: 'image'},
       // output data type for each block type
-      outtype: {binarization: 'image', lettersClassification: 'text', rectangleSelect: 'image'}
+      outtype: {binarization: 'image',
+        lettersClassification: 'text',
+        cosineSimilarity: 'none',
+        clustering: 'image',
+        rectangleSelect: 'image'}
     }
   },
   created () {
@@ -374,7 +410,10 @@ export default {
         this.blocks = {binarizationBlocks: [], lettersClassificationBlocks: []}
         this.linksTop = []
         this.linksBottom = []
-        this.connectedBlocks = {}
+        this.blocks = {binarizationBlocks: [],
+          lettersClassificationBlocks: [],
+          cosineSimilarityBlocks: [],
+          clusteringBlocks: []}
         this.showNotifications = true
         this.redockable = true
         this.incompatible = false
