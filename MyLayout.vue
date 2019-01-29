@@ -20,13 +20,13 @@
   <q-btn-group>
   <q-btn-dropdown
         color="primary"
-        rounded glossy label="tensei"
+        rounded glossy label="File"
         icon="sentiment_satisfied_alt">
           <q-list link>
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >Start new project</q-item-tile>
               </q-item-main> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -38,7 +38,7 @@
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >Load project</q-item-tile>
               </q-item-main> &nbsp;
               <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -50,7 +50,7 @@
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >Save project</q-item-tile>
               </q-item-main> &nbsp;
               <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -59,7 +59,7 @@
             </q-icon>
             </q-item>
             <q-item-separator inset />
-            <q-item>
+             <!-- <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
@@ -70,12 +70,12 @@
             </q-tooltip>
             </q-icon>
             </q-item>
-            <q-item-separator inset />
+            <q-item-separator inset /> -->
           </q-list>
         </q-btn-dropdown>
           <q-btn-dropdown
         color="primary"
-        rounded glossy label="shitara"
+        rounded glossy label="View"
         icon="sentiment_satisfied_alt">
           <q-list link>
             <q-item>
@@ -130,7 +130,7 @@
         </q-btn-dropdown>
           <q-btn-dropdown
         color="primary"
-        rounded glossy label="slime"
+        rounded glossy label="Edit"
         icon="sentiment_satisfied_alt">
           <q-list link>
             <q-item>
@@ -185,7 +185,7 @@
         </q-btn-dropdown>
           <q-btn-dropdown
         color="primary"
-        rounded glossy label="datta"
+        rounded glossy label="Window"
         icon="sentiment_satisfied_alt">
           <q-list link>
             <q-item>
@@ -240,7 +240,7 @@
         </q-btn-dropdown>
           <q-btn-dropdown
         color="primary"
-        rounded glossy label="ken"
+        rounded glossy label="Tools"
         icon="sentiment_satisfied_alt">
           <q-list link>
             <q-item>
@@ -283,6 +283,37 @@
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
                 <q-item-tile label >dummy</q-item-tile>
+              </q-item-main> &nbsp;
+              <q-icon name="info" color="amber">
+            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+            some tooltip
+            </q-tooltip>
+            </q-icon>
+            </q-item>
+            <q-item-separator inset />
+          </q-list>
+        </q-btn-dropdown>
+        <q-btn-dropdown
+        color="primary"
+        rounded glossy label="Help"
+        icon="sentiment_satisfied_alt">
+          <q-list link>
+            <q-item>
+              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-main>
+                <q-item-tile label >Help</q-item-tile>
+              </q-item-main> &nbsp;
+              <q-icon name="info" color="amber">
+            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+            some tooltip
+            </q-tooltip>
+            </q-icon>
+            </q-item>
+            <q-item-separator inset />
+            <q-item>
+              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-main>
+                <q-item-tile label >About this app</q-item-tile>
               </q-item-main> &nbsp;
               <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -325,7 +356,7 @@
                 align="center"
                 icon="sentiment_satisfied_alt"
                 @click.native="emit('')"
-              />
+              />&nbsp;
          <!-- <q-toolbar-title> -->
           <!-- <div style="text-align: right;">Quasar App</div> -->
           <!-- <div slot="subtitle" style="text-align: right;">Running on Quasar v{{ $q.version }}</div> -->
@@ -769,7 +800,6 @@
                 label="Customize block"
                 align="center"
                 icon="sentiment_satisfied_alt"
-                @click="notImplemented"
               /> &nbsp;
               <q-btn
                 color="blue-grey"
@@ -780,7 +810,6 @@
                 label="Customize routine"
                 align="center"
                 icon="sentiment_satisfied_alt"
-                @click="notImplemented"
               />
         </q-list>
     </q-layout-drawer>
