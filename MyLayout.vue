@@ -399,7 +399,7 @@
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
+            Make an image black and white only, according to some threshold
             </q-tooltip>
             </q-icon>
           </q-item>
@@ -522,7 +522,7 @@
           <q-item v-close-overlay @click.native="showNotification">
             <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
             <q-item-main>
-              <q-item-tile label>placeholder 1</q-item-tile>
+              <q-item-tile label>Clustering</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-btn
@@ -531,11 +531,11 @@
                 size="sm"
                 label="add"
                 align="center"
-                @click="notImplemented"
+                @click="emit('addBlock', 'clustering')"
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
+            Cluster an image into an image with clusters.
             </q-tooltip>
             </q-icon>
           </q-item>
@@ -628,7 +628,7 @@
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
+            Output a classified text given an image and an alphabet.
             </q-tooltip>
             </q-icon>
           </q-item>
@@ -709,7 +709,7 @@
           <q-item v-close-overlay @click.native="showNotification">
             <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
             <q-item-main>
-              <q-item-tile label>placeholder 1</q-item-tile>
+              <q-item-tile label>Cosine Similarity</q-item-tile>
               <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-btn
@@ -718,11 +718,11 @@
                 size="sm"
                 label="add"
                 align="center"
-                @click="notImplemented"
+                @click="emit('addBlock', 'cosineSimilarity')"
               /> &nbsp;
             <q-icon name="info" color="amber">
             <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
+            Determine the cosine similarity of a given image (1 means very similar, 0 means not at all).
             </q-tooltip>
             </q-icon>
           </q-item>
