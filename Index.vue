@@ -1,7 +1,6 @@
 <!-- TODO:
   selection frame
   emulate results
-  fix red border after elements are docked and overlapping
   (addBlock: replace id with $ref) - failed attempt
   (moveConnected: try $set instead of $el.style) - failed attempt
   (make blocks move smoothly together - tried out everything in my might)
@@ -147,22 +146,22 @@ export default {
         if (this.linksTop[i] === ref) {
           // update the connected block at bottom
           var linkBottom = this.linksBottom[i]
-          this.updateConnected(linkBottom)
           // delete entries
           console.log('delete top===ref this.linksTop before: ' + this.linksTop)
           this.linksTop.splice(i, 1)
           this.linksBottom.splice(i, 1)
           console.log('delete top===ref this.linksTop after: ' + this.linksTop)
+          this.updateConnected(linkBottom)
         }
         if (this.linksBottom[i] === ref) {
           // update the connected block at top
           var linkTop = this.linksTop[i]
-          this.updateConnected(linkTop)
           // delete entries
           console.log('delete bottom===ref this.linksTop before: ' + this.linksTop)
           this.linksTop.splice(i, 1)
           this.linksBottom.splice(i, 1)
           console.log('delete bottom===ref this.linksTop after: ' + this.linksTop)
+          this.updateConnected(linkTop)
         }
       }
       // delete block itself and its dictionary entry
@@ -265,8 +264,9 @@ export default {
             }
             // avoid asking user to dock again if still overlapping
             this.redockable = false
+            var bothDocked = (this.linksBottom.includes(ref2) && this.linksTop.includes(ref1)) || (this.linksBottom.includes(ref1) && this.linksTop.includes(ref2))
             // display incompatibility of blocks - style 1 (outset red border)
-            if (overlap && (!compatible1 || !compatible2)) {
+            if (overlap && (!compatible1 || !compatible2) && !bothDocked) {
               el1.style.height = '120px'
               el1.style.width = '520px'
               el1.style.border = '12px solid red'
@@ -332,7 +332,8 @@ export default {
       }
     },
     /*
-            docks the block
+            Docks the blocks b1 (top) and b2 (bottom).
+            @params: String b1, String b2
     */
     dock: function (b1, b2) {
       this.linksTop.push(b1)
@@ -344,38 +345,11 @@ export default {
       this.updateConnected(b2)
     },
     /*
-            updates which blocks are connected to b
+            Updates which blocks are connected to block b.
+            @params: String b
     */
     updateConnected: function (b) {
-      /*
-      // console.log('called updateConnected')
-      // blocks connected to b besides itself
-      var connected = b
-      for (var i = 0; i < this.linksTop.length; i++) {
-        if (this.linksTop[i] === b) {
-          // console.log('pushed updateConnected')
-          connected = connected.concat(' ' + this.linksBottom[i])
-        }
-        if (this.linksBottom[i] === b) {
-          // console.log('pushed updateConnected')
-          connected = connected.concat(' ' + this.linksTop[i])
-        }
-      }
-      // console.log('updatedConnected connected: ' + connected)
-      console.log('updatedConnected this.connectedBlocks before: ' + this.connectedBlocks)
-      // overwrite old entry if there exists one
-      // for (var j = 0; j < this.connectedBlocks.length; j++) {
-      //   if (this.connectedBlocks[j][0] === b) {
-      //     this.connectedBlocks[j] = connected
-      //     console.log('updatedConnected this.connectedBlocks after: ' + this.connectedBlocks)
-      //   return
-      //   }
-      // }
-      this.connectedBlocks.push(connected)
-      // create new entry if necessary
-      // this.connectedBlocks.push({key: b, value: connected})
-      console.log('updatedConnected this.connectedBlocks after: ' + this.connectedBlocks)
-      */
+      // find blocks connected to b
       var connected = []
       for (var i = 0; i < this.linksTop.length; i++) {
         if (this.linksTop[i] === b) {
@@ -387,16 +361,10 @@ export default {
           connected.push(' ' + this.linksTop[i])
         }
       }
-      // console.log('caller: ' + b)
-      // console.log('connected: ' + connected)
-      // console.log('connectedBlocks before: ' + this.connectedBlocks)
-      // console.log('connectedBlocks before val[b]: ' + this.connectedBlocks[b])
       this.connectedBlocks[b] = connected
-      // console.log('connectedBlocks after: ' + this.connectedBlocks)
-      // console.log('connectedBlocks before after[b]: ' + this.connectedBlocks[b])
     },
     /*
-            resets everything
+            Resets everything.
     */
     resetAll: function () {
       console.log('called resetAll in Index')
@@ -406,7 +374,7 @@ export default {
         this.blocks = {binarizationBlocks: [], lettersClassificationBlocks: []}
         this.linksTop = []
         this.linksBottom = []
-        this.connectedBlocks = []
+        this.connectedBlocks = {}
         this.showNotifications = true
         this.redockable = true
         this.incompatible = false
