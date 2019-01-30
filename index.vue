@@ -320,7 +320,7 @@ export default {
             }
             if (!overlap) {
               this.redockable = true
-              el1.style.border = '2px solid black'
+              el1.style.border = '2px solid grey'
             }
             */
           }
