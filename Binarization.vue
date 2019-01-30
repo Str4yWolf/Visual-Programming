@@ -53,7 +53,7 @@ div .binarization {
   height: 100px;
   width: 500px;
   padding: 20px;
-  border: 2px solid blue;
+  border: 4px solid blue;
   border-radius: 8px;
   background-color: powderblue;
 }
