@@ -54,6 +54,7 @@ div .binarization {
   width: 500px;
   padding: 20px;
   border: 2px solid blue;
+  border-radius: 8px;
   background-color: powderblue;
 }
 div .deletion {
