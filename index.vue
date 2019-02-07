@@ -2,15 +2,12 @@
   selection frame
   emulate results
   fix red border after elements are docked and overlapping
-  (addBlock: replace id with $ref) - failed attempt
-  (moveConnected: try $set instead of $el.style) - failed attempt
-  (make blocks move smoothly together - tried out everything in my might)
   -->
 <template>
   <q-page class="flex flex-center">
     <binarization
       @emitted="receiveData"
-      v-touch-pan="moveBlock" class="movable q-py-xl"
+      v-touch-pan="move" class="movable q-py-xl"
       :id="'binarizationBlock-'+(i-1)"
       :ref="'binarizationBlock-'+(i-1)"
       :style="{'left': blocks.binarizationBlocks[i-1][0] + 'px',
@@ -20,7 +17,7 @@
     </binarization>
     <letters-classification
       @emitted="receiveData"
-      v-touch-pan="moveBlock" class="movable q-py-xl"
+      v-touch-pan="move" class="movable q-py-xl"
       :id="'lettersClassificationBlock-'+(i-1)"
       :ref="'lettersClassificationBlock-'+(i-1)"
       :style="{'left': blocks.lettersClassificationBlocks[i-1][0] + 'px',
@@ -30,7 +27,7 @@
     </letters-classification>
     <cosine-similarity
       @emitted="receiveData"
-      v-touch-pan="moveBlock" class="movable q-py-xl"
+      v-touch-pan="move" class="movable q-py-xl"
       :id="'cosineSimilarityBlock-'+(i-1)"
       :ref="'cosineSimilarityBlock-'+(i-1)"
       :style="{'left': blocks.cosineSimilarityBlocks[i-1][0] + 'px',
@@ -40,7 +37,7 @@
     </cosine-similarity>
     <clustering
       @emitted="receiveData"
-      v-touch-pan="moveBlock" class="movable q-py-xl"
+      v-touch-pan="move" class="movable q-py-xl"
       :id="'clusteringBlock-'+(i-1)"
       :ref="'clusteringBlock-'+(i-1)"
       :style="{'left': blocks.clusteringBlocks[i-1][0] + 'px',
@@ -48,8 +45,15 @@
       v-for="i in blocks.clusteringBlocks.length"
       :key="'clusteringBlock'+i">
     </clustering>
+    <blocks-start
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'blocksStartBlock-'+(i-1)"
+      :ref="'blocksStartBlock-'+(i-1)"
+      :style="{'left': blocks.blocksStartBlocks[i-1][0] + 'px',
+               'top': blocks.blocksStartBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.blocksStartBlocks.length"
+      :key="'blocksStartBlock'+i"></blocks-start>
     <rectangle-select class="select-comp"></rectangle-select>
-    <!-- <edit-frame class="blocks_editor"></edit-frame> -->
     </q-page>
 </template>
 
@@ -74,7 +78,8 @@ import LettersClassification from '../components/LettersClassification.vue'
 import RectangleSelect from '../components/RectangleSelect.vue'
 import CosineSimilarity from '../components/CosineSimilarity.vue'
 import Clustering from '../components/Clustering.vue'
-// import EditFrame from '../components/editFrame.vue'
+import BlocksStart from '../components/BlocksStart.vue'
+import { Notify } from 'quasar'
 export default {
   name: 'PageIndex',
   components: {
@@ -82,7 +87,9 @@ export default {
     LettersClassification,
     CosineSimilarity,
     Clustering,
-    RectangleSelect
+    RectangleSelect,
+    BlocksStart,
+    Notify
     // EditFrame
   },
   data () {
@@ -93,14 +100,15 @@ export default {
       blocks: {binarizationBlocks: [],
         lettersClassificationBlocks: [],
         cosineSimilarityBlocks: [],
-        clusteringBlocks: []},
+        clusteringBlocks: [],
+        blocksStartBlocks: [[400, 100]]},
       // linksTop[i] and linksBottom[i] are connected blocks
       linksTop: [],
       linksBottom: [],
       // connected blocks (value) of a block (key)
-      connectedBlocks: {},
+      connectedBlocks: {blocksStart: []},
       // show notifications to user
-      showNotifications: false,
+      showNotifications: true,
       // whether a block is redockable after docking attempt
       redockable: true,
       // input data type for each block type
@@ -108,13 +116,15 @@ export default {
         lettersClassification: 'image',
         cosineSimilarity: 'image',
         clustering: 'image',
-        rectangleSelect: 'image'},
+        rectangleSelect: 'image',
+        blocksStart: 'input'},
       // output data type for each block type
       outtype: {binarization: 'image',
         lettersClassification: 'text',
-        cosineSimilarity: 'none',
+        cosineSimilarity: 'output',
         clustering: 'image',
-        rectangleSelect: 'image'}
+        rectangleSelect: 'image',
+        blocksStart: 'image'}
     }
   },
   created () {
@@ -158,7 +168,11 @@ export default {
       var blockId = ref
       this.connectedBlocks[blockId] = [] // entry for connected blocks
       if (this.showNotifications) {
-        alert('created ' + blockName + 'block #' + (blockIndex + 1) + ' at coordinates ' + this.initialPos)
+        this.$q.notify({
+          message: 'Added block.',
+          timeout: 3000,
+          type: 'positive'
+        })
       }
     },
     /*
@@ -167,42 +181,37 @@ export default {
     */
     deleteBlock: function (data) {
       // console.log('called deleteBlock from Index')
-      if (this.showNotifications) {
-        var proceed = confirm('Are you sure you would like to delete this component? ' +
-                              'This action cannot be undone.')
-        if (!proceed) {
-          return
-        }
-      }
       var ref = data.$el.id
       var parentArray = ref.split('-')[0] + 's'
       var index = parseInt(ref.split('-')[1])
-      // delete all links
+      // delete link
       for (var i = this.linksTop.length - 1; i >= 0; i--) {
-        if (this.linksTop[i] === ref) {
-          // update the connected block at bottom
-          var linkBottom = this.linksBottom[i]
-          // delete entries
-          console.log('delete top===ref this.linksTop before: ' + this.linksTop)
-          this.linksTop.splice(i, 1)
-          this.linksBottom.splice(i, 1)
-          console.log('delete top===ref this.linksTop after: ' + this.linksTop)
-          this.updateConnected(linkBottom)
-        }
         if (this.linksBottom[i] === ref) {
-          // update the connected block at top
           var linkTop = this.linksTop[i]
           // delete entries
-          console.log('delete bottom===ref this.linksTop before: ' + this.linksTop)
           this.linksTop.splice(i, 1)
           this.linksBottom.splice(i, 1)
-          console.log('delete bottom===ref this.linksTop after: ' + this.linksTop)
+          // update parents' connected blocks
           this.updateConnected(linkTop)
+          this.getAllParents(linkTop).forEach(parent => {
+            this.updateConnected(parent)
+          })
+        }
+        if (this.linksTop[i] === ref) {
+          this.linksTop.splice(i, 1)
+          this.linksBottom.splice(i, 1)
         }
       }
       // delete block itself and its dictionary entry
-      this.$delete(this.blocks[parentArray], index)
-      delete this.connectedBlocks[ref]
+      this.$set(this.blocks[parentArray], index, [-1000, -1000])
+      this.connectedBlocks[ref] = []
+      if (this.showNotifications) {
+        this.$q.notify({
+          message: 'Deleted block.',
+          timeout: 3000,
+          type: 'negative'
+        })
+      }
     },
     /*
             Find out which element is moving (adapted from Vinodh's reference on Stine).
@@ -225,23 +234,23 @@ export default {
             Move the block which has triggered the event.
             @params: Event event
     */
-    moveBlock: function (event) {
+    move: function (event) {
       // [blockTypeName, index] of block which triggered event
       var sRef1 = this.getActiveElement(event)
       // name of parent array and index
       var blockArray = sRef1[0] + 's'
       var index = parseInt(sRef1[1])
-      // console.log(element[0] + ' #' + blockNumber + ' with index ' + index + ' is moving')
-      // get new positions and update
-      var newX = this.blocks[blockArray][index][0] + event.delta.x
-      var newY = this.blocks[blockArray][index][1] + event.delta.y
-      this.$set(this.blocks[blockArray], index, [newX, newY])
       // bounding box, element, and reference
       var bB1
       var el1
       var ref1 = sRef1[0] + '-' + index
       // move all blocks connected to the current block
-      this.moveConnectedBlocks(ref1, [event.delta.x, event.delta.y])
+      this.moveBlock(ref1, [event.delta.x, event.delta.y])
+      if (this.connectedBlocks[ref1] !== undefined) {
+        this.connectedBlocks[ref1].forEach(block => {
+          this.moveBlock(block, [event.delta.x, event.delta.y])
+        })
+      }
       // either one should work
       if (typeof this.$refs[ref1].$el === 'undefined') {
         el1 = this.$refs[ref1][0].$el
@@ -280,23 +289,18 @@ export default {
             var dockable1 = overlap && ((bB2.bottom - 10) < bB1.top)
             if (this.redockable && compatible1 && dockable1 &&
                 !this.linksBottom.includes(ref1) && !this.linksTop.includes(ref2)) {
-              var dock1 = confirm('Do you want to dock ' + ref1 + ' to ' + ref2 + '?')
-              if (dock1) {
-                this.dock(ref2, ref1)
-                compatible1 = true
-                compatible2 = true
-              }
-            }
-            // reverse case
-            var dockable2 = overlap && ((bB1.bottom - 10) < bB2.top)
-            if (this.redockable && compatible2 && dockable2 &&
-                !this.linksBottom.includes(ref2) && !this.linksTop.includes(ref1)) {
-              var dock2 = confirm('Do you want to dock ' + ref2 + ' to ' + ref1 + '?')
-              if (dock2) {
-                this.dock(ref1, ref2)
-                compatible1 = true
-                compatible2 = true
-              }
+              this.dock(ref2, ref1)
+              compatible1 = true
+              compatible2 = true
+              // align blocks
+              var oldX = this.blocks[blockArray][index][0]
+              var oldY = this.blocks[blockArray][index][1]
+              var dX = bB2.left - 300 - oldX
+              var dY = bB2.top + 50 - oldY
+              this.moveBlock(ref1, [dX, dY])
+              this.getAllChildren(ref1).forEach(child => {
+                this.moveBlock(child, [dX, dY])
+              })
             }
             // avoid asking user to dock again if still overlapping
             this.redockable = false
@@ -306,6 +310,10 @@ export default {
               el1.style.height = '120px'
               el1.style.width = '520px'
               el1.style.border = '12px solid red'
+            }
+            var parentIndex = this.linksBottom.indexOf(ref1)
+            if ((this.linksTop[parentIndex] === ref2) && !overlap) {
+              this.undock(ref2, ref1)
             }
             if (!overlap) {
               this.redockable = true
@@ -328,44 +336,16 @@ export default {
       })
     },
     /*
-            Move all blocks connected to block b in response to a change in position delta
+            Move a block b in response to a change in position delta
             @params: String b (block), Array delta[int x, int y]
     */
-    moveConnectedBlocks: function (b, delta) {
-    // b not connected to any other blocks
-      if (!this.connectedBlocks[b]) {
-        return
-      }
-      var cbs = this.connectedBlocks[b]
-      // console.log('connected to ' + b + ': ' + cbs)
-      for (var i = 0; i < cbs.length; i++) {
-        // set by attribute - properly called but inexplicably bad
-        var ref
-        if (cbs[i].charAt(0) === ' ') {
-          ref = cbs[i].substring(1, cbs[i].length)
-        } else {
-          ref = cbs[i]
-        }
-        var cb
-        console.log('moveConnected with ' + b + ' and current connected block ' + ref)
-        if (typeof this.$refs[ref].$el === 'undefined') {
-          cb = this.$refs[ref][0].$el
-        } else {
-          cb = this.$refs[ref].$el
-        }
-        cb.style.left = (parseInt(cb.style.left) + delta[0]) + 'px'
-        cb.style.top = (parseInt(cb.style.top) + delta[1]) + 'px'
-        /*
-        // set by array - $set doesn't work at all for some reason
-        var arr = cbs[i].split('-')
-        var blockType = arr[0].substring(1, arr[0].length) + 's'
-        var index = arr[1]
-        console.log(blockType)
-        console.log(index)
-        this.$set(this.blocks[blockType][index], 0, this.blocks[blockType][index] + delta[0])
-        this.$set(this.blocks[blockType][index], 1, this.blocks[blockType][index] + delta[1])
-        */
-      }
+    moveBlock: function (b, delta) {
+      var arr = b.split('-')
+      var blockArray = arr[0] + 's'
+      var index = parseInt(arr[1])
+      var newX = this.blocks[blockArray][index][0] + delta[0]
+      var newY = this.blocks[blockArray][index][1] + delta[1]
+      this.$set(this.blocks[blockArray], index, [newX, newY])
     },
     /*
             Docks the blocks b1 (top) and b2 (bottom).
@@ -375,29 +355,89 @@ export default {
       this.linksTop.push(b1)
       this.linksBottom.push(b2)
       if (this.showNotifications) {
-        alert('Docked.')
+        this.$q.notify({
+          message: 'Connected blocks. Move lower block to disconnect.',
+          timeout: 3000,
+          type: 'positive'
+        })
       }
       this.updateConnected(b1)
-      this.updateConnected(b2)
+      this.getAllParents(b1).forEach(parent => {
+        this.updateConnected(parent)
+      })
     },
     /*
-            Updates which blocks are connected to block b.
+            Undocks the blocks b1 (top) and b2 (bottom).
+            @params: String b1, String b2
+    */
+    undock: function (b1, b2) {
+      for (var i = 0; i < this.linksTop.length; i++) {
+        if (this.linksBottom[i] === b2) {
+          this.linksTop.splice(i, 1)
+          this.linksBottom.splice(i, 1)
+          this.updateConnected(b1)
+          this.getAllParents(b1).forEach(parent => {
+            this.updateConnected(parent)
+          })
+          break
+        }
+      }
+      if (this.showNotifications) {
+        this.$q.notify({
+          message: 'Disconnected blocks.',
+          timeout: 3000,
+          type: 'negative'
+        })
+      }
+    },
+    /*
+            Gets all parents of a block b, i.e., those that are connected above
+            @params: String b
+    */
+    getAllParents: function (b) {
+      var parents = []
+      var currentBlock = b
+      var foundParent = true
+      while (foundParent) {
+        foundParent = false
+        for (var i = 0; i < this.linksTop.length; i++) {
+          if (this.linksBottom[i] === currentBlock) {
+            foundParent = true
+            parents.push(this.linksTop[i])
+            currentBlock = this.linksTop[i]
+            break
+          }
+        }
+      }
+      return parents
+    },
+    /*
+            Gets all children of a block b, i.e., those that are connected below
+            @params: String b
+    */
+    getAllChildren: function (b) {
+      var children = []
+      var currentBlock = b
+      var foundChild = true
+      while (foundChild) {
+        foundChild = false
+        for (var i = 0; i < this.linksTop.length; i++) {
+          if (this.linksTop[i] === currentBlock) {
+            foundChild = true
+            children.push(this.linksBottom[i])
+            currentBlock = this.linksBottom[i]
+            break
+          }
+        }
+      }
+      return children
+    },
+    /*
+            Updates which blocks are connected to block b1.
             @params: String b
     */
     updateConnected: function (b) {
-      // find blocks connected to b
-      var connected = []
-      for (var i = 0; i < this.linksTop.length; i++) {
-        if (this.linksTop[i] === b) {
-          console.log('pushed updateConnected')
-          connected.push(this.linksBottom[i])
-        }
-        if (this.linksBottom[i] === b) {
-          console.log('pushed updateConnected')
-          connected.push(' ' + this.linksTop[i])
-        }
-      }
-      this.connectedBlocks[b] = connected
+      this.connectedBlocks[b] = this.getAllChildren(b)
     },
     /*
             Resets everything.
@@ -407,14 +447,14 @@ export default {
       var reset = confirm('Are you sure you want to reset everything? This action cannot be undone.')
       if (reset) {
         this.initialPos = [100, 100]
-        this.blocks = {binarizationBlocks: [], lettersClassificationBlocks: []}
         this.linksTop = []
         this.linksBottom = []
+        this.connectedBlocks = {blocksStart: []}
         this.blocks = {binarizationBlocks: [],
           lettersClassificationBlocks: [],
           cosineSimilarityBlocks: [],
-          clusteringBlocks: []}
-        this.showNotifications = true
+          clusteringBlocks: [],
+          blocksStartBlocks: [[400, 100]]}
         this.redockable = true
         this.incompatible = false
       }
