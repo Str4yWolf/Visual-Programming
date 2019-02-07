@@ -1,14 +1,18 @@
-<!-- TODO:
-  fix interblock reference error: every block reads from
-  one single input field only (wrong get element by Id)
--->
 <template>
   <div class="binarization">
-    <span style="text-align: center; font-weight: bold;">Binarization</span>
-    <br/><br/>
-    <em>Enter Threshold &nbsp; &nbsp;</em>
-    <input id="input">
-    <button @click="binarize">Binarize</button>
+    <span style="text-align: center;">
+      <span style=" padding: 0px 20px 0px 20px">
+        <strong>Binarization</strong> &nbsp; [I/O: Image/Image]
+      </span>
+      <strong>(Select Threshold)</strong>
+    </span>
+    <q-slider
+      v-model="selectedValue"
+      :min="0"
+      :max="255"
+      :step="1"
+      label-always
+    />
     <div class="deletion">
     <button class="del-btn" @click="deleteBlock">x</button>
     </div>
