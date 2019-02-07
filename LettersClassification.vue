@@ -1,12 +1,13 @@
-<!-- TODO:
-  fix interblock reference error: every block reads from
-  one single input field only (wrong get element by Id)
--->
 <template>
   <div class="lettersClassification">
-    <span style="text-align: center; font-weight: bold;">Letters Classification</span>
-    <br/><br/>
-    <em>Enter Charset &nbsp; &nbsp;</em>
+    <span style="text-align: center;">
+      <span style=" padding: 0px 10px 0px 10px">
+        <strong>LettersClassification</strong> &nbsp; [I/O: Image/Text]
+      </span>
+      <strong>(Enter Alphabet)</strong>
+    </span>
+    <br/>
+    <br/>
     <input id="input-lettersClassification">
     <button @click="classify">Classify</button>
     <div class="deletion">
