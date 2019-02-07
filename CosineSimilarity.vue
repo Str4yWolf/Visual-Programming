@@ -1,11 +1,11 @@
-<!-- TODO:
-  fix interblock reference error: every block reads from
-  one single input field only (wrong get element by Id)
--->
 <template>
   <div class="cosine-similarity">
-    <span style="text-align: center; font-weight: bold;">Cosine Similarity</span> &nbsp; &nbsp; <em>Select 2nd image below</em> &nbsp; &nbsp;
-    <button @click="compare">Compare</button>
+    <span style="text-align: center;">
+      <span style=" padding: 0px 5px 0px 5px">
+        <strong>Cosine Similarity</strong> &nbsp; [I/O: Image/Output]
+      </span>
+      <strong>(Load 2nd Image)</strong>
+    </span>
     <br/>
     <q-uploader />
     <div class="deletion">
@@ -56,5 +56,3 @@ button .del-btn {
 /*  background: red;*/
 }
 </style>
-
-
