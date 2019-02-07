@@ -1,16 +1,26 @@
-<!-- TODO:
-  fix interblock reference error: every block reads from
-  one single input field only (wrong get element by Id)
--->
 <template>
   <div class="clustering">
-    <span style="text-align: center; font-weight: bold;">Clustering</span>
-    <br/><br/>
-    <em>Choose Method &nbsp; &nbsp;</em>
-    <button @click="cluster">KNN</button>
-    <button @click="cluster">DBScan</button>
-    <button @click="cluster">k-means</button>
-    <button @click="cluster">spectral</button>
+    <span style="text-align: center;">
+      <span style=" padding: 0px 20px 0px 20px">
+        <strong>Clustering</strong> &nbsp; [I/O: Image/Image]
+      </span>
+      <strong>(Choose Method)</strong>
+    </span>
+    <div class="q-btn-toggle">
+    <q-btn-toggle
+      v-model="clusteringChoices"
+      color="red"
+      toggle-color="green"
+      :options="[
+        {label: 'KNN', value: 'KNN'},
+        {label: 'DBScan', value: 'DBScan'},
+        {label: 'K-Means', value: 'K-Means'},
+        {label: 'Spectral', value: 'Spectral'}
+      ]"
+      push
+      glossy
+      size="14px"
+    /></div>
     <div class="deletion">
     <button class="del-btn" @click="deleteBlock">x</button>
     </div>
@@ -43,6 +53,11 @@ export default {
 </script>
 
 <style>
+div .q-btn-toggle {
+  position: absolute;
+  top: 25px;
+  left: 40px;
+}
 div .clustering {
   height: 100px;
   width: 500px;
