@@ -61,6 +61,9 @@ module.exports = function (ctx) {
         'QBtnDropdown',
         'QBtnGroup',
         'QPopover',
+        'QUploader',
+        'QSlider',
+        'QBtnToggle'
       ],
       directives: [
         'Ripple',
