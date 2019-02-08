@@ -23,40 +23,58 @@
         rounded glossy label="File"
         icon="sentiment_satisfied_alt">
           <q-list link>
-            <q-item @click.native="emit('resetAll')">
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >Start new project</q-item-tile>
+            <q-item>
+              <q-item-side icon="add" inverted color="primary" />
+              <q-item-main @click.native="emit('resetAll')">
+                <q-item-tile label >Start New Project</q-item-tile>
               </q-item-main> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
+            <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              <q-popover>
+                <q-card inline style="width: 500px">
+                  <q-card-title>Start New Project</q-card-title>
+                  <q-card-main>
+                    <p>Start a new project. Please save your current project in order to avoid loss of data.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-icon>
             </q-item>
             <q-item-separator inset />
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >Load project</q-item-tile>
+              <q-item-side icon="..." inverted color="primary" />
+              <q-item-main @click.native="emit('resetAll')">
+                <q-item-tile label >Load Project</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
+            <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              <q-popover>
+                <q-card inline style="width: 500px">
+                  <q-card-title>Load Project</q-card-title>
+                  <q-card-main>
+                    <p>Load an existing project. Please save your current project in order to avoid loss of data.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-icon>
             </q-item>
             <q-item-separator inset />
             <q-item>
               <q-item-side icon="save" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >Save project</q-item-tile>
+              <q-item-main @click.native="emit('notify', 'Saved project', 'positive')">
+                <q-item-tile label >Save Project</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+                <q-popover>
+                <q-card inline style="width: 500px">
+                  <q-card-title>Save Project</q-card-title>
+                  <q-card-main>
+                    <p>Save your project. If this is your first time saving this project, a new file will be created.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
+              </q-icon>
             </q-item>
             <q-item-separator inset />
              <!-- <q-item>
@@ -382,10 +400,10 @@
         icon="sentiment_satisfied_alt"
       >
     <q-list link>
-      <q-item @click.native="emit('addBlock', 'binarization')">
+      <q-item>
         <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-        <q-item-main>
-          <q-item-tile label>Binarization</q-item-tile>
+        <q-item-main @click.native="emit('addBlock', 'binarization')">
+          <q-item-tile label title="Click to add block">Binarization</q-item-tile>
         </q-item-main>
         <q-btn
             color="blue"
@@ -393,11 +411,23 @@
             label="add"
             align="center"
             @click="emit('addBlock', 'binarization')"
+            title="Click to add block"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <span style="{'size: 100px'}">Make an image black and white only,<br>according to some threshold</span>
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Binarization</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Binarizes an image according to a threshold.
+                    All pixel values below the threshold will be displayed as black (binary value 0),
+                    whereas the remaining pixels will be displayed as white (binary value 1).
+                      For coloured pictures, the pixel value is the mean of all channels.
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Binary_image" target="_blank">Read more on binary images</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -414,10 +444,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -434,10 +461,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -454,10 +478,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -474,10 +495,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -494,10 +512,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
     </q-list>
@@ -511,10 +526,10 @@
           icon="sentiment_satisfied_alt"
         >
     <q-list link>
-      <q-item @click.native="emit('addBlock', 'clustering')">
+      <q-item>
         <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
-        <q-item-main>
-          <q-item-tile label>Clustering</q-item-tile>
+        <q-item-main @click.native="emit('addBlock', 'clustering')">
+          <q-item-tile label title="Click to add block">Clustering</q-item-tile>
         </q-item-main>
         <q-btn
             color="red"
@@ -522,11 +537,50 @@
             label="add"
             align="center"
             @click="emit('addBlock', 'clustering')"
+            title="Click to add block"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          Cluster an image<br>into an image with clusters.
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Clustering</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Clusters an image into clusters, using a certain method.
+                  <ul>
+                    <li>
+                      <strong>KNN</strong> (K-nearest neighbours): Takes an image data point and clusters it together with its closest neighbours.
+                      <br>
+                      <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank">Read more</a>
+                      <br>
+                      <br>
+                    </li>
+                    <li>
+                      <strong>DBScan</strong> (Density-based spatial clustering of applications with noise): Clusters together image data points with many similar neighbours.
+                      <br>
+                      <a href="https://en.wikipedia.org/wiki/DBSCAN" target="_blank">Read more</a>
+                      <br>
+                      <br>
+                    </li>
+                    <li>
+                      <strong>K-Means</strong>: Starts with random cluster centres and repeatedly assigns data points to their closest clusters until (nearly) converged.
+                      <br>
+                      <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank">Read more</a>
+                      <br>
+                      <br>
+                    </li>
+                    <li>
+                      <strong>Spectral Clustering</strong>: Clusters according to the eigenvalues of the similarity matrix of the image data.
+                      <br>
+                      <a href="https://en.wikipedia.org/wiki/Spectral_clustering" target="_blank">Read more</a>
+                      <br>
+                      <br>
+                    </li>
+                  </ul>
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Cluster_analysis" target="_blank">Read more on cluster analysis</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -543,10 +597,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -563,10 +614,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -583,10 +631,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
     </q-list>
@@ -600,10 +645,10 @@
         icon="sentiment_satisfied_alt"
       >
     <q-list link>
-      <q-item @click.native="emit('addBlock', 'lettersClassification')">
+      <q-item>
         <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
-        <q-item-main>
-          <q-item-tile label>Letters Classification</q-item-tile>
+        <q-item-main @click.native="emit('addBlock', 'lettersClassification')">
+          <q-item-tile label title="Click to add block">Letters Classification</q-item-tile>
         </q-item-main>
         <q-btn
             color="orange"
@@ -611,11 +656,42 @@
             label="add"
             align="center"
             @click="emit('addBlock', 'lettersClassification')"
+            title="Click to add block"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          Output a classified text<br>given an image and an alphabet.
-          </q-tooltip>
+          <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Letters Classification</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Text</p>
+                <p>Tries to classify letters according to a given alphabet using OCR (Optical Character Recognition).
+                   These classifications will be output as text. Non-Latin classifications will be romanized, i.e., will be approximated with Latin letters.
+                  <br>
+                  Enter one of the available alphabets into the text field.
+                  <br>
+                  <br>
+                  <strong>Currently available:</strong>
+                  <ul>
+                    <li>
+                      <strong>Japanese:</strong> Classifies according to the three Japanese scripts of Kanji, Hiragana, and Katakana.
+                      <br>
+                      <a href="https://en.wikipedia.org/wiki/Japanese_writing_system" target="_blank">Read more on the Japanese writing system</a>
+                      <br>
+                      <br>
+                    </li>
+                    <li>
+                      <strong>Latin:</strong> Classifies according to the Latin alphabet, including specifics such as accents, umlauts, and some special letters of an otherwise Latin script language.
+                      <br>
+                      <a href="https://en.wikipedia.org/wiki/Latin_script" target="_blank">Read more on the Latin writing system</a>
+                      <br>
+                      <br>
+                    </li>
+                  </ul>
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Optical_character_recognition" target="_blank">Read more on OCR</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -632,10 +708,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
                 <q-item-separator inset />
@@ -652,10 +725,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -672,10 +742,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
     </q-list>
@@ -689,10 +756,10 @@
     icon="sentiment_satisfied_alt"
   >
     <q-list link>
-      <q-item @click.native="emit('addBlock', 'cosineSimilarity')">
+      <q-item>
         <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
-        <q-item-main>
-          <q-item-tile label>Cosine Similarity</q-item-tile>
+        <q-item-main @click.native="emit('addBlock', 'cosineSimilarity')">
+          <q-item-tile label title="Click to add block">Cosine Similarity</q-item-tile>
         </q-item-main>
         <q-btn
             color="green"
@@ -700,11 +767,26 @@
             label="add"
             align="center"
             @click="emit('addBlock', 'cosineSimilarity')"
+            title="Click to add block"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          Determine the cosine similarity of a given image<br>(1 means very similar, 0 means not at all).
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Cosine Similarity</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Output</p>
+                <p>Compares two images and outputs their cosine similarity. A value of <strong>1</strong> means <strong>maximum similarity</strong>,
+                   whereas a value of <strong>0</strong> means <strong>no similarity</strong>.
+                   A value of <strong>-1</strong> means <strong>maximum inverse similarity</strong>.
+                  <br>
+                  The cosine similarity describes the quotient of the dot product of the two images and the product of their magnitudes.
+                   That is,
+                   <br><br><span style="padding-left: 125px;"><strong>cos(A, B) = (A・B)/(||A||*||B||)</strong></span>
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">Read more on cosine similarity</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -721,10 +803,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
                 <q-item-separator inset />
@@ -741,10 +820,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
       <q-item-separator inset />
@@ -761,10 +837,7 @@
             align="center"
             @click="notImplemented"
           /> &nbsp;
-        <q-icon name="info" color="amber">
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          some tooltip
-          </q-tooltip>
+        <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
       </q-item>
     </q-list>
@@ -813,7 +886,6 @@ export default {
       alert('Not implemented yet (...) We\'ll work on that (or maybe not =)')
     },
     emit: function (msg, ...args) {
-      console.log('called emit from layout with msg ' + msg)
       this.$root.$emit(msg, ...args)
     }
   }
