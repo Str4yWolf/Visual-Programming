@@ -129,6 +129,7 @@ export default {
   },
   created () {
     // listen to event calls from elsewhere
+    this.$root.$on('notify', this.notify)
     this.$root.$on('addBlock', this.addBlock)
     this.$root.$on('resetAll', this.resetAll)
     this.$root.$on('toggleNotifications', () => {
@@ -464,6 +465,19 @@ export default {
     */
     setInitialPos: function (x, y) {
       this.initialPos = [x, y]
+    },
+    /*
+            Notifies a message msg.
+            @params: String msg
+    */
+    notify: function (msg, msgType) {
+      if (this.showNotifications) {
+        this.$q.notify({
+          message: msg,
+          timeout: 3000,
+          type: msgType
+        })
+      }
     }
   }
 }
