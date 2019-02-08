@@ -23,7 +23,7 @@
         rounded glossy label="File"
         icon="sentiment_satisfied_alt">
           <q-list link>
-            <q-item>
+            <q-item @click.native="emit('resetAll')">
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
                 <q-item-tile label >Start new project</q-item-tile>
@@ -367,13 +367,12 @@
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
-        <q-list-header>MAIN MENU &nbsp; &nbsp; &nbsp;
-        </q-list-header>
+<q-list
+  no-border
+  link
+  inset-delimiter
+>
+  <q-list-header>MAIN MENU</q-list-header>
   <q-btn-dropdown
         split
         color="blue"
@@ -382,228 +381,217 @@
         label="Image Processing"
         icon="sentiment_satisfied_alt"
       >
-<q-list link>
-          <!-- <q-item v-close-overlay @click.native="showNotification"> -->
-          <q-item v-close-overlay>
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-            <q-item-main>
-              <q-item-tile label>Binarization</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="blue"
-                size="sm"
-                label="add"
-                align="center"
-                @click="emit('addBlock', 'binarization')"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Make an image black and white only,<br>according to some threshold
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-          <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-            <q-item-main>
-              <q-item-tile label>Rotation</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="blue"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-            <q-item-main>
-              <q-item-tile label>Greyscaling</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="blue"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-            <q-item-main>
-              <q-item-tile label>Noise Removal</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="blue"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-          <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-            <q-item-main>
-              <q-item-tile label>Sharpening</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="blue"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-          <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-            <q-item-main>
-              <q-item-tile label>Gaussian Filters</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="blue"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-        </q-list>
-</q-btn-dropdown>
-<q-btn-dropdown
-        split
-        color="red"
-        glossy
-        size="30px"
-        label="Page Layout Analysis / Image Segmentation"
-        icon="sentiment_satisfied_alt"
-      >
-        <q-list link>
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
-            <q-item-main>
-              <q-item-tile label>Clustering</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="red"
-                size="sm"
-                label="add"
-                align="center"
-                @click="emit('addBlock', 'clustering')"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Cluster an image<br>into an image with clusters.
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-          <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
-            <q-item-main>
-              <q-item-tile label>placeholder 2</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="red"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
-            <q-item-main>
-              <q-item-tile label>placeholder 3</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="red"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
-            <q-item-main>
-              <q-item-tile label>placeholder 4</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="red"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-        </q-list>
-</q-btn-dropdown>
-<q-btn-dropdown
+    <q-list link>
+      <q-item @click.native="emit('addBlock', 'binarization')">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-main>
+          <q-item-tile label>Binarization</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="blue"
+            size="sm"
+            label="add"
+            align="center"
+            @click="emit('addBlock', 'binarization')"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          <span style="{'size: 100px'}">Make an image black and white only,<br>according to some threshold</span>
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-main>
+          <q-item-tile label>Rotation</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="blue"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-main>
+          <q-item-tile label>Greyscaling</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="blue"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-main>
+          <q-item-tile label>Noise Removal</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="blue"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-main>
+          <q-item-tile label>Sharpening</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="blue"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-main>
+          <q-item-tile label>Gaussian Filters</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="blue"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown>
+  <q-btn-dropdown
+          split
+          color="red"
+          glossy
+          size="30px"
+          label="Page Layout Analysis / Image Segmentation"
+          icon="sentiment_satisfied_alt"
+        >
+    <q-list link>
+      <q-item @click.native="emit('addBlock', 'clustering')">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
+        <q-item-main>
+          <q-item-tile label>Clustering</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="red"
+            size="sm"
+            label="add"
+            align="center"
+            @click="emit('addBlock', 'clustering')"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          Cluster an image<br>into an image with clusters.
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
+        <q-item-main>
+          <q-item-tile label>placeholder 2</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="red"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
+        <q-item-main>
+          <q-item-tile label>placeholder 3</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="red"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
+        <q-item-main>
+          <q-item-tile label>placeholder 4</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="red"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown>
+  <q-btn-dropdown
         split
         color="orange"
         glossy
@@ -611,184 +599,176 @@
         label="Optical Character Recognition"
         icon="sentiment_satisfied_alt"
       >
-        <q-list link>
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
-            <q-item-main>
-              <q-item-tile label>Letters Classification</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="orange"
-                size="sm"
-                label="add"
-                align="center"
-                @click="emit('addBlock', 'lettersClassification')"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Output a classified text<br>given an image and an alphabet.
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-          <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
-            <q-item-main>
-              <q-item-tile label>placeholder 2</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="orange"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
-            <q-item-main>
-              <q-item-tile label>placeholder 3</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="orange"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
-            <q-item-main>
-              <q-item-tile label>placeholder 4</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="orange"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-        </q-list>
-</q-btn-dropdown>
-       <q-btn-dropdown
-        split
-        color="green"
-        glossy
-        size="30px"
-        label="feature extraction / comparison"
-        icon="sentiment_satisfied_alt"
-      >
-        <q-list link>
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
-            <q-item-main>
-              <q-item-tile label>Cosine Similarity</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="green"
-                size="sm"
-                label="add"
-                align="center"
-                @click="emit('addBlock', 'cosineSimilarity')"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            Determine the cosine similarity of a given image<br>(1 means very similar, 0 means not at all).
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-          <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
-            <q-item-main>
-              <q-item-tile label>placeholder 2</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="green"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
-            <q-item-main>
-              <q-item-tile label>placeholder 3</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="green"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-                    <q-item-separator inset />
-          <q-item v-close-overlay @click.native="showNotification">
-            <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
-            <q-item-main>
-              <q-item-tile label>placeholder 4</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-btn
-                color="green"
-                outline
-                size="sm"
-                label="add"
-                align="center"
-                @click="notImplemented"
-              /> &nbsp;
-            <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-          </q-item>
-        </q-list>
-</q-btn-dropdown> &nbsp;
+    <q-list link>
+      <q-item @click.native="emit('addBlock', 'lettersClassification')">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
+        <q-item-main>
+          <q-item-tile label>Letters Classification</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="orange"
+            size="sm"
+            label="add"
+            align="center"
+            @click="emit('addBlock', 'lettersClassification')"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          Output a classified text<br>given an image and an alphabet.
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
+        <q-item-main>
+          <q-item-tile label>placeholder 2</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="orange"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+                <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
+        <q-item-main>
+          <q-item-tile label>placeholder 3</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="orange"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
+        <q-item-main>
+          <q-item-tile label>placeholder 4</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="orange"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown>
+  <q-btn-dropdown
+    split
+    color="green"
+    glossy
+    size="30px"
+    label="feature extraction / comparison"
+    icon="sentiment_satisfied_alt"
+  >
+    <q-list link>
+      <q-item @click.native="emit('addBlock', 'cosineSimilarity')">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
+        <q-item-main>
+          <q-item-tile label>Cosine Similarity</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="green"
+            size="sm"
+            label="add"
+            align="center"
+            @click="emit('addBlock', 'cosineSimilarity')"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          Determine the cosine similarity of a given image<br>(1 means very similar, 0 means not at all).
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
+        <q-item-main>
+          <q-item-tile label>placeholder 2</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="green"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+                <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
+        <q-item-main>
+          <q-item-tile label>placeholder 3</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="green"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+      <q-item-separator inset />
+      <q-item @click.native="notImplemented">
+        <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
+        <q-item-main>
+          <q-item-tile label>placeholder 4</q-item-tile>
+        </q-item-main>
+        <q-btn
+            color="green"
+            outline
+            size="sm"
+            label="add"
+            align="center"
+            @click="notImplemented"
+          /> &nbsp;
+        <q-icon name="info" color="amber">
+          <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+          some tooltip
+          </q-tooltip>
+        </q-icon>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown> &nbsp;
               <q-btn
                 color="indigo"
                 glossy
@@ -835,9 +815,6 @@ export default {
     emit: function (msg, ...args) {
       console.log('called emit from layout with msg ' + msg)
       this.$root.$emit(msg, ...args)
-    },
-    showNotification: function () {
-      console.log('called showNotification in Layout')
     }
   }
 }
