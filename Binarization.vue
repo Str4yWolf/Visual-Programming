@@ -7,7 +7,7 @@
       <strong>(Select Threshold)</strong>
     </span>
     <q-slider
-      v-model="selectedValue"
+      v-model="binarizationThreshold"
       :min="0"
       :max="255"
       :step="1"
@@ -24,6 +24,7 @@ export default {
   // name: 'Binarization',
   data () {
     return {
+      binarizationThreshold: 127
     }
   },
   methods: {
