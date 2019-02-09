@@ -21,10 +21,10 @@
   <q-btn-dropdown
         color="primary"
         rounded glossy label="File"
-        icon="sentiment_satisfied_alt">
+        icon="folder">
           <q-list link>
             <q-item>
-              <q-item-side icon="add" inverted color="primary" />
+              <q-item-side icon="create_new_folder" inverted color="primary" />
               <q-item-main @click.native="emit('resetAll')">
                 <q-item-tile label >Start New Project</q-item-tile>
               </q-item-main> &nbsp;
@@ -42,7 +42,7 @@
             </q-item>
             <q-item-separator inset />
             <q-item>
-              <q-item-side icon="..." inverted color="primary" />
+              <q-item-side icon="more_horiz" inverted color="primary" />
               <q-item-main @click.native="emit('resetAll')">
                 <q-item-tile label >Load Project</q-item-tile>
               </q-item-main> &nbsp;
@@ -94,7 +94,7 @@
           <q-btn-dropdown
         color="primary"
         rounded glossy label="View"
-        icon="sentiment_satisfied_alt">
+        icon="visibility">
           <q-list link>
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
@@ -149,7 +149,7 @@
           <q-btn-dropdown
         color="primary"
         rounded glossy label="Edit"
-        icon="sentiment_satisfied_alt">
+        icon="edit">
           <q-list link>
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
@@ -204,7 +204,7 @@
           <q-btn-dropdown
         color="primary"
         rounded glossy label="Window"
-        icon="sentiment_satisfied_alt">
+        icon="crop_landscape">
           <q-list link>
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
@@ -259,7 +259,7 @@
           <q-btn-dropdown
         color="primary"
         rounded glossy label="Tools"
-        icon="sentiment_satisfied_alt">
+        icon="build">
           <q-list link>
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
@@ -397,11 +397,11 @@
         glossy
         size="30px"
         label="Image Processing"
-        icon="sentiment_satisfied_alt"
+        icon="photo"
       >
     <q-list link>
       <q-item>
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
+        <q-item-side icon="invert_colors" inverted color="blue" />
         <q-item-main @click.native="emit('addBlock', 'binarization')">
           <q-item-tile label title="Click to add block">Binarization</q-item-tile>
         </q-item-main>
@@ -431,88 +431,163 @@
         </q-icon>
       </q-item>
       <q-item-separator inset />
-      <q-item @click.native="notImplemented">
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-        <q-item-main>
+      <q-item>
+        <q-item-side icon="rotate_left" inverted color="blue" />
+        <q-item-main @click.native="emit('addBlock', 'rotation')">
           <q-item-tile label>Rotation</q-item-tile>
         </q-item-main>
         <q-btn
             color="blue"
-            outline
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
+            @click="emit('addBlock', 'rotation')"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Rotation</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Rotates an image according to an input in degrees. Positive numbers will rotate clockwise.
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Rotation_(mathematics)" target="_blank">Read more on rotation</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
-      <q-item @click.native="notImplemented">
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-        <q-item-main>
+      <q-item>
+        <q-item-side icon="lens" inverted color="blue" />
+        <q-item-main @click.native="emit('addBlock', 'greyscaling')">
           <q-item-tile label>Greyscaling</q-item-tile>
         </q-item-main>
         <q-btn
             color="blue"
-            outline
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
+            @click="emit('addBlock', 'greyscaling')"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Greyscaling</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Applies greyscaling to each pixel of an image. Given a selection of colour channels,
+                   the grey value of each pixel will be the mean of all selected colour channels.
+                   Pixel values range from <strong>0</strong> (weakest) to <strong>255</strong> (strongest).
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Grayscale" target="_blank">Read more on greyscale</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
-      <q-item @click.native="notImplemented">
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-        <q-item-main>
+      <q-item>
+        <q-item-side icon="flare" inverted color="blue" />
+        <q-item-main @click.native="emit('addBlock', 'noiseRemoval')">
           <q-item-tile label>Noise Removal</q-item-tile>
         </q-item-main>
         <q-btn
             color="blue"
-            outline
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
+            @click="emit('addBlock', 'noiseRemoval')"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Noise Removal</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Removes noise in a blurring fashion by admixture of a pixel's neighbouring colour values.
+                   Noise Removal can be seen as the counterpart to Sharpening.
+                  <br>
+                  <br>
+                  <strong>Parameters:</strong>
+                  <ul>
+                    <br>
+                    <li>
+                      <strong>Radius (px): </strong>Size of the neighbourhood of admixture
+                    </li>
+                    <br>
+                    <br>
+                    <li>
+                      <strong>Strength (%): </strong>How much an image pixel will be changed by its neighbours
+                    </li>
+                    <br>
+                    <br>
+                    <li>
+                      <strong>Threshold (%): </strong>How to identify noise. A value of 100% will consider everything different
+                       from the image pixel as noise, whereas a value of 50% will ignore neighbouring image points which are above
+                       above and below that threshold, the image pixel itself being centred within its threshold environment.
+                    </li>
+                  </ul>
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Noise_reduction" target="_blank">Read more on noise reduction</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
-      <q-item @click.native="notImplemented">
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-        <q-item-main>
+      <q-item>
+        <q-item-side icon="wb_iridescent" inverted color="blue" />
+        <q-item-main @click.native="emit('addBlock', 'sharpening')">
           <q-item-tile label>Sharpening</q-item-tile>
         </q-item-main>
         <q-btn
             color="blue"
-            outline
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
+            @click="emit('addBlock', 'sharpening')"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Sharpening</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Sharpens an image by shortening the transition of soft edges to make them harder.
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Image_editing#Sharpening_and_softening_images" target="_blank">Read more on image sharpening</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
       <q-item-separator inset />
-      <q-item @click.native="notImplemented">
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="blue" />
-        <q-item-main>
-          <q-item-tile label>Gaussian Filters</q-item-tile>
+      <q-item>
+        <q-item-side icon="gradient" inverted color="blue" />
+        <q-item-main @click.native="gaussianFilter">
+          <q-item-tile label>Gaussian Filter</q-item-tile>
         </q-item-main>
         <q-btn
             color="blue"
-            outline
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
+            @click="gaussianFilter"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
+          <q-popover>
+            <q-card inline style="width: 500px">
+              <q-card-title>Gaussian Filter</q-card-title>
+              <q-card-main>
+                <p>Input: Image ・ Output: Image</p>
+                <p>Applies a bell-shaped Gaussian filter to the image, given the sigma environment.
+                   It tends to blur images and remove noise.
+                </p>
+                <a href="https://en.wikipedia.org/wiki/Gaussian_filter" target="_blank">Read more on Gaussian filters</a>
+              </q-card-main>
+            </q-card>
+          </q-popover>
         </q-icon>
       </q-item>
     </q-list>
@@ -523,11 +598,11 @@
           glossy
           size="30px"
           label="Page Layout Analysis / Image Segmentation"
-          icon="sentiment_satisfied_alt"
+          icon="border_all"
         >
     <q-list link>
       <q-item>
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="red" />
+        <q-item-side icon="scatter_plot" inverted color="red" />
         <q-item-main @click.native="emit('addBlock', 'clustering')">
           <q-item-tile label title="Click to add block">Clustering</q-item-tile>
         </q-item-main>
@@ -642,11 +717,11 @@
         glossy
         size="30px"
         label="Optical Character Recognition"
-        icon="sentiment_satisfied_alt"
+        icon="vertical_split"
       >
     <q-list link>
       <q-item>
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="orange" />
+        <q-item-side icon="translate" inverted color="orange" />
         <q-item-main @click.native="emit('addBlock', 'lettersClassification')">
           <q-item-tile label title="Click to add block">Letters Classification</q-item-tile>
         </q-item-main>
@@ -753,11 +828,11 @@
     glossy
     size="30px"
     label="feature extraction / comparison"
-    icon="sentiment_satisfied_alt"
+    icon="poll"
   >
     <q-list link>
       <q-item>
-        <q-item-side icon="sentiment_satisfied_alt" inverted color="green" />
+        <q-item-side icon="compare" inverted color="green" />
         <q-item-main @click.native="emit('addBlock', 'cosineSimilarity')">
           <q-item-tile label title="Click to add block">Cosine Similarity</q-item-tile>
         </q-item-main>
