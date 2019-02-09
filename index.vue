@@ -15,6 +15,56 @@
       v-for="i in blocks.binarizationBlocks.length"
       :key="'binarizationBlock'+i">
     </binarization>
+    <rotation
+      @emitted="receiveData"
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'rotationBlock-'+(i-1)"
+      :ref="'rotationBlock-'+(i-1)"
+      :style="{'left': blocks.rotationBlocks[i-1][0] + 'px',
+               'top': blocks.rotationBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.rotationBlocks.length"
+      :key="'rotationBlock'+i">
+    </rotation>
+    <greyscaling
+      @emitted="receiveData"
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'greyscalingBlock-'+(i-1)"
+      :ref="'greyscalingBlock-'+(i-1)"
+      :style="{'left': blocks.greyscalingBlocks[i-1][0] + 'px',
+               'top': blocks.greyscalingBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.greyscalingBlocks.length"
+      :key="'greyscalingBlock'+i">
+    </greyscaling>
+    <noise-removal
+      @emitted="receiveData"
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'noiseRemovalBlock-'+(i-1)"
+      :ref="'noiseRemovalBlock-'+(i-1)"
+      :style="{'left': blocks.noiseRemovalBlocks[i-1][0] + 'px',
+               'top': blocks.noiseRemovalBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.noiseRemovalBlocks.length"
+      :key="'noiseRemovalBlock'+i">
+    </noise-removal>
+    <sharpening
+      @emitted="receiveData"
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'sharpeningBlock-'+(i-1)"
+      :ref="'sharpeningBlock-'+(i-1)"
+      :style="{'left': blocks.sharpeningBlocks[i-1][0] + 'px',
+               'top': blocks.sharpeningBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.sharpeningBlocks.length"
+      :key="'sharpeningBlock'+i">
+    </sharpening>
+    <gaussian-filter
+      @emitted="receiveData"
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'gaussianFilterBlock-'+(i-1)"
+      :ref="'gaussianFilterBlock-'+(i-1)"
+      :style="{'left': blocks.gaussianFilterBlocks[i-1][0] + 'px',
+               'top': blocks.gaussianFilterBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.gaussianFilterBlocks.length"
+      :key="'gaussianFilterBlock'+i">
+    </gaussian-filter>
     <letters-classification
       @emitted="receiveData"
       v-touch-pan="move" class="movable q-py-xl"
@@ -74,6 +124,11 @@
 
 <script>
 import Binarization from '../components/Binarization.vue'
+import Rotation from '../components/Rotation.vue'
+import Greyscaling from '../components/Greyscaling.vue'
+import NoiseRemoval from '../components/NoiseRemoval.vue'
+import Sharpening from '../components/Sharpening.vue'
+import GaussianFilter from '../components/GaussianFilter.vue'
 import LettersClassification from '../components/LettersClassification.vue'
 import RectangleSelect from '../components/RectangleSelect.vue'
 import CosineSimilarity from '../components/CosineSimilarity.vue'
@@ -84,13 +139,17 @@ export default {
   name: 'PageIndex',
   components: {
     Binarization,
+    Rotation,
+    Greyscaling,
+    NoiseRemoval,
+    Sharpening,
+    GaussianFilter,
     LettersClassification,
     CosineSimilarity,
     Clustering,
     RectangleSelect,
     BlocksStart,
     Notify
-    // EditFrame
   },
   data () {
     return {
@@ -98,6 +157,11 @@ export default {
       initialPos: [100, 100],
       // all blocks
       blocks: {binarizationBlocks: [],
+        rotationBlocks: [],
+        greyscalingBlocks: [],
+        noiseRemovalBlocks: [],
+        sharpeningBlocks: [],
+        gaussianFilterBlocks: [],
         lettersClassificationBlocks: [],
         cosineSimilarityBlocks: [],
         clusteringBlocks: [],
@@ -113,6 +177,11 @@ export default {
       redockable: true,
       // input data type for each block type
       intype: {binarization: 'image',
+        rotation: 'image',
+        greyscaling: 'image',
+        noiseRemoval: 'image',
+        sharpening: 'image',
+        gaussianFilter: 'image',
         lettersClassification: 'image',
         cosineSimilarity: 'image',
         clustering: 'image',
@@ -120,6 +189,11 @@ export default {
         blocksStart: 'input'},
       // output data type for each block type
       outtype: {binarization: 'image',
+        rotation: 'image',
+        greyscaling: 'image',
+        noiseRemoval: 'image',
+        sharpening: 'image',
+        gaussianFilter: 'image',
         lettersClassification: 'text',
         cosineSimilarity: 'output',
         clustering: 'image',
@@ -452,6 +526,11 @@ export default {
         this.linksBottom = []
         this.connectedBlocks = {blocksStart: []}
         this.blocks = {binarizationBlocks: [],
+          rotationBlocks: [],
+          greyscalingBlocks: [],
+          noiseRemovalBlocks: [],
+          sharpeningBlocks: [],
+          gaussianFilterBlocks: [],
           lettersClassificationBlocks: [],
           cosineSimilarityBlocks: [],
           clusteringBlocks: [],
