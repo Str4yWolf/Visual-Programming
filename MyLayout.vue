@@ -319,25 +319,68 @@
             <q-item>
               <q-item-side icon="help" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >Help</q-item-tile>
+                <q-item-tile label >How to use this App</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 500px">
+                  <q-card-title>How to use this App</q-card-title>
+                  <q-card-main>
+                    <p>
+                      <br><br>
+                      This app is a tool for you to process your images. Just go to the left-hand q-item-side
+                      of the window to find blocks from different categories. By clicking <strong>Add</strong>,
+                      you can generate a block.
+                      <br><br>
+                      Each block has its own functions and parameters which you can read more about by clicking the
+                      <strong>icon</strong> next to the <strong>Add</strong> button. You can also find more information
+                      on each block's function by following the links.
+                      <br><br>
+                      You can connect blocks to each other by moving a block to the <strong>lower edge</strong> of another block.
+                      Compatible blocks will snap, while incompatible ones will not. You can see which blocks are compatible by
+                      clicking the icon next to the Add button again. Your currently moving block's <strong>Input</strong>
+                      has to be of the same type as the <strong>Output</strong> of the block you're trying to attach to.
+                      <br><br>
+                      To create a process, just attach any block with <strong>Input: Image</strong> to the <strong>Starting Block</strong>.
+                      After you're finished building a chain of blocks, just hit the <strong>Run Program</strong> button to
+                      see it live in action.
+                      <br><br>
+                      For more information, click on the <strong>Information Icons</strong> throughout or contact us through
+                      media given in the <strong>About this App</strong> section.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-item>
             <q-item-separator inset />
             <q-item>
               <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >About this app</q-item-tile>
+                <q-item-tile label >About this App</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 500px">
+                  <q-card-title>About this App</q-card-title>
+                  <q-card-main>
+                    <p style="color: grey;">V 0.2 Last modified: Feb 12, 2019 11:59 pm EST</p>
+                    <p>
+                      <br><br>
+                      This app has been created for the project <strong>Visual Programming</strong>.
+                      <br><br><br>
+                      <strong>Contact us via: </strong>
+                      <br><br>
+                      <span style="color: blue; text-decoration: underline; padding-left: 50px;">tensei-shitara@slime.datta.ken</span>
+                      <br><br>
+                      or <strong>call:</strong>
+                      <br><br>
+                      <strong style="padding-left: 50px;">001-000-TENSEI (001-000-123-4567)</strong>
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-item>
             <q-item-separator inset />
           </q-list>
@@ -373,7 +416,7 @@
                 label="Run Program"
                 align="center"
                 icon="play_arrow"
-                @click.native="emit('')"
+                @click.native="emit('runProgram')"
               />&nbsp;
          <!-- <q-toolbar-title> -->
           <!-- <div style="text-align: right;">Quasar App</div> -->
@@ -565,7 +608,7 @@
       <q-item-separator inset />
       <q-item>
         <q-item-side icon="gradient" inverted color="blue" />
-        <q-item-main @click.native="gaussianFilter">
+        <q-item-main @click.native="emit('addBlock', 'gaussianFilter')">
           <q-item-tile label>Gaussian Filter</q-item-tile>
         </q-item-main>
         <q-btn
@@ -573,7 +616,7 @@
             size="sm"
             label="add"
             align="center"
-            @click="gaussianFilter"
+            @click="emit('addBlock', 'gaussianFilter')"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
           <q-popover>
