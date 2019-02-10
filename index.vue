@@ -1,6 +1,5 @@
 <!-- TODO:
   selection frame
-  emulate results
   fix red border after elements are docked and overlapping
   -->
 <template>
@@ -103,7 +102,22 @@
                'top': blocks.blocksStartBlocks[i-1][1] + 'px'}"
       v-for="i in blocks.blocksStartBlocks.length"
       :key="'blocksStartBlock'+i"></blocks-start>
-    <rectangle-select class="select-comp"></rectangle-select>
+    <image-preview
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'imagePreviewBlock-'+(i-1)"
+      :ref="'imagePreviewBlock-'+(i-1)"
+      :style="{'left': blocks.imagePreviewBlocks[i-1][0] + 'px',
+               'top': blocks.imagePreviewBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.imagePreviewBlocks.length"
+      :key="'imagePreviewBlock'+i"></image-preview>
+    <rectangle-select
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'rectangleSelectBlock-'+(i-1)"
+      :ref="'rectangleSelectBlock-'+(i-1)"
+      :style="{'left': blocks.rectangleSelectBlocks[i-1][0] + 'px',
+               'top': blocks.rectangleSelectBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.rectangleSelectBlocks.length"
+      :key="'rectangleSelectBlock'+i">></rectangle-select>
     </q-page>
 </template>
 
@@ -114,12 +128,6 @@
   position: absolute;
   z-index: 1;
 }
-.select-comp {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  z-index: 0;
-}
 </style>
 
 <script>
@@ -129,10 +137,11 @@ import Greyscaling from '../components/Greyscaling.vue'
 import NoiseRemoval from '../components/NoiseRemoval.vue'
 import Sharpening from '../components/Sharpening.vue'
 import GaussianFilter from '../components/GaussianFilter.vue'
-import LettersClassification from '../components/LettersClassification.vue'
-import RectangleSelect from '../components/RectangleSelect.vue'
-import CosineSimilarity from '../components/CosineSimilarity.vue'
 import Clustering from '../components/Clustering.vue'
+import LettersClassification from '../components/LettersClassification.vue'
+import CosineSimilarity from '../components/CosineSimilarity.vue'
+import ImagePreview from '../components/ImagePreview.vue'
+import RectangleSelect from '../components/RectangleSelect.vue'
 import BlocksStart from '../components/BlocksStart.vue'
 import { Notify } from 'quasar'
 export default {
@@ -144,9 +153,10 @@ export default {
     NoiseRemoval,
     Sharpening,
     GaussianFilter,
+    Clustering,
     LettersClassification,
     CosineSimilarity,
-    Clustering,
+    ImagePreview,
     RectangleSelect,
     BlocksStart,
     Notify
@@ -165,6 +175,8 @@ export default {
         lettersClassificationBlocks: [],
         cosineSimilarityBlocks: [],
         clusteringBlocks: [],
+        imagePreviewBlocks: [[1200, 452]],
+        rectangleSelectBlocks: [[1200, 0]],
         blocksStartBlocks: [[400, 100]]},
       // linksTop[i] and linksBottom[i] are connected blocks
       linksTop: [],
@@ -185,7 +197,8 @@ export default {
         lettersClassification: 'image',
         cosineSimilarity: 'image',
         clustering: 'image',
-        rectangleSelect: 'image',
+        imagePreview: 'preview',
+        rectangleSelect: 'preview',
         blocksStart: 'input'},
       // output data type for each block type
       outtype: {binarization: 'image',
@@ -197,7 +210,8 @@ export default {
         lettersClassification: 'text',
         cosineSimilarity: 'output',
         clustering: 'image',
-        rectangleSelect: 'image',
+        imagePreview: 'preview',
+        rectangleSelect: 'preview',
         blocksStart: 'image'}
     }
   },
@@ -205,6 +219,7 @@ export default {
     // listen to event calls from elsewhere
     this.$root.$on('notify', this.notify)
     this.$root.$on('addBlock', this.addBlock)
+    this.$root.$on('runProgram', this.updateView)
     this.$root.$on('resetAll', this.resetAll)
     this.$root.$on('toggleNotifications', () => {
       this.showNotifications = !this.showNotifications
@@ -243,11 +258,7 @@ export default {
       var blockId = ref
       this.connectedBlocks[blockId] = [] // entry for connected blocks
       if (this.showNotifications) {
-        this.$q.notify({
-          message: 'Added block.',
-          timeout: 3000,
-          type: 'positive'
-        })
+        this.notify('Added block.', 'positive')
       }
     },
     /*
@@ -281,11 +292,7 @@ export default {
       this.$set(this.blocks[parentArray], index, [-1000, -1000])
       this.connectedBlocks[ref] = []
       if (this.showNotifications) {
-        this.$q.notify({
-          message: 'Deleted block.',
-          timeout: 3000,
-          type: 'negative'
-        })
+        this.notify('Deleted block.', 'negative')
       }
     },
     /*
@@ -360,6 +367,8 @@ export default {
             // output(ref2) compatible with input(ref1), and vice versa
             var compatible1 = this.outtype[type2] === this.intype[type1]
             var compatible2 = this.outtype[type1] === this.intype[type2]
+            // distinguish between normal blocks and big blocks
+            var isImagePreview = ((type1 === 'imagePreview') || (type1 === 'rectangleSelect'))
             // checking for dockability of block (ref1) moving to the bottom of ref2
             var dockable1 = overlap && ((bB2.bottom - 10) < bB1.top)
             if (this.redockable && compatible1 && dockable1 &&
@@ -371,17 +380,27 @@ export default {
               var oldX = this.blocks[blockArray][index][0]
               var oldY = this.blocks[blockArray][index][1]
               var dX = bB2.left - 300 - oldX
-              var dY = bB2.top + 50 - oldY
+              var dY
+              if (!isImagePreview) {
+                dY = bB2.top + 50 - oldY
+              } else {
+                if (type1 === 'imagePreview') {
+                  dY = bB2.top + 400 - oldY
+                } else {
+                  dY = bB2.top + 450 - oldY
+                }
+              }
               this.moveBlock(ref1, [dX, dY])
               this.getAllChildren(ref1).forEach(child => {
                 this.moveBlock(child, [dX, dY])
               })
             }
+
             // avoid asking user to dock again if still overlapping
             this.redockable = false
             var bothDocked = (this.linksBottom.includes(ref2) && this.linksTop.includes(ref1)) || (this.linksBottom.includes(ref1) && this.linksTop.includes(ref2))
             // display incompatibility of blocks - style 1 (outset red border)
-            if (overlap && (!compatible1 || !compatible2) && !bothDocked) {
+            if (overlap && (!compatible1 || !compatible2) && !bothDocked && !isImagePreview) {
               el1.style.height = '120px'
               el1.style.width = '520px'
               el1.style.border = '12px solid red'
@@ -390,11 +409,13 @@ export default {
             if ((this.linksTop[parentIndex] === ref2) && !overlap) {
               this.undock(ref2, ref1)
             }
-            if (!overlap) {
-              this.redockable = true
+            if (!overlap && !isImagePreview) {
               el1.style.height = '100px'
               el1.style.width = '500px'
               el1.style.border = '2px solid black'
+            }
+            if (!overlap) {
+              this.redockable = true
             }
             /*
             // display incompatibility of blocks - style 2 (inset red border)
@@ -429,17 +450,13 @@ export default {
     dock: function (b1, b2) {
       this.linksTop.push(b1)
       this.linksBottom.push(b2)
-      if (this.showNotifications) {
-        this.$q.notify({
-          message: 'Connected blocks. Move lower block to disconnect.',
-          timeout: 3000,
-          type: 'positive'
-        })
-      }
       this.updateConnected(b1)
       this.getAllParents(b1).forEach(parent => {
         this.updateConnected(parent)
       })
+      if (this.showNotifications) {
+        this.notify('Connected blocks. Move lower block to disconnect.', 'positive')
+      }
     },
     /*
             Undocks the blocks b1 (top) and b2 (bottom).
@@ -458,11 +475,7 @@ export default {
         }
       }
       if (this.showNotifications) {
-        this.$q.notify({
-          message: 'Disconnected blocks.',
-          timeout: 3000,
-          type: 'negative'
-        })
+        this.notify('Disconnected blocks.', 'negative')
       }
     },
     /*
@@ -514,6 +527,19 @@ export default {
     updateConnected: function (b) {
       this.connectedBlocks[b] = this.getAllChildren(b)
     },
+    updateView: function () {
+      var processChain = []
+      this.getAllChildren('blocksStartBlock-0').forEach(block => {
+        processChain.push(block.split('-')[0])
+      })
+      if (this.showNotifications) {
+        this.notify('Running program.', 'positive')
+      }
+      this.$root.$emit('updateView', processChain)
+      if (this.showNotifications) {
+        this.notify('Updated view.', 'positive')
+      }
+    },
     /*
             Resets everything.
     */
@@ -531,13 +557,48 @@ export default {
           noiseRemovalBlocks: [],
           sharpeningBlocks: [],
           gaussianFilterBlocks: [],
+          clusteringBlocks: [],
           lettersClassificationBlocks: [],
           cosineSimilarityBlocks: [],
-          clusteringBlocks: [],
+          imagePreviewBlocks: [[1200, 452]],
+          rectangleSelectBlocks: [[1200, 0]],
           blocksStartBlocks: [[400, 100]]}
         this.redockable = true
         this.incompatible = false
       }
+    },
+    /*
+            Restyles the borders of a block (String reference) according to a String newStyle
+            which contains the CSS property of the format 'px line-type colour'
+            @params: Array(String) blocks, String newStyle
+    */
+    restyleBorder: function (blocks, newStyle) {
+      blocks.forEach(block => {
+        var style
+        if (typeof this.$refs[block].$el === 'undefined') {
+          style = this.$refs[block][0].$el.style
+        } else {
+          style = this.$refs[block].$el.style
+        }
+        style.border = newStyle
+      })
+    },
+    /*
+            Restyles the witdh and height of a block (String reference)
+            according to their respective Strings which contain the CSS property in px
+            @params: Array(String) blocks, String newWidth, String newHeight
+    */
+    restyleSize: function (blocks, newWidth, newHeight) {
+      blocks.forEach(block => {
+        var style
+        if (typeof this.$refs[block].$el === 'undefined') {
+          style = this.$refs[block][0].$el.style
+        } else {
+          style = this.$refs[block].$el.style
+        }
+        style.width = newWidth
+        style.height = newHeight
+      })
     },
     /*
             sets the initial positions of blocks the parameters
