@@ -1,14 +1,29 @@
 <template>
-  <div id="outer-frame">
-    <div id="image-frame">
+  <div class="rectangle-select-outer">
+    <div style="padding: 15px 0px 0px 30px; font-weight: bold;">
+      Select Region
+      <q-icon name="info" size="24px" color="amber" title="Click for more information"
+        style="display: inline; padding: 0px 0px 0px 30px;">
+        <q-popover>
+          <q-card inline style="width: 500px">
+            <q-card-title>Select Region</q-card-title>
+            <q-card-main>
+              <p>Dockable to: Image Preview</p>
+              <p>Select a region of interest on which actions will be performed
+                  Press <strong>Select</strong> to confirm, or <strong>Cancel</strong> to revert to original image.
+              </p>
+            </q-card-main>
+          </q-card>
+        </q-popover>
+      </q-icon>
+    </div>
+    <div class="rectangle-select-image">
+      <img src="../statics/dummy.jpg" class="responsive">
       <div id="rectangle-select"
         @mousedown.native="selectStart($event,1)"
         @mouseup.native="selectEnd($event,1)"
         @mousemove.native="selectActive($event,1)" hidden>
       </div>
-    <div class="preview">
-      <img src="../statics/dummy.jpg" class="responsive">
-    </div>
     </div>
     <button id="btn1" @click="select()">Select</button>
     <button id="btn2" @click="cancel()">Cancel</button>
@@ -64,13 +79,13 @@ export default {
     select: function () {
       var div = document.getElementById('rectangle-select')
       div.border = '2px solid red'
-      alert('Image area selected. Operations will be performed on them.')
+      this.$root.$emit('notify', 'Image region selected. Program will be performed on it.', 'positive')
     },
     cancel: function () {
       var div = document.getElementById('rectangle-select')
       div.border = '2px dotted black'
       div.hidden = 1
-      alert('Operation cancelled.')
+      this.$root.$emit('notify', 'Selection cancelled.', 'negative')
     }
   }
 }
@@ -81,18 +96,17 @@ div #rectangle-select {
   border: 2px dotted black;
   position: absolute;
 }
-div #outer-frame {
+div .rectangle-select-outer {
   border: 2px solid black;
-  position: absolute;
-  height: 500px;
+  height: 450px;
   width: 400px;
-  background: #eeeeee;
+  background: #fae5d3;
 }
-div #image-frame {
+div .rectangle-select-image {
   border: none;
   position: relative;
-  height: 350px;
-  width: 350px;
+  max-height: 400px;
+  max-width: 350px;
   top: 25px;
   left: 25px;
   background: white;
@@ -101,9 +115,9 @@ div #image-frame {
 #btn1, #btn2 {
   position: relative;
   font-weight: bold;
-  width: 150px;
-  height: 75px;
-  top: 40px;
+  width: 155px;
+  height: 50px;
+  top: 30px;
   right: 25px;
   left: 25px;
   margin: 10px;
