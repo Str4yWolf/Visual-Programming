@@ -115,7 +115,7 @@ div .rectangle-select-image {
   top: 25px;
   left: 25px;
   background: white;
-  overflow: hidden;
+  overflow: scroll;
 }
 #btn1, #btn2 {
   position: relative;
