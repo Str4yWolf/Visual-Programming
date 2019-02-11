@@ -77,18 +77,6 @@
               </q-icon>
             </q-item>
             <q-item-separator inset />
-             <!-- <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset /> -->
           </q-list>
         </q-btn-dropdown>
           <q-btn-dropdown
@@ -97,53 +85,138 @@
         icon="visibility">
           <q-list link>
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-side icon="book" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >Documentation</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 1000px">
+                  <q-card-title>Documentation</q-card-title>
+                  <q-card-main>
+                    <p style="color: grey;">Tensei VPL</p>
+                    <p>
+                      <br><br>
+                      Our VPL app is dedicated to those of you who would like to perform advanced <strong>Digital Image Analysis (DIA)</strong>
+                       on images of text but don't want to spend too much time on learning a programming language.
+                       For our intuitive block-based VPL paradigm will let you safely try which building blocks
+                       fit and which don't.
+                      <br>
+                       At our VPL's core lies the <strong>main "construction" area</strong> where you can create your own functions
+                       with small elemental blocks you can choose from the left. Given an input text on an image, you can then decide which functions you would like to perform
+                       in what order and with which parameters. An <strong>image preview</strong> will give immediate feedback on what your output image will look like.
+                       Try out different configurations and settings and choose the option that best fit you. And when you are content with the results,
+                       you can think about what format your output file(s) will be (e.g., image or text).
+                      <br><br><br><br>
+                      <strong><h5>1 - Basics</h5></strong>
+                      The following are some basics for you to get started right away.
+                      <br><br>
+                      <strong>Adding a Block</strong>
+                      <br>
+                      By selecting a category on the left and clicking the <strong>Add</strong> button or the name label, you can generate a block
+                      <br><br>
+                      <strong>Block Info</strong>
+                      <br>
+                      Each block has its own functions and parameters which you can read more about by clicking the
+                       <strong>icon</strong> next to the <strong>Add</strong> button. You can also find more information
+                       on each block's function by following the links.
+                      <br><br>
+                      <strong>Connecting Blocks</strong>
+                      <br>
+                      You can connect blocks to each other by moving a block to the <strong>lower edge</strong> of another block.
+                       Compatible blocks will snap, while incompatible ones will not. You can see which blocks are compatible by
+                       viewing the block info next to the Add button. Your currently moving block's <strong>Input</strong>
+                       has to be of the same type as the <strong>Output</strong> of the block you're trying to attach to.
+                      <br><br>
+                      <strong>Chaining Blocks and Running a Process</strong>
+                      <br>
+                      To create a process, just attach any block with <strong>Input: Image</strong> to the <strong>Starting Block</strong>.
+                       After you're finished building a chain of blocks, just hit the <strong>Run Program</strong> button on the top right to
+                       see it live in action.
+                      <br><br>
+                      <strong>Save and Load Project</strong>
+                      <br>
+                      By default, you will have started a new project by running this program. On the top left of the menu under <strong>File</strong>, you can choose to
+                       save, load, or even start a new project by clicking their respective labels.
+                      <br><br>
+                      <strong>Notifications</strong>
+                      <br>
+                      By default, you will see notifications on actions at the bottom. You can toggle these by clicking the <strong>Toggle Notifications</strong> button on the top right.
+                      <br><br>
+                      <strong>Reset All</strong>
+                      <br>
+                      You can reset everything to its initial state by clicking <strong>Reset All</strong> next to the <strong>Toggle Notifications</strong> button.
+                       Make sure that you've saved your project in order to avoid any loss of data.
+                      <br><br>
+                      <strong>More Info</strong>
+                      <br>
+                      For more information, click on the <strong>Information Icons</strong> throughout or contact us through
+                       media given in the <strong>About this App</strong> section.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-item>
             <q-item-separator inset />
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-side icon="info" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >Terms of Use</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 1000px">
+                  <q-card-title>Terms of Use</q-card-title>
+                  <q-card-main>
+                    <p style="color: grey;">Tensei VPL</p>
+                    <p>
+                      <br><br>
+                      By using our app, you agree that you have read and understood the terms of use presented here.
+                      <br><br>
+                      <strong>1 - The Agreement</strong>
+                      <br>
+                      These terms outline here form an agreement between the user(s) of this VPL ("you") and the Tensei VPL group ("us").
+                       Any any time of usage, you will be bound to these terms. Please make sure to check out these terms every time a new update is available.
+                      <br><br>
+                      <strong>2 - Guarantee of Correctness and Liability</strong>
+                      <br>
+                      There are no known inherent risks associated with the use of this app. However, we will not guarantee that the accuracy and correctness of
+                       block functions and other features here will be present. We will also not be held liable for damage resulting from the use of this app,
+                       or loss of data on both your side and our side. Please make sure to always back up your data and protect your device from harm and damage.
+                      <br><br>
+                      <strong>3 - Availability</strong>
+                      <br>
+                      This app might not be available in the future for various reasons. You agree to accept this possibility.
+                      <br><br>
+                      <strong>4 - Things you musn't do</strong>
+                      You may not copy this program, redistribute it or any derivatives from it, or reverse-engineer it without prior permission from us. You also agree
+                       that you will use this program for actions considered legal in your country and everywhere your content will be available in some way. In particular,
+                       you may not use this program to further actions which are considered an offense or even criminal under the law.
+                      <br><br>
+                      <strong>5 - Termination of Use</strong>
+                      <br>
+                      You can terminate this agreement on your side any time you want by not using this app anymore.
+                       However, we may always terminate this agreement with you without prior notification and statement of reasons whatsoever.
+                      <br><br>
+                      <strong>6 - Legal Disputes</strong>
+                      <br>
+                      All legal disputes shall be governed under American law. Disputes shall be held in Los Angeles, California.
+                      <br><br>
+                      <strong>7 - Further Notes</strong>
+                      <br>
+                      Further rights such as property rights and common law shall apply.
+                      <br><br>
+                      <strong>8 - Overriding Terms</strong>
+                      <br>
+                      We do not guarantee that these terms are complete or correct. In case we should send you different terms as written or spoken document via our official email,
+                       you agree that the latter shall apply.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
           </q-list>
         </q-btn-dropdown>
           <q-btn-dropdown
@@ -151,54 +224,22 @@
         rounded glossy label="Edit"
         icon="edit">
           <q-list link>
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+             <q-item>
+              <q-item-side icon="edit" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >Edit</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 1000px">
+                  <q-card-title>Edit</q-card-title>
+                  <q-card-main>
+                    <p>Currently, you can edit everything that is movable. Your browser might also provide some edit functions. Further editing options shall be released in later versions.</p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
           </q-list>
         </q-btn-dropdown>
           <q-btn-dropdown
@@ -207,53 +248,38 @@
         icon="crop_landscape">
           <q-list link>
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+              <q-item-side icon="crop_landscape" inverted color="primary" />
+              <q-item-main @click.native="openFullscreen">
+                <q-item-tile label >Go Fullscreen</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+                <q-popover>
+                  <q-card inline style="width: 500px">
+                    <q-card-title>Go Fullscreen</q-card-title>
+                    <q-card-main>
+                      <p>Makes window fullscreen.</p>
+                    </q-card-main>
+                  </q-card>
+                </q-popover>
+              </q-icon>
             </q-item>
             <q-item-separator inset />
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+              <q-item-side icon="cancel" inverted color="primary" />
+              <q-item-main @click.native="closeFullscreen">
+                <q-item-tile label >Exit Fullscreen</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+                <q-popover>
+                  <q-card inline style="width: 500px">
+                    <q-card-title>Exit Fullscreen</q-card-title>
+                    <q-card-main>
+                      <p>Exits fullscreen mode.</p>
+                    </q-card-main>
+                  </q-card>
+                </q-popover>
+              </q-icon>
             </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
           </q-list>
         </q-btn-dropdown>
           <q-btn-dropdown
@@ -262,53 +288,22 @@
         icon="build">
           <q-list link>
             <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
+              <q-item-side icon="code" inverted color="primary" />
               <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
+                <q-item-tile label >How to Debug</q-item-tile>
               </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 500px">
+                  <q-card-title>How to Debug</q-card-title>
+                  <q-card-main>
+                    <p>Press <strong>F12</strong> to open console. Right-click app to view source.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
             </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
-            <q-item>
-              <q-item-side icon="sentiment_satisfied_alt" inverted color="primary" />
-              <q-item-main>
-                <q-item-tile label >dummy</q-item-tile>
-              </q-item-main> &nbsp;
-              <q-icon name="info" color="amber">
-            <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-            some tooltip
-            </q-tooltip>
-            </q-icon>
-            </q-item>
-            <q-item-separator inset />
           </q-list>
         </q-btn-dropdown>
         <q-btn-dropdown
@@ -329,7 +324,7 @@
                   <q-card-main>
                     <p>
                       <br><br>
-                      This app is a tool for you to process your images. Just go to the left-hand q-item-side
+                      This app is a tool for you to process your images. Just go to the left-hand side
                       of the window to find blocks from different categories. By clicking <strong>Add</strong>,
                       you can generate a block.
                       <br><br>
@@ -346,8 +341,7 @@
                       After you're finished building a chain of blocks, just hit the <strong>Run Program</strong> button to
                       see it live in action.
                       <br><br>
-                      For more information, click on the <strong>Information Icons</strong> throughout or contact us through
-                      media given in the <strong>About this App</strong> section.
+                      For more information, check out our <strong>Documentation</strong> under <strong>View</strong> in the menu panel.
                     </p>
                   </q-card-main>
                 </q-card>
@@ -382,7 +376,6 @@
                 </q-card>
               </q-popover>
             </q-item>
-            <q-item-separator inset />
           </q-list>
         </q-btn-dropdown>
       </q-btn-group> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -1005,6 +998,29 @@ export default {
     },
     emit: function (msg, ...args) {
       this.$root.$emit(msg, ...args)
+    },
+    openFullscreen: function () {
+      var elem = document.documentElement
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen()
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen()
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen()
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen()
+      }
+    },
+    closeFullscreen: function () {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
+      } else if (document.mozCancelFullScreen) { /* Firefox */
+        document.mozCancelFullScreen()
+      } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen()
+      } else if (document.msExitFullscreen) { /* IE/Edge */
+        document.msExitFullscreen()
+      }
     }
   }
 }
