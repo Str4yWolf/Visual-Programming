@@ -98,7 +98,6 @@ export default {
 div #rectangle-select {
   border: 2px dotted black;
   position: absolute;
-  overflow: hidden;
 }
 div .rectangle-select-outer {
   border: 2px solid black;
