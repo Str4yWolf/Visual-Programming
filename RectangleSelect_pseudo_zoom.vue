@@ -20,14 +20,14 @@
 <div class="rectangle-select-image">
       <img src="../statics/dummy.jpg" v-bind:style="{width: value+'px'}">
       <div class="rectangle-select-image">
-      <img src="../statics/dummy.jpg" v-bind:style="{width: ChangeWidth +'px'}">
+      <img src="../statics/dummy.jpg" v-bind:style="{width: changeWidth +'px'}">
       <div id="rectangle-select"
         @mousedown.native="selectStart($event,1)"
         @mouseup.native="selectEnd($event,1)"
         @mousemove.native="selectActive($event,1)" hidden></div>
     </div>
     <q-slider v-model="standard"
-        v-on:input="ChangeWidth"
+        v-on:input="changeWidth"
         :min="350" :max="1050" :step:="70"
     />
     <button id="btn1" @click="select()">Select</button>
