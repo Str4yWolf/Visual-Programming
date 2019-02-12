@@ -168,9 +168,9 @@
                       <br>
                       By default, you will see notifications on actions at the bottom. You can toggle these by clicking the <strong>Toggle Notifications</strong> button on the top right.
                       <br><br>
-                      <strong>Reset All</strong>
+                      <strong>Reset Blocks</strong>
                       <br>
-                      You can reset everything to its initial state by clicking <strong>Reset All</strong> next to the <strong>Toggle Notifications</strong> button.
+                      You can reset everything to its initial state by clicking <strong>Reset Blocks</strong> next to the <strong>Toggle Notifications</strong> button.
                        Make sure that you've saved your project in order to avoid any loss of data.
                       <br><br><br><br>
                       <strong><h5>2 - Blocks</h5></strong>
@@ -337,7 +337,7 @@
                         A <strong>Loop</strong> on this block will apply to all of the blocks it contains.
                         <br>
                         When you delete this block, all of the contained blocks will also disappear. If you have also
-                        deleted the <strong>Starting Block</strong>, then hit <strong>Reset All</strong> to get it back.
+                        deleted the <strong>Starting Block</strong>, then hit <strong>Reset Blocks</strong> to get it back.
                       </p>
                       <br><br>
                       <strong>Loop (Beta)</strong>
@@ -633,7 +633,7 @@
                 color="white"
                 text-color="blue"
                 size="md"
-                label="Reset All"
+                label="Reset Blocks"
                 align="center"
                 @click.native="emit('resetAll')"
               /> &nbsp;
