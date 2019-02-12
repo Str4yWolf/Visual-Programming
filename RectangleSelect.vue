@@ -1,16 +1,19 @@
 <template>
   <div class="rectangle-select-outer">
     <div style="padding: 15px 0px 0px 30px; font-weight: bold;">
-      Select Region
+      Select Region (Beta)
       <q-icon name="info" size="24px" color="amber" title="Click for more information"
         style="display: inline; padding: 0px 0px 0px 30px;">
         <q-popover>
           <q-card inline style="width: 500px">
-            <q-card-title>Select Region</q-card-title>
+            <q-card-title>Select Region (Beta)</q-card-title>
             <q-card-main>
-              <p>Dockable to: Image Preview</p>
-              <p>Select a region of interest on which actions will be performed
-                  Press <strong>Select</strong> to confirm, or <strong>Cancel</strong> to revert to original image.
+              <p>
+                Select a region of interest on which actions will be performed.
+                Currently, you can only select the entire image region. Thus, this component
+                 acts as an <strong>Image Preview</strong> of the input image at the moment.
+                <br>
+                Press <strong>Select</strong> to confirm, or <strong>Cancel</strong> to revert to original image.
               </p>
             </q-card-main>
           </q-card>
@@ -95,12 +98,14 @@ export default {
 div #rectangle-select {
   border: 2px dotted black;
   position: absolute;
+  z-index: 8;
 }
 div .rectangle-select-outer {
   border: 2px solid black;
   height: 450px;
   width: 400px;
   background: #fae5d3;
+  z-index: 6;
 }
 div .rectangle-select-image {
   border: none;
@@ -111,6 +116,7 @@ div .rectangle-select-image {
   left: 25px;
   background: white;
   overflow: hidden;
+  z-index: 7
 }
 #btn1, #btn2 {
   position: relative;
@@ -121,5 +127,6 @@ div .rectangle-select-image {
   right: 25px;
   left: 25px;
   margin: 10px;
+  z-index: 7;
 }
 </style>
