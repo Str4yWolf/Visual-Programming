@@ -61,7 +61,7 @@
             <q-item-separator inset />
             <q-item>
               <q-item-side icon="save" inverted color="primary" />
-              <q-item-main @click.native="emit('notify', 'Saved project', 'positive')">
+              <q-item-main @click.native="checkFileExists(' saving project.')">
                 <q-item-tile label >Save Project</q-item-tile>
               </q-item-main> &nbsp;
               <q-icon name="info" size="24px" color="amber" title="Click for more information">
@@ -77,6 +77,24 @@
               </q-icon>
             </q-item>
             <q-item-separator inset />
+            <q-item>
+              <q-item-side icon="keyboard_tab" inverted color="primary" />
+              <q-item-main @click.native="checkFileExists(' exporting results.')">
+                <q-item-tile label >Export Results</q-item-tile>
+              </q-item-main> &nbsp;
+              <q-icon name="info" size="24px" color="amber" title="Click for more information">
+                <q-popover>
+                  <q-card inline style="width: 500px">
+                    <q-card-title>Export Results</q-card-title>
+                    <q-card-main>
+                      <p>Save your file. The file that you're saving is what you can see in the image preview.
+                         The file type will correspond to what you get as the output type of your last block connected to the starting block.
+                      </p>
+                    </q-card-main>
+                  </q-card>
+                </q-popover>
+              </q-icon>
+            </q-item>
           </q-list>
         </q-btn-dropdown>
           <q-btn-dropdown
@@ -135,10 +153,16 @@
                        After you're finished building a chain of blocks, just hit the <strong>Run Program</strong> button on the top right to
                        see it live in action.
                       <br><br>
-                      <strong>Save and Load Project</strong>
+                      <strong>Encapsulation</strong>
+                      <br>
+                      Because there might be long chains of blocks involved in your image steps, you can encapsulate a moving chain of blocks by moving it against the <strong>Encapsulator</strong>.
+                       If you can't see the <strong>Encapsulator</strong>, then press <strong>Toggle Encapsulator</strong> on the bottom left. You can name your resulting <strong>Encapsulation</strong>
+                       and decapsulate it again by moving it against the <strong>Encapsulator again</strong>.
+                      <br><br>
+                      <strong>Save and Load Project, Export</strong>
                       <br>
                       By default, you will have started a new project by running this program. On the top left of the menu under <strong>File</strong>, you can choose to
-                       save, load, or even start a new project by clicking their respective labels.
+                       save, load, or even start a new project by clicking their respective labels. When you are done, you can export your processed file.
                       <br><br>
                       <strong>Notifications</strong>
                       <br>
@@ -148,12 +172,205 @@
                       <br>
                       You can reset everything to its initial state by clicking <strong>Reset All</strong> next to the <strong>Toggle Notifications</strong> button.
                        Make sure that you've saved your project in order to avoid any loss of data.
+                      <br><br><br><br>
+                      <strong><h5>2 - Blocks</h5></strong>
+                      You'll find some information on blocks here.
+                      <br><br>
+                      <strong>Binarization</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Binarizes an image according to a threshold.
+                          All pixel values below the threshold will be displayed as black (binary value 0),
+                          whereas the remaining pixels will be displayed as white (binary value 1).
+                            For coloured pictures, the pixel value is the mean of all channels.
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Binary_image" target="_blank">Read more on binary images</a>
+                      <br><br>
+                      <strong>Rotation</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Rotates an image according to an input in degrees. Positive numbers will rotate clockwise.
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Rotation_(mathematics)" target="_blank">Read more on rotation</a>
+                      <br><br>
+                      <strong>Greyscaling</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Applies greyscaling to each pixel of an image. Given a selection of colour channels,
+                          the grey value of each pixel will be the mean of all selected colour channels.
+                          Pixel values range from <strong>0</strong> (weakest) to <strong>255</strong> (strongest).
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Grayscale" target="_blank">Read more on greyscale</a>
+                      <br><br>
+                      <strong>Noise Removal</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Removes noise in a blurring fashion by admixture of a pixel's neighbouring colour values.
+                        Noise Removal can be seen as the counterpart to Sharpening.
+                        <br>
+                        <br>
+                        <strong>Parameters:</strong>
+                        <ul>
+                          <br>
+                          <li>
+                            <strong>Radius (px): </strong>Size of the neighbourhood of admixture
+                          </li>
+                          <br>
+                          <br>
+                          <li>
+                            <strong>Strength (%): </strong>How much an image pixel will be changed by its neighbours
+                          </li>
+                          <br>
+                          <br>
+                          <li>
+                            <strong>Threshold (%): </strong>How to identify noise. A value of 100% will consider everything different
+                            from the image pixel as noise, whereas a value of 50% will ignore neighbouring image points which are above
+                            above and below that threshold, the image pixel itself being centred within its threshold environment.
+                          </li>
+                        </ul>
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Noise_reduction" target="_blank">Read more on noise reduction</a>
+                      <br><br>
+                      <strong>Sharpening</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Sharpens an image by shortening the transition of soft edges to make them harder.
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Image_editing#Sharpening_and_softening_images" target="_blank">Read more on image sharpening</a>
+                      <br><br>
+                      <strong>Gaussian Filter</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Applies a bell-shaped Gaussian filter to the image, given the sigma environment.
+                        It tends to blur images and remove noise.
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Gaussian_filter" target="_blank">Read more on Gaussian filters</a>
+                      <br><br>
+                      <strong>Clustering</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Image</p>
+                      <p>Clusters an image into clusters, using a certain method.
+                        <ul>
+                          <li>
+                            <strong>KNN</strong> (K-nearest neighbours): Takes an image data point and clusters it together with its closest neighbours.
+                            <br>
+                            <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank">Read more</a>
+                            <br>
+                            <br>
+                          </li>
+                          <li>
+                            <strong>DBScan</strong> (Density-based spatial clustering of applications with noise): Clusters together image data points with many similar neighbours.
+                            <br>
+                            <a href="https://en.wikipedia.org/wiki/DBSCAN" target="_blank">Read more</a>
+                            <br>
+                            <br>
+                          </li>
+                          <li>
+                            <strong>K-Means</strong>: Starts with random cluster centres and repeatedly assigns data points to their closest clusters until (nearly) converged.
+                            <br>
+                            <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank">Read more</a>
+                            <br>
+                            <br>
+                          </li>
+                          <li>
+                            <strong>Spectral Clustering</strong>: Clusters according to the eigenvalues of the similarity matrix of the image data.
+                            <br>
+                            <a href="https://en.wikipedia.org/wiki/Spectral_clustering" target="_blank">Read more</a>
+                          </li>
+                        </ul>
+                      </p>
+                      <br><br>
+                      <strong>Letters Classification</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Text</p>
+                      <p>Tries to classify letters according to a given alphabet using OCR (Optical Character Recognition).
+                        These classifications will be output as text. Non-Latin classifications will be romanized, i.e., will be approximated with Latin letters.
+                        <br>
+                        Enter one of the available alphabets into the text field.
+                        <br>
+                        <br>
+                        <strong>Currently available:</strong>
+                        <ul>
+                          <li>
+                            <strong>Japanese:</strong> Classifies according to the three Japanese scripts of Kanji, Hiragana, and Katakana.
+                            <br>
+                            <a href="https://en.wikipedia.org/wiki/Japanese_writing_system" target="_blank">Read more on the Japanese writing system</a>
+                            <br>
+                            <br>
+                          </li>
+                          <li>
+                            <strong>Latin:</strong> Classifies according to the Latin alphabet, including specifics such as accents, umlauts, and some special letters of an otherwise Latin script language.
+                            <br>
+                            <a href="https://en.wikipedia.org/wiki/Latin_script" target="_blank">Read more on the Latin writing system</a>
+                            <br>
+                            <br>
+                          </li>
+                        </ul>
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Optical_character_recognition" target="_blank">Read more on OCR</a>
+                      <br><br>
+                      <strong>Cosine Similarity</strong>
+                      <br>
+                      <p>Input: Image ・ Output: Output</p>
+                      <p>Compares two images and outputs their cosine similarity. A value of <strong>1</strong> means <strong>maximum similarity</strong>,
+                        whereas a value of <strong>0</strong> means <strong>no similarity</strong>.
+                        A value of <strong>-1</strong> means <strong>maximum inverse similarity</strong>.
+                        <br>
+                        The cosine similarity describes the quotient of the dot product of the two images and the product of their magnitudes.
+                        That is,
+                        <br><br><span style="padding-left: 125px;"><strong>cos(A, B) = (A・B)/(||A||*||B||)</strong></span>
+                      </p>
+                      <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">Read more on cosine similarity</a>
+                      <br><br>
+                      <strong>Encapsulator</strong>
+                      <br>
+                      <p>
+                        Move a chain of blocks against the Encapsulator and it will generate a single block "<strong>Encapsulation</strong>" from it.
+                        Move an Encapsulation block against the Encapsulator and you will get the blocks it contains.
+                      </p>
+                      <br><br>
+                      <strong>Encapsulation</strong>
+                      <br>
+                      <p>
+                        An encapsulation of the blocks you moved against the <strong>Encapsulator</strong>.
+                        Enter a name in the text field to distinguish your encapsulations.
+                        A <strong>Loop</strong> on this block will apply to all of the blocks it contains.
+                        <br>
+                        When you delete this block, all of the contained blocks will also disappear. If you have also
+                        deleted the <strong>Starting Block</strong>, then hit <strong>Reset All</strong> to get it back.
+                      </p>
+                      <br><br>
+                      <strong>Loop (Beta)</strong>
+                      <br>
+                      <p>
+                        Perform a chain of blocks as much as you enter into the input field. You can attach this block to the left of any type of normal block.
+                         Currently, it works only on one block at a time
+                         and the <strong>+/-</strong> buttons don't work yet. A workaround could be to <strong>encapsulate</strong> your chain of blocks and
+                         attach this for loop to the encapsulation instead.
+                      </p>
+                      <br><br>
+                      <strong>Select Region (Beta)</strong>
+                      <br>
+                      <p>
+                        Select a region of interest on which actions will be performed.
+                         Currently, you can only select the entire image region. Thus, this component
+                         acts as an <strong>Image Preview</strong> of the input image at the moment.
+                        <br>
+                        Press <strong>Select</strong> to confirm, or <strong>Cancel</strong> to revert to original image.
+                      </p>
+                      <br><br>
+                      <strong>Image Preview</strong>
+                      <br>
+                      <p>
+                        Displays a preview of the image that results from performing your chain
+                         of blocks as a program. Hit the <strong>Run Program</strong> button to
+                         run your program.
+                      </p>
                       <br><br>
                       <strong>More Info</strong>
-                      <br>
+                      <br><br><br><br>
                       For more information, click on the <strong>Information Icons</strong> throughout or contact us through
                        media given in the <strong>About this App</strong> section.
-                    </p>
                   </q-card-main>
                 </q-card>
               </q-popover>
@@ -212,6 +429,37 @@
                       <br>
                       We do not guarantee that these terms are complete or correct. In case we should send you different terms as written or spoken document via our official email,
                        you agree that the latter shall apply.
+                    </p>
+                  </q-card-main>
+                </q-card>
+              </q-popover>
+            </q-item>
+            <q-item-separator inset />
+            <q-item>
+              <q-item-side icon="info" inverted color="primary" />
+              <q-item-main>
+                <q-item-tile label >Possible Issues</q-item-tile>
+              </q-item-main> &nbsp;
+              <q-icon name="warning" size="24px" color="amber" title="Click for more information">
+              </q-icon>
+              <q-popover>
+                <q-card inline style="width: 1000px">
+                  <q-card-title>Possible Issues</q-card-title>
+                  <q-card-main>
+                    <p>
+                      <br><br>
+                      Depending on the performance of your computer and workload you put onto the program, there might be known issues which you can avoid.
+                      <br><br>
+                      <strong>Looping Encapsulation/Decapsulation</strong>
+                      <br>
+                      If you are placing the <strong>Encapsulator</strong> at the coordinates where new blocks will be created, the Encapsulator might loop
+                       because both encapsulation and decapsulation will place their conversion output at that position.
+                      <br><br>
+                      <strong>No Red Border</strong>
+                      <br>
+                      While you will always see blocks snap together when they are compatible, incompatible blocks won't always be displayed with a red border
+                       explicitly. The detection of compatibility works in the positive case, but the display of incompatibility doesn't always work because
+                       the red border styling might be overwritten by the ensuing further checks on compatibility with other blocks. We will work on that.
                     </p>
                   </q-card-main>
                 </q-card>
@@ -706,7 +954,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -723,7 +970,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -740,7 +986,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -817,7 +1062,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -834,7 +1078,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -851,7 +1094,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -912,7 +1154,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -929,7 +1170,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -946,7 +1186,6 @@
             size="sm"
             label="add"
             align="center"
-            @click="notImplemented"
           /> &nbsp;
         <q-icon name="info" size="24px" color="amber" title="Click for more information">
         </q-icon>
@@ -956,24 +1195,24 @@
               <q-btn
                 color="indigo"
                 glossy
-                disable
                 class="full-width"
                 size="lg"
                 rounded
-                label="Customize block"
+                label="Create Loop"
                 align="center"
-                icon="sentiment_satisfied_alt"
+                icon="repeat"
+                @click="emit('addBlock', 'forLoop')"
               /> &nbsp;
               <q-btn
                 color="blue-grey"
                 glossy
-                disable
                 class="full-width"
                 size="lg"
                 rounded
-                label="Customize routine"
+                label="Toggle Encapsulator"
                 align="center"
-                icon="sentiment_satisfied_alt"
+                icon="branding_watermark"
+                @click="emit('toggleEncapsulator')"
               />
 </q-list>
     </q-layout-drawer>
@@ -988,13 +1227,14 @@ export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      noFileExists: true
     }
   },
   methods: {
     openURL,
     notImplemented: function () {
-      alert('Not implemented yet (...) We\'ll work on that (or maybe not =)')
+      this.emit('notify', 'Not implemented yet. We\'ll work on that.', 'info')
     },
     emit: function (msg, ...args) {
       this.$root.$emit(msg, ...args)
@@ -1021,6 +1261,19 @@ export default {
       } else if (document.msExitFullscreen) { /* IE/Edge */
         document.msExitFullscreen()
       }
+    },
+    checkFileExists: function (message) {
+      this.emit('notify', 'Proceeding with' + message, 'info')
+      if (this.noFileExists) {
+        var element = document.createElement('a')
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('just some test'))
+        element.setAttribute('download', 'userFile001')
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click()
+        document.body.removeChild(element)
+      }
+      this.noFileExists = false
     }
   }
 }
