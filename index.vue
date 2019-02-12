@@ -94,14 +94,6 @@
       v-for="i in blocks.clusteringBlocks.length"
       :key="'clusteringBlock'+i">
     </clustering>
-    <blocks-start
-      v-touch-pan="move" class="movable q-py-xl"
-      :id="'blocksStartBlock-'+(i-1)"
-      :ref="'blocksStartBlock-'+(i-1)"
-      :style="{'left': blocks.blocksStartBlocks[i-1][0] + 'px',
-               'top': blocks.blocksStartBlocks[i-1][1] + 'px'}"
-      v-for="i in blocks.blocksStartBlocks.length"
-      :key="'blocksStartBlock'+i"></blocks-start>
     <image-preview
       v-touch-pan="move" class="movable q-py-xl"
       :id="'imagePreviewBlock-'+(i-1)"
@@ -118,6 +110,38 @@
                'top': blocks.rectangleSelectBlocks[i-1][1] + 'px'}"
       v-for="i in blocks.rectangleSelectBlocks.length"
       :key="'rectangleSelectBlock'+i">></rectangle-select>
+    <encapsulator
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'encapsulatorBlock-'+(i-1)"
+      :ref="'encapsulatorBlock-'+(i-1)"
+      :style="{'left': blocks.encapsulatorBlocks[i-1][0] + 'px',
+               'top': blocks.encapsulatorBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.encapsulatorBlocks.length"
+      :key="'encapsulatorBlock'+i">></encapsulator>
+    <encapsulation
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'encapsulationBlock-'+(i-1)"
+      :ref="'encapsulationBlock-'+(i-1)"
+      :style="{'left': blocks.encapsulationBlocks[i-1][0] + 'px',
+               'top': blocks.encapsulationBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.encapsulationBlocks.length"
+      :key="'encapsulationBlock'+i">></encapsulation>
+    <for-loop
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'forLoopBlock-'+(i-1)"
+      :ref="'forLoopBlock-'+(i-1)"
+      :style="{'left': blocks.forLoopBlocks[i-1][0] + 'px',
+               'top': blocks.forLoopBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.forLoopBlocks.length"
+      :key="'forLoopBlock'+i">></for-loop>
+    <blocks-start
+      v-touch-pan="move" class="movable q-py-xl"
+      :id="'blocksStartBlock-'+(i-1)"
+      :ref="'blocksStartBlock-'+(i-1)"
+      :style="{'left': blocks.blocksStartBlocks[i-1][0] + 'px',
+              'top': blocks.blocksStartBlocks[i-1][1] + 'px'}"
+      v-for="i in blocks.blocksStartBlocks.length"
+      :key="'blocksStartBlock'+i"></blocks-start>
     </q-page>
 </template>
 
@@ -142,6 +166,9 @@ import LettersClassification from '../components/LettersClassification.vue'
 import CosineSimilarity from '../components/CosineSimilarity.vue'
 import ImagePreview from '../components/ImagePreview.vue'
 import RectangleSelect from '../components/RectangleSelect.vue'
+import Encapsulator from '../components/Encapsulator.vue'
+import Encapsulation from '../components/Encapsulation.vue'
+import ForLoop from '../components/ForLoop.vue'
 import BlocksStart from '../components/BlocksStart.vue'
 import { Notify } from 'quasar'
 export default {
@@ -158,6 +185,9 @@ export default {
     CosineSimilarity,
     ImagePreview,
     RectangleSelect,
+    Encapsulator,
+    Encapsulation,
+    ForLoop,
     BlocksStart,
     Notify
   },
@@ -177,14 +207,20 @@ export default {
         clusteringBlocks: [],
         imagePreviewBlocks: [[1200, 452]],
         rectangleSelectBlocks: [[1200, 0]],
+        encapsulatorBlocks: [[1050, 50]],
+        encapsulationBlocks: [],
+        forLoopBlocks: [],
         blocksStartBlocks: [[400, 100]]},
       // linksTop[i] and linksBottom[i] are connected blocks
       linksTop: [],
       linksBottom: [],
       // connected blocks (value) of a block (key)
       connectedBlocks: {blocksStart: []},
-      // show notifications to user
+      // which encapsulation block (key) maps to which block + its children
+      encapsulations: {},
+      // show certain data to user
       showNotifications: true,
+      showEncapsulator: true,
       // whether a block is redockable after docking attempt
       redockable: true,
       // input data type for each block type
@@ -199,6 +235,9 @@ export default {
         clustering: 'image',
         imagePreview: 'preview',
         rectangleSelect: 'preview',
+        encapsulator: 'encapsulation',
+        encapsulation: 'image',
+        forLoop: 'void',
         blocksStart: 'input'},
       // output data type for each block type
       outtype: {binarization: 'image',
@@ -212,6 +251,9 @@ export default {
         clustering: 'image',
         imagePreview: 'preview',
         rectangleSelect: 'preview',
+        encapsulator: 'encapsulation',
+        encapsulation: 'image',
+        forLoop: 'void',
         blocksStart: 'image'}
     }
   },
@@ -219,8 +261,10 @@ export default {
     // listen to event calls from elsewhere
     this.$root.$on('notify', this.notify)
     this.$root.$on('addBlock', this.addBlock)
+    this.$root.$on('deleteBlock', this.deleteBlock)
     this.$root.$on('runProgram', this.updateView)
     this.$root.$on('resetAll', this.resetAll)
+    this.$root.$on('toggleEncapsulator', this.toggleEncapsulator)
     this.$root.$on('toggleNotifications', () => {
       this.showNotifications = !this.showNotifications
     })
@@ -262,12 +306,22 @@ export default {
       }
     },
     /*
-            Deletes a block specified in data.
+            Deletes a block specified in data (either object or already id string)
             @params: Object data
     */
     deleteBlock: function (data) {
       // console.log('called deleteBlock from Index')
-      var ref = data.$el.id
+      var ref
+      console.log('deleteBlock')
+      console.log(data)
+      console.log(typeof data)
+      if (typeof data !== 'string') {
+        ref = data.$el.id
+      } else {
+        ref = data
+      }
+      console.log(ref)
+      console.log(typeof ref)
       var parentArray = ref.split('-')[0] + 's'
       var index = parseInt(ref.split('-')[1])
       // delete link
@@ -367,12 +421,16 @@ export default {
             // output(ref2) compatible with input(ref1), and vice versa
             var compatible1 = this.outtype[type2] === this.intype[type1]
             var compatible2 = this.outtype[type1] === this.intype[type2]
-            // distinguish between normal blocks and big blocks
+            // distinguish between normal blocks and special blocks
             var isImagePreview = ((type1 === 'imagePreview') || (type1 === 'rectangleSelect'))
+            var isEncapsulator = (type1 === 'encapsulator')
+            var isForLoop = (type1 === 'forLoop')
             // checking for dockability of block (ref1) moving to the bottom of ref2
             var dockable1 = overlap && ((bB2.bottom - 10) < bB1.top)
+            // special case for the forLoop blocks
+            var dockable2 = overlap && ((bB2.left - 10) < bB1.right)
             if (this.redockable && compatible1 && dockable1 &&
-                !this.linksBottom.includes(ref1) && !this.linksTop.includes(ref2)) {
+                !this.linksBottom.includes(ref1) && !this.linksTop.includes(ref2) && !isImagePreview) {
               this.dock(ref2, ref1)
               compatible1 = true
               compatible2 = true
@@ -380,40 +438,62 @@ export default {
               var oldX = this.blocks[blockArray][index][0]
               var oldY = this.blocks[blockArray][index][1]
               var dX = bB2.left - 300 - oldX
-              var dY
-              if (!isImagePreview) {
-                dY = bB2.top + 50 - oldY
-              } else {
-                if (type1 === 'imagePreview') {
-                  dY = bB2.top + 400 - oldY
-                } else {
-                  dY = bB2.top + 450 - oldY
-                }
-              }
+              var dY = bB2.top + 50 - oldY
+              // (with hook 2) change the number of dY's in relation to one another if the blocks don't match up because
+              // Vue will sometimes align blocks according to different inexplicable parameters.
+              // Don't know how to fix this
+              // alternative 1 (50, 50)
+              // alternative 2 (86, 14)
               this.moveBlock(ref1, [dX, dY])
               this.getAllChildren(ref1).forEach(child => {
                 this.moveBlock(child, [dX, dY])
               })
             }
-
+            // forLoop
+            if (this.redockable && isForLoop && dockable2 &&
+                !this.linksBottom.includes(ref1) && !this.linksTop.includes(ref2) && !isImagePreview) {
+              this.dock(ref2, ref1)
+              compatible1 = true
+              compatible2 = true
+              // align blocks
+              var oldX2 = this.blocks[blockArray][index][0]
+              var oldY2 = this.blocks[blockArray][index][1]
+              // hook 2
+              dX = bB2.left - 450 - oldX2
+              dY = bB2.top - 50 - oldY2
+              this.moveBlock(ref1, [dX, dY])
+            }
+            // encapsulate
+            if (overlap && (!(type1 === 'encapsulation') && (type2 === 'encapsulator'))) {
+              this.encapsulate(ref1)
+              return
+            }
+            // decapsulate
+            if (overlap && ((type1 === 'encapsulation') && (type2 === 'encapsulator'))) {
+              this.decapsulate(ref1)
+              return
+            }
             // avoid asking user to dock again if still overlapping
             this.redockable = false
             var bothDocked = (this.linksBottom.includes(ref2) && this.linksTop.includes(ref1)) || (this.linksBottom.includes(ref1) && this.linksTop.includes(ref2))
-            // display incompatibility of blocks - style 1 (outset red border)
-            if (overlap && (!compatible1 || !compatible2) && !bothDocked && !isImagePreview) {
+            // display incompatibility of normal blocks - style 1 (outset red border)
+            if (overlap && (!compatible1 || !compatible2) && !bothDocked && !isImagePreview && !isEncapsulator && !isForLoop) {
               el1.style.height = '120px'
               el1.style.width = '520px'
               el1.style.border = '12px solid red'
             }
+            // undocking
             var parentIndex = this.linksBottom.indexOf(ref1)
             if ((this.linksTop[parentIndex] === ref2) && !overlap) {
               this.undock(ref2, ref1)
             }
-            if (!overlap && !isImagePreview) {
+            // don't display incompatibility for normal blocks anymore
+            if (!overlap && !isImagePreview && !isEncapsulator && !isForLoop) {
               el1.style.height = '100px'
               el1.style.width = '500px'
               el1.style.border = '2px solid black'
             }
+            // original status
             if (!overlap) {
               this.redockable = true
             }
@@ -562,6 +642,9 @@ export default {
           cosineSimilarityBlocks: [],
           imagePreviewBlocks: [[1200, 452]],
           rectangleSelectBlocks: [[1200, 0]],
+          encapsulatorBlocks: [[1050, 50]],
+          encapsulationBlocks: [],
+          forLoopBlocks: [],
           blocksStartBlocks: [[400, 100]]}
         this.redockable = true
         this.incompatible = false
@@ -599,6 +682,60 @@ export default {
         style.width = newWidth
         style.height = newHeight
       })
+    },
+    /*
+            Toggles the visibility of the Encapsulator
+    */
+    toggleEncapsulator: function () {
+      if (this.showEncapsulator) {
+        this.moveBlock('encapsulatorBlock-0', [-10000, -10000])
+        this.showEncapsulator = false
+      } else {
+        this.moveBlock('encapsulatorBlock-0', [10000, 10000])
+        this.showEncapsulator = true
+      }
+    },
+    /*
+            Replaces a chain of blocks with argument block on top of it with a single encapsulation block
+            @params: String block
+    */
+    encapsulate: function (block) {
+      // Generate encapsulation block
+      this.addBlock('encapsulation')
+      // get the ref of the current encapsulation block
+      var ref = 'encapsulationBlock-' + (this.blocks.encapsulationBlocks.length - 1)
+      // add reference
+      this.encapsulations[ref] = block
+      // hide old blocks
+      this.moveBlock(block, [-10000, -10000])
+      this.getAllChildren(block).forEach(child => {
+        this.moveBlock(child, [-10000, -10000])
+      })
+    },
+    /*
+            Replaces an encapsulation eblock with the chain of blocks it encapsulates
+            @params: String block
+    */
+    decapsulate: function (eblock) {
+      // get the top block of the blocks the eblock encapsulates
+      var ref = this.encapsulations[eblock]
+      // show encapsulated blocks at the position where new blocks will be generated
+      var blockType = ref.split('-')[0] + 's'
+      var index = ref.split('-')[1]
+      var oldPos = this.blocks[blockType][index]
+      console.log('decapsulate oldPos: ' + oldPos)
+      var dX = this.initialPos[0] - oldPos[0]
+      var dY = this.initialPos[1] - oldPos[1]
+      this.moveBlock(ref, [dX, dY])
+      this.getAllChildren(ref).forEach(child => {
+        this.moveBlock(child, [dX, dY])
+      })
+      this.deleteBlock(eblock)
+      this.connectedBlocks[eblock] = []
+      if (this.showNotifications) {
+        this.notify('Deleted encapsulation block.', 'negative')
+      }
+      this.encapsulations[eblock] = []
     },
     /*
             sets the initial positions of blocks the parameters
