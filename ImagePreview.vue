@@ -8,7 +8,6 @@
           <q-card inline style="width: 500px">
             <q-card-title>Image Preview</q-card-title>
             <q-card-main>
-              <p>Dockable to: Image Preview or Rectangle Select</p>
               <p>Displays a preview of the image that results from performing your chain
                  of blocks as a program. Hit the <strong>Run Program</strong> button to
                  run your program.
@@ -42,6 +41,31 @@ export default {
             @params: Array(String) blocks
     */
     updateView: function (blocks) {
+      if (blocks.includes('lettersClassificationBlock')) {
+        var text = document.getElementById('input-lettersClassification').value.toLowerCase()
+        // Why does Vue not update correct pictures even though ...
+        // ... Branches are entered correctly
+        // ... Format extension is correct
+        // ... Paths match up (copy and paste)
+        // ... Similar image display works with cosine similarity
+        // Don't know why it doesn't work
+        if (text === 'japanese') {
+          console.log('entered japanese branch')
+          this.setImage('../statics/dummy_output_japanese.jpg')
+        } else if (text === 'latin') {
+          console.log('entered latin branch')
+          this.setImage('../statics/dummy_output_latin.jpg')
+        } else {
+          console.log('entered else branch')
+          this.$root.$emit('notify', 'Could not classify letters!', 'negative')
+          this.setImage('../statics/void.jpg')
+          return
+        }
+      }
+      if (blocks.includes('cosineSimilarityBlock')) {
+        this.setImage('../statics/dummy_output_cosine_similarity.jpg')
+        return
+      }
       // permutations to keep track
       // 1,2,3
       if (blocks.includes('binarizationBlock') &&
@@ -102,6 +126,7 @@ div .img-preview-outer {
   height: 500px;
   width: 400px;
   background: #fae5d3;
+  z-index: 6;
 }
 div .img-preview-image {
   border: none;
@@ -112,5 +137,6 @@ div .img-preview-image {
   left: 25px;
   background: white;
   overflow: hidden;
+  z-index: 7;
 }
 </style>
