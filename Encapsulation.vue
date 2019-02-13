@@ -14,7 +14,7 @@
                    A <strong>Loop</strong> on this block will apply to all of the blocks it contains.
                   <br>
                   When you delete this block, all of the contained blocks will also disappear. If you have also
-                   deleted the <strong>Starting Block</strong>, then hit <strong>Reset All</strong> to get it back.
+                   deleted the <strong>Starting Block</strong>, then hit <strong>Reset Blocks</strong> to get it back.
                 </p>
               </q-card-main>
             </q-card>
