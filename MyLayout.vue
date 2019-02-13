@@ -170,7 +170,7 @@
                       <br><br>
                       <strong>Reset Blocks</strong>
                       <br>
-                      You can reset everything to its initial state by clicking <strong>Reset Blocks</strong> next to the <strong>Toggle Notifications</strong> button.
+                      You can reset all blocks to the initial state by clicking <strong>Reset Blocks</strong> next to the <strong>Toggle Notifications</strong> button.
                        Make sure that you've saved your project in order to avoid any loss of data.
                       <br><br><br><br>
                       <strong><h5>2 - Blocks</h5></strong>
