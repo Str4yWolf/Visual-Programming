@@ -35,7 +35,7 @@
           :max="400"
           :step="25"
           snap markers
-      />
+          />
     <button id="btn1" @click="select()">Select</button>
     <button id="btn2" @click="cancel()">Cancel</button>
   </div>
