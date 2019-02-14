@@ -31,7 +31,7 @@
           v-on:input="val => { width = val }"
           label-always
           :label-value="width+'%'"
-          :min="50"
+          :min="25"
           :max="200"
           :step="25"
           snap markers
