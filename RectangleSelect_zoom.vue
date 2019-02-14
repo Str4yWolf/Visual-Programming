@@ -21,16 +21,16 @@
       </q-icon>
     </div>
     <div class="rectangle-select-image">
-      <img src="../statics/dummy.jpg" v-bind:style="{height: height? 3*height+'px':'300px'}">
+      <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.5*width+'px':'350px'}">
        <div id="rectangle-select">
       </div>
           </div>
            &nbsp;
           <q-slider
           v-model="zoomSlider"
-          @input="val=>{height=val}"
+          @input="val=>{width=val}"
           label-always
-          :label-value="`${height}%`"
+          :label-value="`${width}%`"
           :min="25"
           :max="400"
           :step="25"
@@ -110,7 +110,7 @@ div #rectangle-select {
 }
 div .rectangle-select-outer {
   border: 2px solid black;
-  height: 512px;
+  height: 520px;
   width: 400px;
   background: #fae5d3;
   z-index: 6;
@@ -118,9 +118,8 @@ div .rectangle-select-outer {
 div .rectangle-select-image {
   border: none;
   position: relative;
-/*  max-height: 400px;*/
-  height: 320px;
-  width: 360px;
+  max-height: 400px;
+  width: 350px;
   top: 25px;
   left: 25px;
   background: white;
