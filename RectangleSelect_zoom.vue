@@ -28,7 +28,7 @@
            &nbsp;
           <q-slider
           v-model="zoomSlider"
-          v-on:input="val => { width = val }"
+          v-on:input="val=>{width=val}"
           label-always
           :label-value="width+'%'"
           :min="25"
