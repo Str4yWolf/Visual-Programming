@@ -18,7 +18,7 @@
       </q-icon>
     </div>
     <div class="img-preview-image">
-      <img id="image-preview" src="../statics/dummy.jpg" v-bind:style="{width: pWidth? 3.5*pWidth+'px':'350px'}">
+      <img id="image-preview" src="../statics/dummy.jpg" v-bind:style="{width: pWidth? 3.6*pWidth+'px':'360px'}">
     </div>
            &nbsp;
           <q-slider
@@ -142,7 +142,7 @@ export default {
 div .img-preview-outer {
   border: 2px solid black;
   height: 520px;
-  width: 400px;
+  width: 420px;
   background: #fae5d3;
   z-index: 6;
 }
@@ -150,7 +150,7 @@ div .img-preview-image {
   border: none;
   position: relative;
   height: 320px;
-  width: 350px;
+  width: 360px;
   top: 25px;
   left: 25px;
   background: white;
