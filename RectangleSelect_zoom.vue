@@ -118,7 +118,7 @@ div .rectangle-select-outer {
 div .rectangle-select-image {
   border: none;
   position: relative;
-  max-height: 400px;
+  height: 320px;
   width: 350px;
   top: 25px;
   left: 25px;
