@@ -32,7 +32,7 @@
           label-always
           :label-value="`${width}%`"
           :min="25"
-          :max="400"
+          :max="200"
           :step="25"
           snap markers
           />
