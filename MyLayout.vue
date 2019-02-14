@@ -459,7 +459,7 @@
                       <br>
                       While you will always see blocks snap together when they are compatible, incompatible blocks won't always be displayed with a red border
                        explicitly. The detection of compatibility works in the positive case, but the display of incompatibility doesn't always work because
-                       the red border styling might be overwritten by the ensuing further checks on compatibility with other blocks. We will work on that.
+                       the red border styling might be overwritten by the ensuing further checks on compatibility with other blocks.
                     </p>
                   </q-card-main>
                 </q-card>
@@ -607,7 +607,7 @@
                 <q-card inline style="width: 500px">
                   <q-card-title>About this App</q-card-title>
                   <q-card-main>
-                    <p style="color: grey;">V 0.2 Last modified: Feb 12, 2019 11:59 pm EST</p>
+                    <p style="color: grey;">V 0.2 Last modified: Feb 15, 2019 11:59 pm EST</p>
                     <p>
                       <br><br>
                       This app has been created for the project <strong>Visual Programming</strong>.
@@ -1234,7 +1234,7 @@ export default {
   methods: {
     openURL,
     notImplemented: function () {
-      this.emit('notify', 'Not implemented yet. We\'ll work on that.', 'info')
+      this.emit('notify', 'Not implemented yet.', 'info')
     },
     emit: function (msg, ...args) {
       this.$root.$emit(msg, ...args)
