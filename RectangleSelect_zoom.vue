@@ -21,7 +21,7 @@
       </q-icon>
     </div>
     <div class="rectangle-select-image">
-      <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.6*width+'px':'360px'}">
+      <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.5*width+'px':'350px'}">
        <div id="rectangle-select">
       </div>
           </div>
