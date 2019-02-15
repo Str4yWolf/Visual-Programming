@@ -110,7 +110,7 @@ div #rectangle-select {
 div .rectangle-select-outer {
   border: 2px solid black;
   height: 520px;
-  width: 420px;
+  width: 400px;
   background: #fae5d3;
   z-index: 6;
 }
