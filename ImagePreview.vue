@@ -28,7 +28,6 @@
           :min="25"
           :max="250"
           :step="25"
-          snap
           />
           <button id="btn3" @click="exportingResults()">Export Results</button>
   </div>
