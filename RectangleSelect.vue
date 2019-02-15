@@ -29,7 +29,7 @@
           v-model="zoomSlider"
           @input="val=>{width=val}"
           label-always
-          :label-value="`${width}%`"
+          :label-value="`${zoomSlider}%`"
           :min="25"
           :max="200"
           :step="25"
