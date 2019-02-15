@@ -143,7 +143,7 @@ div .rectangle-select-image {
   margin: 10px;
   z-index: 7;
 }
-/*previous version withiou zoom slider
+/*previous version without zoom slider
   div .rectangle-select-outer {
   border: 2px solid black;
   height: 450px;
