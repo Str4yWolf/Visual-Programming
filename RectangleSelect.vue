@@ -22,14 +22,12 @@
     </div>
     <div class="rectangle-select-image">
 <!-- previous version without zoom slider
-     <img src="../statics/dummy.jpg" class="responsive">
-      <div id="rectangle-select"
+     <img src="../statics/dummy.jpg" class="responsive">-->
+      <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.6*width+'px':'360px'}">
+       <div id="rectangle-select"
         @mousedown.native="selectStart($event,1)"
         @mouseup.native="selectEnd($event,1)"
         @mousemove.native="selectActive($event,1)" hidden>
-      </div> -->
-      <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.6*width+'px':'360px'}">
-       <div id="rectangle-select">
       </div>
           </div>&nbsp;
           <q-slider
