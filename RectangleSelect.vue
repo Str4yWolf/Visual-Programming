@@ -40,7 +40,6 @@
           :min="25"
           :max="250"
           :step="25"
-          snap
           />
     <button id="btn1" @click="select()">Select</button>
     <button id="btn2" @click="cancel()">Cancel</button>
