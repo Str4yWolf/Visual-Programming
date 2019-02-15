@@ -26,7 +26,7 @@
           label-always
           :label-value="`${zoomSliderPreview}%`"
           :min="25"
-          :max="200"
+          :max="250"
           :step="25"
           snap markers
           />
@@ -167,4 +167,23 @@ div .img-preview-image {
   margin: 10px;
   z-index: 7;
 }
+/*previous version without zoom slider
+  div .img-preview-outer {
+  border: 2px solid black;
+  height: 500px;
+  width: 400px;
+  background: #fae5d3;
+  z-index: 6;
+}
+div .img-preview-image {
+  border: none;
+  position: relative;
+  max-height: 400px;
+  max-width: 350px;
+  top: 25px;
+  left: 25px;
+  background: white;
+  overflow: hidden;
+  z-index: 7;
+}*/
 </style>
