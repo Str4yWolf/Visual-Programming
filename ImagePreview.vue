@@ -19,8 +19,7 @@
     </div>
     <div class="img-preview-image">
       <img id="image-preview" src="../statics/dummy.jpg" v-bind:style="{width: pWidth? 3.6*pWidth+'px':'360px'}">
-    </div>
-           &nbsp;
+    </div>&nbsp;
           <q-slider
           v-model="zoomSliderPreview"
           @input="val=>{pWidth=val}"
