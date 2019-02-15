@@ -607,7 +607,7 @@
                 <q-card inline style="width: 500px">
                   <q-card-title>About this App</q-card-title>
                   <q-card-main>
-                    <p style="color: grey;">V 0.21 Last modified: Feb 15, 2019 11:59 pm EST</p>
+                    <p style="color: grey;">V 0.21 Last modified: Feb 15, 2019</p>
                     <p>
                       <br><br>
                       This app has been created for the project <strong>Visual Programming</strong>.
