@@ -113,7 +113,7 @@
                 <q-card inline style="width: 1000px">
                   <q-card-title>Documentation</q-card-title>
                   <q-card-main>
-                    <p style="color: grey;">Tensei VPL</p>
+                    <p style="color: grey;">Tensei XP VPL</p>
                     <p>
                       <br><br>
                       Our VPL app is dedicated to those of you who would like to perform advanced <strong>Digital Image Analysis (DIA)</strong>
@@ -387,14 +387,14 @@
                 <q-card inline style="width: 1000px">
                   <q-card-title>Terms of Use</q-card-title>
                   <q-card-main>
-                    <p style="color: grey;">Tensei VPL</p>
+                    <p style="color: grey;">Tensei XP VPL</p>
                     <p>
                       <br><br>
                       By using our app, you agree that you have read and understood the terms of use presented here.
                       <br><br>
                       <strong>1 - The Agreement</strong>
                       <br>
-                      These terms outline here form an agreement between the user(s) of this VPL ("you") and the Tensei VPL group ("us").
+                      These terms outline here form an agreement between the user(s) of this VPL ("you") and the Tensei XP VPL group ("us").
                        Any any time of usage, you will be bound to these terms. Please make sure to check out these terms every time a new update is available.
                       <br><br>
                       <strong>2 - Guarantee of Correctness and Liability</strong>
@@ -607,7 +607,7 @@
                 <q-card inline style="width: 500px">
                   <q-card-title>About this App</q-card-title>
                   <q-card-main>
-                    <p style="color: grey;">V 0.2 Last modified: Feb 15, 2019 11:59 pm EST</p>
+                    <p style="color: grey;">V 0.21 Last modified: Feb 15, 2019 11:59 pm EST</p>
                     <p>
                       <br><br>
                       This app has been created for the project <strong>Visual Programming</strong>.
