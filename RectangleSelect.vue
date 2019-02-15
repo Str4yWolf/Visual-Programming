@@ -21,6 +21,13 @@
       </q-icon>
     </div>
     <div class="rectangle-select-image">
+<!-- previous version without zoom slider
+     <img src="../statics/dummy.jpg" class="responsive">
+      <div id="rectangle-select"
+        @mousedown.native="selectStart($event,1)"
+        @mouseup.native="selectEnd($event,1)"
+        @mousemove.native="selectActive($event,1)" hidden>
+      </div> -->
       <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.6*width+'px':'360px'}">
        <div id="rectangle-select">
       </div>
@@ -31,7 +38,7 @@
           label-always
           :label-value="`${zoomSlider}%`"
           :min="25"
-          :max="200"
+          :max="250"
           :step="25"
           snap markers
           />
@@ -136,4 +143,34 @@ div .rectangle-select-image {
   margin: 10px;
   z-index: 7;
 }
+/*previous version withiou zoom slider
+  div .rectangle-select-outer {
+  border: 2px solid black;
+  height: 450px;
+  width: 400px;
+  background: #fae5d3;
+  z-index: 6;
+}
+div .rectangle-select-image {
+  border: none;
+  position: relative;
+  max-height: 400px;
+  max-width: 350px;
+  top: 25px;
+  left: 25px;
+  background: white;
+  overflow: hidden;
+  z-index: 7
+}
+#btn1, #btn2 {
+  position: relative;
+  font-weight: bold;
+  width: 155px;
+  height: 50px;
+  top: 30px;
+  right: 25px;
+  left: 25px;
+  margin: 10px;
+  z-index: 7;
+}*/
 </style>
