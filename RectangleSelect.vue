@@ -24,8 +24,7 @@
       <img src="../statics/dummy.jpg" v-bind:style="{width: width? 3.6*width+'px':'360px'}">
        <div id="rectangle-select">
       </div>
-          </div>
-           &nbsp;
+          </div>&nbsp;
           <q-slider
           v-model="zoomSlider"
           @input="val=>{width=val}"
